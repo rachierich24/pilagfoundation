@@ -30,6 +30,7 @@ export default function HomePage() {
       .to('.preloader-text', { y: '100%', duration: 0.8, ease: 'power4.in' })
       .to('.split-left', { x: '-100%', duration: 1.2, ease: 'power4.inOut' }, 'split')
       .to('.split-right', { x: '100%', duration: 1.2, ease: 'power4.inOut' }, 'split')
+      .to(['.split-left', '.split-right'], { autoAlpha: 0, duration: 0.01 }, 'split+=1.2')
       .to('.preloader', { autoAlpha: 0, duration: 0.5 }, 'split+=0.5');
 
     let mm = gsap.matchMedia();

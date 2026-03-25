@@ -126,7 +126,7 @@
 
 /* Navigation */
 .main-nav { 
-    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 1.5rem 0; 
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 99999; padding: 1.5rem 0; 
     transition: background var(--transition-fast), padding var(--transition-fast);
     background: #F9F6F0; /* Beige base */
     border-bottom: 1px solid rgba(34,34,34,0.05);
