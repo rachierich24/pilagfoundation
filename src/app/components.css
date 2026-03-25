@@ -126,7 +126,7 @@
 
 /* Navigation */
 .main-nav { 
-    position: fixed; top: 0; left: 0; width: 100%; z-index: 2147483647; padding: 1.5rem 0; 
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 1.5rem 0; 
     transition: background var(--transition-fast), padding var(--transition-fast);
     background: #F9F6F0; /* Beige base */
     border-bottom: 1px solid rgba(34,34,34,0.05);
@@ -355,6 +355,7 @@
     justify-content: center;
     position: relative;
     z-index: 10;
+    background: #1A3626; /* BRAND GREEN */
 }
 .sv-split-heading {
     display: flex;
@@ -363,7 +364,7 @@
     font-family: var(--font-heading);
     font-size: clamp(4rem, 8vw, 7rem);
     line-height: 1;
-    color: #1A3626; /* Deep forest green hook */
+    color: #F9F6F0; /* Warm Beige contrast */
 }
 
 /* 3. Iris Reval Transition */

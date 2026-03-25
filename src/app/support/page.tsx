@@ -33,7 +33,7 @@ export default function SupportPage() {
                 </div>
                 <h1 style={{ fontFamily: 'var(--font-heading)', color: '#EADFC8', fontSize: '3rem', marginBottom: '1rem' }}>Transaction Secured</h1>
                 <p style={{ opacity: 0.8, fontSize: '1.2rem', marginBottom: '2rem', lineHeight: 1.6 }}>
-                    Thank you. Your contribution of <strong>${finalAmount}</strong> has been successfully processed. An official receipt and allocation tracker has been dispatched to your secure email.
+                    Thank you. Your contribution of <strong>₹{finalAmount}</strong> has been successfully processed. An official receipt and allocation tracker has been dispatched to your secure email.
                 </p>
                 <Link href="/" className="btn btn-primary" style={{ display: 'inline-flex', justifyContent: 'center' }}>Return to Operations</Link>
             </div>
@@ -73,7 +73,7 @@ export default function SupportPage() {
                             <input type="email" id="donor-email" required placeholder="contact@domain.com" style={{ background: 'rgba(255,255,255,0.05)', color: '#FFF', border: '1px solid rgba(255,255,255,0.1)', padding: '1rem', width: '100%', borderRadius: '4px' }} />
                         </div>
                         <div className="form-group" style={{ marginTop: '1.5rem' }}>
-                            <label style={{ color: 'var(--clr-text-prime)', opacity: 0.8 }}>Contribution Amount (USD)</label>
+                            <label style={{ color: 'var(--clr-text-prime)', opacity: 0.8 }}>Contribution Amount (INR)</label>
                             <div className="amount-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '0.5rem', marginTop: '0.5rem' }}>
                                 {[50, 100, 500].map(val => (
                                     <button 
@@ -82,7 +82,7 @@ export default function SupportPage() {
                                         onClick={() => setAmount(val)} 
                                         style={{ padding: '1rem', background: amount === val ? '#EADFC8' : 'rgba(255,255,255,0.05)', color: amount === val ? '#000' : '#FFF', border: 'none', cursor: 'pointer', borderRadius: '4px', fontWeight: 'bold' }}
                                     >
-                                        ${val}
+                                        ₹{val}
                                     </button>
                                 ))}
                                 <button 

@@ -18,10 +18,12 @@ export default function HomePage() {
     const tl = gsap.timeline({
         onComplete: () => {
             document.body.style.overflow = 'auto';
+            gsap.to('.main-nav', { autoAlpha: 1, duration: 0.5 });
         }
     });
 
     document.body.style.overflow = 'hidden';
+    gsap.set('.main-nav', { autoAlpha: 0 });
 
     tl.to('.preloader-text', { y: '0%', duration: 1, ease: 'power4.out', delay: 0.2 })
       .to({}, {duration: 0.5})

@@ -119,9 +119,21 @@ export default function SavorTrajectoryPage() {
         });
     });
 
+    // 6. Navbar Visibility Toggle (Hide on Hero)
+    ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom top", // Change as needed (e.g., end of hero)
+        onEnter: () => gsap.to('.main-nav', { autoAlpha: 0, duration: 0.3 }),
+        onLeave: () => gsap.to('.main-nav', { autoAlpha: 1, duration: 0.3 }),
+        onEnterBack: () => gsap.to('.main-nav', { autoAlpha: 0, duration: 0.3 }),
+        onLeaveBack: () => gsap.to('.main-nav', { autoAlpha: 1, duration: 0.3 }),
+    });
+
     return () => {
       lenis.destroy();
       ScrollTrigger.getAll().forEach(t => t.kill());
+      gsap.to('.main-nav', { autoAlpha: 1, duration: 0 }); // Ensure it returns when unmounting
     };
   }, { scope: containerRef });
 
