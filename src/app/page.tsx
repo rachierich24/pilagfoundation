@@ -48,59 +48,79 @@ export default function HomePage() {
             });
         }
 
-        // 6. Pinned Crossfade Gallery (Desktop Only Pin)
+        // 6. Pinned Editorial Gallery (Enhanced Mask Reveals)
         const pinnedSection = document.getElementById('pinned-quotes');
         const pinnedSlides = gsap.utils.toArray('.pinned-slide') as HTMLElement[];
         if (pinnedSection && pinnedSlides.length > 0) {
             gsap.set(pinnedSlides[0], { autoAlpha: 1 });
+            gsap.set(pinnedSlides[0].querySelector('.pinned-bg-wrapper'), { clipPath: 'inset(0 0 0 0%)' });
             gsap.set(pinnedSlides[0].querySelector('.pinned-content'), { y: 0, autoAlpha: 1 });
 
-            const crossfadeTl = gsap.timeline({
+            const galleryTl = gsap.timeline({
                 scrollTrigger: {
-                    trigger: pinnedSection, start: "top top", end: "+=300%", scrub: 1, pin: true
+                    trigger: pinnedSection, start: "top top", end: "+=400%", scrub: 1, pin: true
                 }
             });
 
+            // Orb parallax
+            galleryTl.to('.gallery-orb', { y: 200, x: 100, scale: 1.2, ease: "none", duration: 4 }, 0);
+
             pinnedSlides.forEach((slide, i) => {
-                if (i === 0) return;
+                if (i === 0) {
+                    // Animate first slide's popup
+                    galleryTl.to(slide.querySelector('.stat-popup'), { autoAlpha: 1, scale: 1, duration: 0.5 }, 0.2);
+                    return;
+                }
                 const prevSlide = pinnedSlides[i - 1];
                 const prevContent = prevSlide.querySelector('.pinned-content');
-                const currentBg = slide.querySelector('.pinned-bg');
+                const prevBg = prevSlide.querySelector('.pinned-bg-wrapper');
+                const prevPopup = prevSlide.querySelector('.stat-popup');
+                
+                const currentBg = slide.querySelector('.pinned-bg-wrapper');
                 const currentContent = slide.querySelector('.pinned-content');
+                const currentPopup = slide.querySelector('.stat-popup');
 
-                crossfadeTl
-                    .to({}, { duration: 0.5 })
-                    .to(prevContent, { y: -50, autoAlpha: 0, duration: 0.8 }, "transition" + i)
-                    .to(slide, { autoAlpha: 1, zIndex: i + 5, duration: 1 }, "transition" + i)
-                    .to(currentBg, { scale: 1, duration: 1.5, ease: "power1.out" }, "transition" + i)
-                    .to(currentContent, { y: 0, autoAlpha: 1, duration: 0.8 }, "transition" + i + "+=0.3")
-                    .to(prevSlide, { autoAlpha: 0, duration: 0.1 }, "transition" + i + "+=1.5");
+                const label = "transition" + i;
+                galleryTl.add(label)
+                    .to(prevContent, { y: -100, autoAlpha: 0, duration: 1 }, label)
+                    .to(prevPopup, { scale: 0.8, autoAlpha: 0, duration: 0.5 }, label)
+                    .to(prevBg, { clipPath: 'inset(0 0 0 100%)', duration: 1.2, ease: "power2.inOut" }, label)
+                    .to(slide, { autoAlpha: 1, duration: 0.1 }, label + "+=0.1")
+                    .to(currentBg, { clipPath: 'inset(0 0 0 0%)', duration: 1.2, ease: "power2.inOut" }, label)
+                    .to(currentContent, { y: 0, autoAlpha: 1, duration: 1 }, label + "+=0.3")
+                    .to(currentPopup, { scale: 1, autoAlpha: 1, duration: 0.8 }, label + "+=0.6");
             });
         }
 
-        // 7. Horizontal Museum Scroll Segment (Desktop Only)
+        // 7. Kinetic Museum Timeline (Staggered & Progress)
         const horizontalWrapper = document.getElementById('horizontal-wrapper');
         const horizontalContainer = document.getElementById('horizontal-container');
         if (horizontalWrapper && horizontalContainer) {
             const scrollWidth = horizontalContainer.offsetWidth - window.innerWidth;
-            gsap.to(horizontalContainer, {
-                x: -scrollWidth, ease: "none",
+            
+            const museumTl = gsap.timeline({
                 scrollTrigger: {
                     trigger: horizontalWrapper, pin: true, scrub: 1, start: "top top", end: () => `+=${scrollWidth}`
                 }
             });
 
-            gsap.utils.toArray('.museum-card img').forEach(img => {
-                gsap.fromTo(img as HTMLElement, { x: '-15vw', rotateY: -15, scale: 0.9 }, { 
-                    x: '15vw', rotateY: 15, scale: 1.1, ease: "none", 
-                    scrollTrigger: { trigger: horizontalWrapper, start: "top top", end: () => `+=${scrollWidth}`, scrub: 1 }
+            museumTl.to(horizontalContainer, { x: -scrollWidth, ease: "none" }, 0);
+            museumTl.to('.timeline-progress-bar', { width: '100%', ease: "none" }, 0);
+
+            // Parallax Year Labels
+            gsap.utils.toArray('.outlined-dark').forEach((text, i) => {
+                const shift = (i + 1) * 150;
+                gsap.to(text as HTMLElement, {
+                    x: -shift, ease: "none",
+                    scrollTrigger: { trigger: horizontalWrapper, start: "top top", end: () => `+=${scrollWidth}`, scrub: 2 }
                 });
             });
 
-            gsap.utils.toArray('.outlined-dark').forEach(text => {
-                gsap.to(text as HTMLElement, {
-                    x: -200, ease: "none",
-                    scrollTrigger: { trigger: horizontalWrapper, start: "top top", end: () => `+=${scrollWidth}`, scrub: 1.5 }
+            // 3D Card Tilts on Scroll
+            gsap.utils.toArray('.museum-card').forEach(card => {
+                gsap.fromTo(card as HTMLElement, { rotateY: -10, rotateX: 5 }, { 
+                    rotateY: 10, rotateX: -5, ease: "none", 
+                    scrollTrigger: { trigger: horizontalWrapper, start: "top top", end: () => `+=${scrollWidth}`, scrub: 1 }
                 });
             });
         }
@@ -230,33 +250,54 @@ export default function HomePage() {
               </section>
 
               <section id="pinned-quotes" className="pinned-gallery-wrapper">
+                  <div className="gallery-orb"></div>
                   <div className="pinned-gallery-container">
+                      
+                      {/* Slide 1 */}
                       <div className="pinned-slide active">
-                          <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2000" alt="Child in nature" className="pinned-bg" />
-                          <div className="bento-overlay" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)' }}></div>
-                          <div className="pinned-content active-content">
-                              <h2 className="text-colossal">OUR FUTURE.</h2>
-                              <p className="lead-text">The next generation inherits whatever remains. We are fighting to ensure it is a world worth inheriting.</p>
+                          <div className="pinned-bg-wrapper">
+                              <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2000" alt="Child in nature" className="pinned-bg" />
+                          </div>
+                          <div className="pinned-content">
+                              <h2 className="text-colossal">THE YOUTH.</h2>
+                              <p className="lead-text">Securing the rights of the next generation to inherit a stable climate through aggressive legal precedents.</p>
+                          </div>
+                          <div className="stat-popup" style={{ top: '20%', right: '15%' }}>
+                              <h5>1.2M</h5>
+                              <p>Hectares under legal protection</p>
                           </div>
                       </div>
 
+                      {/* Slide 2 */}
                       <div className="pinned-slide">
-                          <img src="https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=2000" alt="Deforestation" className="pinned-bg" />
-                          <div className="bento-overlay" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)' }}></div>
+                          <div className="pinned-bg-wrapper">
+                              <img src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=2000" alt="Mapping" className="pinned-bg" />
+                          </div>
                           <div className="pinned-content">
-                              <h2 className="text-colossal">OUR FIGHT.</h2>
-                              <p className="lead-text">Halting systemic ecological collapse requires more than awareness—it requires aggressive, data-driven grassroots intervention.</p>
+                              <h2 className="text-colossal">THE DATA.</h2>
+                              <p className="lead-text">Mapping the invisible. Using high-resolution satellite arrays to prove ancestral land ownership.</p>
+                          </div>
+                          <div className="stat-popup" style={{ bottom: '25%', right: '10%' }}>
+                              <h5>400+</h5>
+                              <p>Communities Digitized</p>
                           </div>
                       </div>
 
+                      {/* Slide 3 */}
                       <div className="pinned-slide">
-                          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2000" alt="Community gathering" className="pinned-bg" />
-                          <div className="bento-overlay" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)' }}></div>
+                          <div className="pinned-bg-wrapper">
+                              <img src="https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=2000" alt="Deforestation" className="pinned-bg" />
+                          </div>
                           <div className="pinned-content">
-                              <h2 className="text-colossal">OUR VOICE.</h2>
-                              <p className="lead-text">Equipping local communities to map, petition, and legally demand their fundamental environmental rights.</p>
+                              <h2 className="text-colossal">THE DEFENSE.</h2>
+                              <p className="lead-text">Halting illegal extractions. Our litigation fund is the shield for the world's most vulnerable habitats.</p>
+                          </div>
+                          <div className="stat-popup" style={{ top: '30%', right: '20%' }}>
+                              <h5>$8M</h5>
+                              <p>Legal Grants Disbursed</p>
                           </div>
                       </div>
+
                   </div>
               </section>
 
@@ -274,9 +315,12 @@ export default function HomePage() {
               </section>
 
               <section id="horizontal-wrapper" className="horizontal-wrapper">
+                  <div className="timeline-progress-container">
+                      <div className="timeline-progress-bar"></div>
+                  </div>
                   <div id="horizontal-container" className="horizontal-container">
                       <div className="museum-panel">
-                          <h2 className="text-colossal outlined-dark" style={{ WebkitTextStroke: '2px rgba(34,34,34,0.25)', color: 'transparent' }}>TIMELINE</h2>
+                          <h2 className="text-colossal outlined-dark">FOUNDATIONS</h2>
                           <div className="museum-card">
                               <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?q=80&w=1000" alt="River Conservation" />
                               <div className="card-caption">
@@ -287,6 +331,7 @@ export default function HomePage() {
                       </div>
 
                       <div className="museum-panel">
+                          <h2 className="text-colossal outlined-dark" style={{ left: '50%' }}>LITIGATION</h2>
                           <div className="museum-card" style={{ transform: 'translateY(-10vh)' }}>
                               <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?q=80&w=1000" alt="Legal Action" />
                               <div className="card-caption">
@@ -297,12 +342,23 @@ export default function HomePage() {
                       </div>
 
                       <div className="museum-panel">
-                          <h2 className="text-colossal outlined-dark" style={{ WebkitTextStroke: '1px rgba(34,34,34,0.08)', color: 'transparent' }}>VICTORIES</h2>
+                          <h2 className="text-colossal outlined-dark" style={{ left: '80%' }}>RESOLUTION</h2>
                           <div className="museum-card" style={{ transform: 'translateY(10vh)' }}>
                               <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000" alt="Emissions" />
                               <div className="card-caption">
                                   <span>Archive: 2025</span>
                                   <h4>CLEAN AIR ACCORD</h4>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div className="museum-panel">
+                          <h2 className="text-colossal outlined-dark" style={{ left: '110%' }}>SOVEREIGNTY</h2>
+                          <div className="museum-card">
+                              <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1000" alt="Future" />
+                              <div className="card-caption">
+                                  <span>Vision: 2030</span>
+                                  <h4>SYSTEMIC SHIFT</h4>
                               </div>
                           </div>
                       </div>
