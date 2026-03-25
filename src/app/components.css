@@ -126,12 +126,13 @@
 
 /* Navigation */
 .main-nav { 
-    position: fixed; top: 0; left: 0; width: 100%; z-index: 100; padding: 1.5rem 0; 
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 9999; padding: 1.5rem 0; 
     transition: background var(--transition-fast), padding var(--transition-fast);
     background: #F9F6F0; /* Beige base */
     border-bottom: 1px solid rgba(34,34,34,0.05);
+    pointer-events: auto;
 }
-.main-nav .logo, .main-nav a { color: var(--clr-text-prime); }
+.main-nav .logo, .main-nav a { color: var(--clr-text-prime); pointer-events: auto; }
 .main-nav.scrolled {
     background: rgba(249, 246, 240, 0.95); backdrop-filter: blur(10px); padding: 1rem 0; 
 }
