@@ -4,8 +4,8 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
-  title: 'PILAG Foundation | High-Kinetic Redesign',
-  description: 'Climate & Social Change Foundation',
+  title: "PILAG Foundation | People's Initiative for Local Administration and Governance",
+  description: 'Building a sustainable future through local action and data-driven impact.',
 };
 
 export default function RootLayout({
