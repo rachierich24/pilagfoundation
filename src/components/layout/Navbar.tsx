@@ -41,7 +41,7 @@ export default function Navbar() {
                 </ul>
 
                 <div className="nav-actions desktop-only">
-                    <Link href="/support" className="btn btn-primary" style={{ background: '#1A3626', color: '#FFF' }}>
+                    <Link href="/support" className="btn btn-primary" id="nav-dynamic-cta" style={{ background: '#1A3626', color: '#FFF' }}>
                         Support Us
                     </Link>
                 </div>

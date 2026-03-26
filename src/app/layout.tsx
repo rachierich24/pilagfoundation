@@ -16,6 +16,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body style={{ background: 'var(--clr-bg-panel)', color: 'var(--clr-text-prime)' }}>
+        <div id="eco-cursor"></div>
+        <div id="scroll-progress-bar"></div>
         <Navbar />
         {children}
         <Footer />

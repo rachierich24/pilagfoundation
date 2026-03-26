@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -12,43 +12,74 @@ if (typeof window !== "undefined") {
 
 export default function HomePage() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [donationAmount, setDonationAmount] = useState<number>(500);
 
   useGSAP(() => {
-    // 0. Preloader Sequence
+    const mm = gsap.matchMedia();
+
+    // ─── GLOBAL: Custom Cursor ───
+    const cursor = document.getElementById('eco-cursor');
+    const moveCursor = (e: MouseEvent) => {
+        gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1, ease: 'power2.out' });
+    };
+    window.addEventListener('mousemove', moveCursor);
+
+    const handleHover = () => cursor?.classList.add('hovering');
+    const handleUnhover = () => cursor?.classList.remove('hovering');
+    document.querySelectorAll('a, button, .donation-card, .testimonial-card').forEach(el => {
+        el.addEventListener('mouseenter', handleHover);
+        el.addEventListener('mouseleave', handleUnhover);
+    });
+
+    // ─── GLOBAL: Scroll Progress Bar ───
+    gsap.to('#scroll-progress-bar', {
+        width: '100%', ease: 'none',
+        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 0.3 }
+    });
+
+    // ─── 0. Preloader Sequence (Enhanced) ───
     const tl = gsap.timeline({
         onComplete: () => {
             document.body.style.overflow = 'auto';
-            gsap.to('.main-nav', { autoAlpha: 1, duration: 0.5 });
+            gsap.to('.main-nav', { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out' });
         }
     });
 
     document.body.style.overflow = 'hidden';
-    gsap.set('.main-nav', { autoAlpha: 0 });
+    gsap.set('.main-nav', { autoAlpha: 0, y: -20 });
 
-    tl.to('.preloader-text', { y: '0%', duration: 1, ease: 'power4.out', delay: 0.2 })
-      .to({}, {duration: 0.5})
-      .to('.preloader-text', { y: '100%', duration: 0.8, ease: 'power4.in' })
-      .to('.split-left', { x: '-100%', duration: 1.2, ease: 'power4.inOut' }, 'split')
-      .to('.split-right', { x: '100%', duration: 1.2, ease: 'power4.inOut' }, 'split')
-      .to(['.split-left', '.split-right'], { autoAlpha: 0, duration: 0.01 }, 'split+=1.2')
-      .to('.preloader', { autoAlpha: 0, duration: 0.5 }, 'split+=0.5');
+    // Preloader progress counter
+    const prgCounter = { value: 0 };
+    tl.to(prgCounter, {
+        value: 100, duration: 2, ease: 'power2.inOut',
+        onUpdate: () => {
+            const pct = Math.floor(prgCounter.value);
+            const pctEl = document.querySelector('.preloader-pct');
+            const fillEl = document.querySelector('.preloader-progress-fill') as HTMLElement;
+            if (pctEl) pctEl.textContent = `${pct}%`;
+            if (fillEl) fillEl.style.width = `${pct}%`;
+            if (pct > 80) document.querySelector('.preloader-text')?.classList.add('sharp');
+        }
+    }, 'start');
 
-    let mm = gsap.matchMedia();
+    tl.to('.preloader-text', { y: '0%', duration: 1.2, ease: 'power4.out' }, 'start+=0.2')
+      .to('.preloader-text', { scale: 1.1, opacity: 0, filter: 'blur(20px)', duration: 0.8, ease: 'power2.in' }, '+=0.5')
+      .to('.split-left', { x: '-100%', duration: 1.2, ease: 'expo.inOut' }, 'split')
+      .to('.split-right', { x: '100%', duration: 1.2, ease: 'expo.inOut' }, 'split')
+      .to('.preloader', { autoAlpha: 0, duration: 0.5 }, 'split+=0.8');
 
     mm.add("(min-width: 769px)", () => {
-        // 1. Pinned Mask Reveal Hero (Desktop Only Pin)
+        // 1. Pinned Mask Reveal Hero
         const heroSection = document.getElementById('hero-pin-trigger');
         const heroMaskImg = document.getElementById('hero-mask-img');
         if (heroSection && heroMaskImg) {
             gsap.to(heroMaskImg, {
                 width: '100vw', height: '100vh', ease: 'none',
-                scrollTrigger: {
-                    trigger: heroSection, start: 'top top', end: '+=150%', scrub: true, pin: true
-                }
+                scrollTrigger: { trigger: heroSection, start: 'top top', end: '+=150%', scrub: true, pin: true }
             });
         }
 
-        // 6. Pinned Editorial Gallery (Enhanced Mask Reveals)
+        // 6. Pinned Editorial Gallery
         const pinnedSection = document.getElementById('pinned-quotes');
         const pinnedSlides = gsap.utils.toArray('.pinned-slide') as HTMLElement[];
         if (pinnedSection && pinnedSlides.length > 0) {
@@ -57,138 +88,138 @@ export default function HomePage() {
             gsap.set(pinnedSlides[0].querySelector('.pinned-content'), { y: 0, autoAlpha: 1 });
 
             const galleryTl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: pinnedSection, start: "top top", end: "+=180%", scrub: 1, pin: true
-                }
+                scrollTrigger: { trigger: pinnedSection, start: "top top", end: "+=250%", scrub: 1, pin: true }
             });
 
-            // Orb parallax
-            galleryTl.to('.gallery-orb', { y: 200, x: 100, scale: 1.2, ease: "none", duration: 4 }, 0);
+            galleryTl.to('.gallery-orb', { y: 200, x: 100, scale: 1.5, ease: "none", duration: 4 }, 0);
 
             pinnedSlides.forEach((slide, i) => {
                 if (i === 0) {
-                    // Animate first slide's popup
                     galleryTl.to(slide.querySelector('.stat-popup'), { autoAlpha: 1, scale: 1, duration: 0.5 }, 0.2);
                     return;
                 }
-                const prevSlide = pinnedSlides[i - 1];
-                const prevContent = prevSlide.querySelector('.pinned-content');
-                const prevBg = prevSlide.querySelector('.pinned-bg-wrapper');
-                const prevPopup = prevSlide.querySelector('.stat-popup');
-                
-                const currentBg = slide.querySelector('.pinned-bg-wrapper');
-                const currentContent = slide.querySelector('.pinned-content');
-                const currentPopup = slide.querySelector('.stat-popup');
-
+                const prevBg = pinnedSlides[i - 1].querySelector('.pinned-bg-wrapper');
+                const prevContent = pinnedSlides[i - 1].querySelector('.pinned-content');
                 const label = "transition" + i;
                 galleryTl.add(label)
-                    .to(prevContent, { y: -100, autoAlpha: 0, duration: 1 }, label)
-                    .to(prevPopup, { scale: 0.8, autoAlpha: 0, duration: 0.5 }, label)
+                    .to(prevContent, { y: -50, autoAlpha: 0, duration: 1 }, label)
                     .to(prevBg, { clipPath: 'inset(0 0 0 100%)', duration: 1.2, ease: "power2.inOut" }, label)
                     .to(slide, { autoAlpha: 1, duration: 0.1 }, label + "+=0.1")
-                    .to(currentBg, { clipPath: 'inset(0 0 0 0%)', duration: 1.2, ease: "power2.inOut" }, label)
-                    .to(currentContent, { y: 0, autoAlpha: 1, duration: 1 }, label + "+=0.3")
-                    .to(currentPopup, { scale: 1, autoAlpha: 1, duration: 0.8 }, label + "+=0.6");
+                    .to(slide.querySelector('.pinned-bg-wrapper'), { clipPath: 'inset(0 0 0 0%)', duration: 1.2, ease: "power2.inOut" }, label)
+                    .to(slide.querySelector('.pinned-content'), { y: 0, autoAlpha: 1, duration: 1 }, label + "+=0.3")
+                    .to(slide.querySelector('.stat-popup'), { scale: 1, autoAlpha: 1, duration: 0.8 }, label + "+=0.6");
             });
         }
 
-        // 7. Kinetic Museum Timeline (Staggered & Progress)
+        // 7. Kinetic Museum Timeline
         const horizontalWrapper = document.getElementById('horizontal-wrapper');
         const horizontalContainer = document.getElementById('horizontal-container');
         if (horizontalWrapper && horizontalContainer) {
             const scrollWidth = horizontalContainer.offsetWidth - window.innerWidth;
-            
             const museumTl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: horizontalWrapper, pin: true, scrub: 1, start: "top top", end: () => `+=${scrollWidth}`
-                }
+                scrollTrigger: { trigger: horizontalWrapper, pin: true, scrub: 1, start: "top top", end: () => `+=${scrollWidth}` }
             });
-
             museumTl.to(horizontalContainer, { x: -scrollWidth, ease: "none" }, 0);
             museumTl.to('.timeline-progress-bar', { width: '100%', ease: "none" }, 0);
-
-            // Parallax Year Labels
-            gsap.utils.toArray('.outlined-dark').forEach((text, i) => {
-                gsap.to(text as HTMLElement, {
-                    x: -150, ease: "none",
-                    scrollTrigger: { trigger: horizontalWrapper, start: "top top", end: () => `+=${scrollWidth}`, scrub: 2 }
-                });
+            
+            gsap.utils.toArray('.outlined-dark').forEach((text) => {
+                gsap.to(text as HTMLElement, { x: -200, scrollTrigger: { trigger: horizontalWrapper, scrub: 2 } });
             });
-
-            // 3D Card Tilts on Scroll
             gsap.utils.toArray('.museum-card').forEach(card => {
-                gsap.fromTo(card as HTMLElement, { rotateY: -10, rotateX: 5 }, { 
-                    rotateY: 10, rotateX: -5, ease: "none", 
-                    scrollTrigger: { trigger: horizontalWrapper, start: "top top", end: () => `+=${scrollWidth}`, scrub: 1 }
-                });
+                gsap.fromTo(card as HTMLElement, { rotateY: -15 }, { rotateY: 15, scrollTrigger: { trigger: horizontalWrapper, scrub: 1 } });
             });
         }
 
-        // 4. Extreme Floating Parallax Scatter (Desktop Only)
-        const rapidImages = gsap.utils.toArray('.parallax-rapid') as HTMLElement[];
-        rapidImages.forEach(img => {
-            const speed = parseFloat(img.getAttribute('data-speed') || '1');
-            gsap.to(img, {
-                y: () => `${-100 * speed}px`, ease: "none",
-                scrollTrigger: {
-                    trigger: img.parentElement, start: "top bottom", end: "bottom top", scrub: true
-                }
+        // ─── NEW: IMPACT STRIP Count-up ───
+        const stats = [
+            { id: 'stat-trees', end: 120000, suffix: '+' },
+            { id: 'stat-volunteers', end: 3800, suffix: '+' },
+            { id: 'stat-campaigns', end: 47, suffix: '' }
+        ];
+        stats.forEach(stat => {
+            const el = document.getElementById(stat.id);
+            if (el) {
+                gsap.to({ val: 0 }, {
+                    val: stat.end, duration: 2, ease: 'power2.out',
+                    scrollTrigger: { trigger: '.impact-strip', start: 'top 80%' },
+                    onUpdate: function() {
+                        el.textContent = Math.floor(this.targets()[0].val).toLocaleString() + stat.suffix;
+                    }
+                });
+            }
+        });
+
+        // ─── NEW: TRUST BARS Fill ───
+        gsap.utils.toArray('.trust-bar-fill').forEach((bar: any) => {
+            gsap.to(bar, {
+                width: bar.getAttribute('data-pct') + '%', duration: 1.5, ease: 'expo.out',
+                scrollTrigger: { trigger: '.trust-section', start: 'top 70%' }
             });
         });
+
+        // ─── NEW: FINAL CTA Reveal ───
+        const ctaLines = gsap.utils.toArray('.cta-line');
+        ctaLines.forEach((line, i) => {
+            gsap.to(line as HTMLElement, {
+                className: 'cta-line revealed', scrollTrigger: { trigger: line as HTMLElement, start: 'top 85%', toggleActions: 'play none none reverse' },
+                delay: i * 0.2
+            });
+        });
+        gsap.to('.final-cta-buttons', {
+            className: 'final-cta-buttons visible', scrollTrigger: { trigger: '.final-cta-section', start: 'top 60%' }
+        });
+
+        // ─── NAVBAR DYNAMIC CTA ───
+        const navCTA = document.getElementById('nav-dynamic-cta');
+        if (navCTA) {
+            ScrollTrigger.create({
+                trigger: '.hero-pinned', start: 'top top',
+                onEnterBack: () => gsap.to(navCTA, { textContent: 'Join Movement', duration: 0.3 })
+            });
+            ScrollTrigger.create({
+                trigger: '.impact-strip', start: 'top 50%',
+                onEnter: () => gsap.to(navCTA, { textContent: 'See Impact', duration: 0.3 }),
+                onLeaveBack: () => gsap.to(navCTA, { textContent: 'Join Movement', duration: 0.3 })
+            });
+            ScrollTrigger.create({
+                trigger: '.conversion-section', start: 'top 50%',
+                onEnter: () => gsap.to(navCTA, { textContent: 'Donate Now', duration: 0.3 }),
+                onLeaveBack: () => gsap.to(navCTA, { textContent: 'See Impact', duration: 0.3 })
+            });
+        }
     });
 
     mm.add("(max-width: 768px)", () => {
-        // Mobile behavior: No pinning, simple fades
-        gsap.utils.toArray('.gs-fade-up, .pinned-slide, .museum-card, .scatter-img').forEach(elem => {
-            gsap.fromTo(elem as HTMLElement, { y: 40, opacity: 0 }, {
-                y: 0, opacity: 1, duration: 1, ease: 'power2.out',
-                scrollTrigger: { trigger: elem as HTMLElement, start: 'top 85%', toggleActions: 'play none none none' }
+        gsap.utils.toArray('.gs-fade-up, .pinned-slide, .museum-card, .impact-stat, .testimonial-card').forEach(elem => {
+            gsap.fromTo(elem as HTMLElement, { y: 30, opacity: 0 }, {
+                y: 0, opacity: 1, duration: 1, scrollTrigger: { trigger: elem as HTMLElement, start: 'top 90%' }
             });
         });
-        
-        // Show all pinned slides instead of hiding them
         gsap.set('.pinned-slide', { autoAlpha: 1, position: 'relative', marginBottom: '2rem' });
-        gsap.set('.pinned-content', { autoAlpha: 1, y: 0, position: 'relative', bottom: 'auto', left: 'auto' });
-        gsap.set('.hero-mask-img', { width: '100%', height: '50vh', position: 'relative', top: '0', left: '0', transform: 'none' });
+        gsap.set('.pinned-content', { autoAlpha: 1, y: 0, position: 'relative' });
+        gsap.set('.hero-mask-img', { width: '100%', height: '50vh', position: 'relative' });
     });
 
-    // 2. Infinite Continuous Marquee (Shared)
+    // 2. Continuous Marquee
     const marqueeTrack = document.getElementById('marquee-1');
     if (marqueeTrack) {
         gsap.to(marqueeTrack, { xPercent: -50, ease: "none", duration: 15, repeat: -1 });
     }
 
-    // 3. Scrub Text Fill Reveal (Shared)
+    // 3. Scrub Text Fill
     const scrubContainer = document.getElementById('scrub-container-1');
     const scrubFill = document.getElementById('scrub-fill-1');
     if (scrubContainer && scrubFill) {
         gsap.to(scrubFill, {
             clipPath: 'inset(0 0% 0 0)', ease: 'none',
-            scrollTrigger: {
-                trigger: scrubContainer, start: 'top 80%', end: 'top 30%', scrub: true
-            }
+            scrollTrigger: { trigger: scrubContainer, start: 'top 80%', end: 'top 30%', scrub: true }
         });
     }
 
-    // 5. Base Elegance Fades (Shared)
-    const fadeUps = gsap.utils.toArray('.gs-fade-up') as HTMLElement[];
-    fadeUps.forEach(elem => {
-        gsap.fromTo(elem, { y: 30, opacity: 0 }, {
-            y: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
-            scrollTrigger: { trigger: elem, start: 'top 90%', toggleActions: 'play none none none' }
-        });
-    });
-
-    // Nav blend mode workaround (Shared)
-    const nav = document.querySelector('.main-nav');
-    if (nav) {
-        ScrollTrigger.create({
-            trigger: '#hero-pin-trigger',
-            start: "bottom top", 
-            onEnter: () => nav.classList.add('scrolled'),
-            onLeaveBack: () => nav.classList.remove('scrolled')
-        });
-    }
+    return () => {
+        window.removeEventListener('mousemove', moveCursor);
+        mm.revert();
+    };
   }, { scope: containerRef });
 
   return (
@@ -360,6 +391,153 @@ export default function HomePage() {
                                   <h4>SYSTEMIC SHIFT</h4>
                               </div>
                           </div>
+                      </div>
+                  </div>
+              </section>
+
+              {/* ─── NEW: IMPACT STRIP ─── */}
+              <section className="impact-strip">
+                  <div className="impact-strip-inner">
+                      <div className="impact-stat">
+                          <span className="impact-stat-number" id="stat-trees">0</span>
+                          <span className="impact-stat-label">Trees Planted</span>
+                      </div>
+                      <div className="impact-stat">
+                          <span className="impact-stat-number" id="stat-volunteers">0</span>
+                          <span className="impact-stat-label">Volunteers Joined</span>
+                      </div>
+                      <div className="impact-stat">
+                          <span className="impact-stat-number" id="stat-campaigns">0</span>
+                          <span className="impact-stat-label">Campaigns Executed</span>
+                      </div>
+                  </div>
+              </section>
+
+              {/* ─── NEW: CONVERSION SPLIT ─── */}
+              <section className="conversion-section">
+                  <div className="conversion-inner">
+                      <div className="volunteer-col">
+                          <span className="section-eyebrow">Get Involved</span>
+                          <h2>Join the Movement</h2>
+                          <p>Your time is the most powerful currency in climate action. Join thousands of volunteers driving real grassroots change across India's most vulnerable ecosystems.</p>
+                          <Link href="/support" className="btn btn-primary" style={{ background: '#1A3626', color: '#FFF' }}>Register as Volunteer →</Link>
+                      </div>
+                      
+                      <div className="donation-col">
+                          <span className="section-eyebrow">Action Now</span>
+                          <h2>Fund the Impact</h2>
+                          <div className="donation-cards">
+                              {[
+                                  { amt: 100, desc: "Plant a native tree + certificate" },
+                                  { amt: 500, desc: "Support community awareness events" },
+                                  { amt: 1000, desc: "Sponsor a full local campaign" }
+                              ].map((card) => (
+                                  <div 
+                                      key={card.amt}
+                                      className={`donation-card ${donationAmount === card.amt ? 'selected' : ''}`}
+                                      onClick={() => setDonationAmount(card.amt)}
+                                  >
+                                      <div>
+                                          <div className="donation-amount">₹{card.amt}</div>
+                                          <div className="donation-desc">{card.desc}</div>
+                                      </div>
+                                      <div className="donation-card-check"></div>
+                                  </div>
+                              ))}
+                          </div>
+                          <div className="donate-action">
+                              <Link href="/support" className="btn-donate">Donate Now ₹{donationAmount}</Link>
+                          </div>
+                      </div>
+                  </div>
+              </section>
+
+              {/* ─── NEW: TRUST SECTION ─── */}
+              <section className="trust-section">
+                  <div className="trust-inner">
+                      <span className="trust-eyebrow">Transparency</span>
+                      <h2 className="trust-heading">Where your money goes</h2>
+                      <div className="trust-bars">
+                          <div className="trust-bar-item">
+                              <div className="trust-bar-header">
+                                  <span className="trust-bar-label">Direct Project Funding</span>
+                                  <span className="trust-bar-pct">70%</span>
+                              </div>
+                              <div className="trust-bar-track">
+                                  <div className="trust-bar-fill" data-pct="70"></div>
+                              </div>
+                          </div>
+                          <div className="trust-bar-item">
+                              <div className="trust-bar-header">
+                                  <span className="trust-bar-label">Research & Litigation</span>
+                                  <span className="trust-bar-pct">20%</span>
+                              </div>
+                              <div className="trust-bar-track">
+                                  <div className="trust-bar-fill" data-pct="20"></div>
+                              </div>
+                          </div>
+                          <div className="trust-bar-item">
+                              <div className="trust-bar-header">
+                                  <span className="trust-bar-label">Community Outreach</span>
+                                  <span className="trust-bar-pct">10%</span>
+                              </div>
+                              <div className="trust-bar-track">
+                                  <div className="trust-bar-fill" data-pct="10"></div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </section>
+
+              {/* ─── NEW: COMMUNITY SECTION ─── */}
+              <section className="community-section">
+                  <div className="community-inner">
+                      <h2 className="community-heading">Our Community. <br/> Our Strength.</h2>
+                      <div className="community-grid">
+                          <div className="testimonial-card">
+                              <p className="testimonial-text">"Pilag Foundation gave us the tools to map our ancestral lands when the government said they didn't exist."</p>
+                              <div className="testimonial-author">
+                                  <div className="testimonial-avatar">AM</div>
+                                  <div>
+                                      <div className="testimonial-name">Arjun Mehra</div>
+                                      <div className="testimonial-role">Community Leader</div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div className="testimonial-card">
+                              <p className="testimonial-text">"The litigation fund stopped the illegal logging in our valley within three months of the first report."</p>
+                              <div className="testimonial-author">
+                                  <div className="testimonial-avatar">PN</div>
+                                  <div>
+                                      <div className="testimonial-name">Priya Nair</div>
+                                      <div className="testimonial-role">Legal Activist</div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div className="testimonial-card">
+                              <p className="testimonial-text">"I started as a volunteer planting trees and now I lead digital literacy workshops for tribal youth."</p>
+                              <div className="testimonial-author">
+                                  <div className="testimonial-avatar">RD</div>
+                                  <div>
+                                      <div className="testimonial-name">Rekha Devi</div>
+                                      <div className="testimonial-role">Field Officer</div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </section>
+
+              {/* ─── NEW: FINAL CLIMAX CTA ─── */}
+              <section className="final-cta-section">
+                  <div className="final-cta-bg-orb"></div>
+                  <div className="final-cta-inner">
+                      <span className="cta-line">You've seen the problem.</span>
+                      <span className="cta-line">You've seen the action.</span>
+                      <span className="cta-line">Now be part of it.</span>
+                      <div className="final-cta-buttons">
+                          <Link href="/support" className="btn-volunteer">Register as Volunteer</Link>
+                          <Link href="/support" className="btn-donate-cta">Donate Now ₹</Link>
                       </div>
                   </div>
               </section>

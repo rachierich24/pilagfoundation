@@ -552,3 +552,137 @@
     height: 2px;
     background: #EADFC8; /* mimics a horizontal trajectory line */
 }
+
+/* ==========================================================================
+   SUPER PREMIUM CINEMATIC UPGRADE (Conversion Focus)
+   ========================================================================== */
+
+/* ─── GLOBAL: Custom Cursor ─────────────────────────────────────── */
+*, *::before, *::after { cursor: none !important; }
+#eco-cursor {
+    position: fixed; top: -20px; left: -20px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(34,197,94,0.9) 0%, rgba(22,163,74,0.3) 60%, transparent 100%);
+    pointer-events: none; z-index: 2147483647;
+    filter: blur(1px); transition: transform 0.1s ease, opacity 0.3s ease;
+    mix-blend-mode: screen;
+}
+#eco-cursor.hovering { transform: scale(3.5); opacity: 0.6; }
+#eco-cursor.clicking { transform: scale(0.8); opacity: 0.9; }
+a, button, [role="button"], .donation-card, .testimonial-card { cursor: none !important; }
+
+/* ─── GLOBAL: Scroll Progress Bar ───────────────────────────────── */
+#scroll-progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+    background: linear-gradient(90deg, #22c55e, #16a34a, #15803d);
+    z-index: 2147483647; pointer-events: none;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
+}
+
+/* ─── PRELOADER ENHANCEMENTS ─────────────────────────────────────── */
+.preloader-progress-line {
+    position: absolute; bottom: 15%; left: 50%; transform: translateX(-50%);
+    width: 200px; height: 2px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;
+}
+.preloader-progress-fill {
+    height: 100%; width: 0%; background: #a8e6cf;
+}
+.preloader-pct {
+    position: absolute; bottom: calc(15% + 1.5rem); left: 50%; transform: translateX(-50%);
+    font-size: 0.7rem; letter-spacing: 0.3em; color: rgba(255,255,255,0.4);
+    font-family: var(--font-heading);
+}
+.preloader-text { filter: blur(20px); transition: filter 0.8s ease; }
+.preloader-text.sharp { filter: blur(0px); }
+
+/* ─── NAVBAR & BUTTON ENHANCEMENTS ────────────────────────────────── */
+.main-nav { transition: all 0.4s ease !important; }
+.main-nav.scrolled-mid {
+    backdrop-filter: blur(20px) !important;
+    background: rgba(249, 246, 240, 0.85) !important;
+}
+.nav-dynamic-cta { transition: all 0.4s ease; }
+.btn { transition: transform 0.25s var(--ease-smooth), box-shadow 0.25s ease, background 0.3s ease !important; }
+.btn:hover { transform: translateY(-3px) scale(1.03) !important; box-shadow: 0 12px 40px rgba(0,0,0,0.15) !important; }
+
+/* ─── IMPACT SUMMARY STRIP ───────────────────────────────────────── */
+.impact-strip { background: var(--clr-bg-deep); padding: 8rem 0; overflow: hidden; }
+.impact-strip-inner {
+    max-width: 1200px; margin: 0 auto; padding: 0 5vw;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 4rem; text-align: center;
+}
+.impact-stat-number {
+    display: block; font-family: var(--font-heading); font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 900; line-height: 1; color: var(--clr-accent-bright); letter-spacing: -0.03em;
+}
+.impact-stat-label {
+    display: block; margin-top: 1.5rem; font-size: var(--text-sm); text-transform: uppercase;
+    letter-spacing: 0.2em; opacity: 0.5; color: var(--clr-text-prime);
+}
+
+/* ─── CONVERSION SECTION ─────────────────────────────────────────── */
+.conversion-section { padding: 8rem 5vw; background: var(--clr-bg-panel); }
+.conversion-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start;
+}
+.section-eyebrow { text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.75rem; color: #16a34a; margin-bottom: 1.5rem; display: block; }
+.conversion-col h2 { font-family: var(--font-heading); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900; line-height: 0.95; margin-bottom: 2rem; color: var(--clr-bg-deep); }
+.donation-cards { display: flex; flex-direction: column; gap: 1rem; }
+.donation-card {
+    border: 1px solid rgba(0,0,0,0.08); border-radius: 12px; padding: 1.5rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    background: #FFF; transition: all 0.3s var(--ease-smooth);
+}
+.donation-card:hover, .donation-card.selected { transform: translateY(-4px); border-color: #16a34a; box-shadow: 0 15px 40px rgba(22,163,74,0.12); }
+.donation-card.selected { background: #f0fdf4; border-width: 2px; border-color: #16a34a; }
+.donation-amount { font-family: var(--font-heading); font-size: 2.5rem; font-weight: 900; color: var(--clr-bg-deep); }
+.donation-card-check {
+    width: 28px; height: 28px; border-radius: 50%; border: 1px solid #ddd;
+    display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;
+}
+.donation-card.selected .donation-card-check { background: #16a34a; border-color: #16a34a; }
+.donation-card.selected .donation-card-check::after { content: '✓'; color: #FFF; font-size: 0.8rem; font-weight: 800; }
+
+/* ─── TRANSPARENCY / TRUST SECTION ──────────────────────────────── */
+.trust-section { padding: 10rem 5vw; background: var(--clr-bg-deep); }
+.trust-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+.trust-bars { display: flex; flex-direction: column; gap: 3rem; text-align: left; margin-top: 5rem; }
+.trust-bar-header { display: flex; justify-content: space-between; margin-bottom: 1rem; }
+.trust-bar-pct { color: #22c55e; font-family: var(--font-heading); font-weight: 900; font-size: 1.5rem; }
+.trust-bar-track { height: 2px; background: rgba(255,255,255,0.1); width: 100%; border-radius: 2px; overflow: hidden; }
+.trust-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #22c55e, #16a34a); box-shadow: 0 0 10px rgba(34,197,94,0.4); }
+
+/* ─── SOCIAL PROOF / COMMUNITY SECTION ──────────────────────────── */
+.community-section { padding: 10rem 5vw; background: var(--clr-bg-panel); }
+.community-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5rem; margin-top: 5rem; }
+.testimonial-card {
+    background: #FFF; border-radius: 12px; padding: 3rem; position: relative;
+    transition: all 0.5s var(--ease-smooth); border: 1px solid rgba(0,0,0,0.03);
+}
+.testimonial-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.08); }
+.testimonial-avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--clr-accent-bright); display: flex; align-items: center; justify-content: center; font-weight: 900; color: var(--clr-bg-deep); font-family: var(--font-heading); }
+
+/* ─── FINAL CTA SECTION ──────────────────────────────────────────── */
+.final-cta-section {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: var(--clr-bg-deep); position: relative; overflow: hidden; text-align: center;
+}
+.final-cta-bg-orb {
+    position: absolute; width: 70vw; height: 70vw; border-radius: 50%;
+    background: radial-gradient(circle, rgba(22,163,74,0.12) 0%, transparent 70%);
+}
+.cta-line {
+    display: block; font-family: var(--font-heading); font-size: clamp(2rem, 6vw, 5rem);
+    font-weight: 900; line-height: 1.05; color: rgba(255,255,255,0.1);
+    transition: color 0.8s ease, transform 0.8s ease; margin-bottom: 0.1em;
+}
+.cta-line.revealed { color: #FFF; }
+.final-cta-buttons { margin-top: 5rem; display: flex; gap: 2rem; justify-content: center; opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+.final-cta-buttons.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 768px) {
+    .impact-strip-inner, .community-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .conversion-inner { grid-template-columns: 1fr; gap: 4rem; }
+    .final-cta-buttons { flex-direction: column; align-items: center; }
+}
