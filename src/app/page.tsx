@@ -58,7 +58,7 @@ export default function HomePage() {
 
             const galleryTl = gsap.timeline({
                 scrollTrigger: {
-                    trigger: pinnedSection, start: "top top", end: "+=400%", scrub: 1, pin: true
+                    trigger: pinnedSection, start: "top top", end: "+=180%", scrub: 1, pin: true
                 }
             });
 
@@ -109,9 +109,8 @@ export default function HomePage() {
 
             // Parallax Year Labels
             gsap.utils.toArray('.outlined-dark').forEach((text, i) => {
-                const shift = (i + 1) * 150;
                 gsap.to(text as HTMLElement, {
-                    x: -shift, ease: "none",
+                    x: -150, ease: "none",
                     scrollTrigger: { trigger: horizontalWrapper, start: "top top", end: () => `+=${scrollWidth}`, scrub: 2 }
                 });
             });
@@ -331,7 +330,7 @@ export default function HomePage() {
                       </div>
 
                       <div className="museum-panel">
-                          <h2 className="text-colossal outlined-dark" style={{ left: '50%' }}>LITIGATION</h2>
+                          <h2 className="text-colossal outlined-dark">LITIGATION</h2>
                           <div className="museum-card" style={{ transform: 'translateY(-10vh)' }}>
                               <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?q=80&w=1000" alt="Legal Action" />
                               <div className="card-caption">
@@ -342,7 +341,7 @@ export default function HomePage() {
                       </div>
 
                       <div className="museum-panel">
-                          <h2 className="text-colossal outlined-dark" style={{ left: '80%' }}>RESOLUTION</h2>
+                          <h2 className="text-colossal outlined-dark">RESOLUTION</h2>
                           <div className="museum-card" style={{ transform: 'translateY(10vh)' }}>
                               <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000" alt="Emissions" />
                               <div className="card-caption">
@@ -353,7 +352,7 @@ export default function HomePage() {
                       </div>
 
                       <div className="museum-panel">
-                          <h2 className="text-colossal outlined-dark" style={{ left: '110%' }}>SOVEREIGNTY</h2>
+                          <h2 className="text-colossal outlined-dark">SOVEREIGNTY</h2>
                           <div className="museum-card">
                               <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1000" alt="Future" />
                               <div className="card-caption">
