@@ -1,0 +1,152 @@
+/* ==========================================================================
+   CSS Variables & Core Setup for Editorial Elevated UI
+   ========================================================================== */
+   
+/* Premium Web Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+    /* Color Palette - Premium Editorial Museum Aesthetic */
+    --clr-bg-deep: #F9F6F0; /* Alabaster / Museum Off-White */
+    --clr-bg-panel: #FFFFFF; /* Pure White for contrast cards */
+    --clr-bg-dark: #121A16; /* Deepest Charcoal/Green for footer */
+    
+    --clr-text-prime: #222222; /* Soft Charcoal Black */
+    --clr-text-muted: #5A5A5A; /* Elegant gray */
+    
+    --clr-accent-bright: #1A3626; /* Deep Forest Green (Primary Brand) */
+    --clr-accent-secondary: #C85A3F; /* Earthy Terracotta (Interactions & Calls to Action) */
+    
+    /* Typography */
+    --font-heading: 'Playfair Display', serif;
+    --font-heading-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-body: 'Inter', sans-serif;
+    
+    /* Fluid Scales */
+    --text-xs: clamp(0.75rem, 0.5vw + 0.6rem, 0.85rem);
+    --text-sm: clamp(0.875rem, 0.8vw + 0.5rem, 1rem);
+    --text-base: clamp(1rem, 1vw + 0.75rem, 1.125rem); /* Extremely legible base */
+    --text-md: clamp(1.25rem, 1.5vw + 1rem, 1.75rem);
+    --text-lg: clamp(1.75rem, 2.5vw + 1.25rem, 3rem);
+    --text-xl: clamp(2.5rem, 4vw + 1.5rem, 4.5rem);
+    --text-huge: clamp(3.5rem, 7vw + 2rem, 8rem);
+    
+    /* Elegant Easing */
+    --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+    --ease-slow: cubic-bezier(0.25, 1, 0.25, 1);
+    
+    --transition-fast: 0.3s var(--ease-smooth);
+    --transition-slow: 0.8s var(--ease-slow);
+    
+    /* Layout */
+    --max-width: 1400px;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: var(--clr-bg-deep);
+    color: var(--clr-text-prime);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+    background: var(--clr-accent-bright);
+    color: #FFF;
+}
+
+/* Background Image Parallax Container */
+.fixed-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--clr-bg-deep); /* Fallback */
+}
+
+.bg-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(249, 246, 240, 0.3) 0%, rgba(249, 246, 240, 1) 100%);
+}
+
+#smooth-wrapper {
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, h5 {
+    font-family: var(--font-heading);
+    color: var(--clr-text-prime);
+    margin: 0;
+    line-height: 1.1;
+    font-weight: 400;
+}
+
+h1 strong, h2 strong, h3 strong {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--clr-accent-bright);
+}
+
+p {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--clr-text-muted);
+    font-weight: 400;
+    max-width: 65ch; /* Optimal reading width */
+    margin: 1.5rem 0;
+}
+
+.lead-text {
+    font-size: var(--text-md);
+    color: var(--clr-text-prime);
+    line-height: 1.4;
+    font-weight: 300;
+}
+
+.uppercase-label {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--text-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--clr-accent-secondary);
+    display: block;
+    margin-bottom: 1rem;
+}
+
+/* Layout Core Helpers */
+.container { margin: 0 auto; max-width: var(--max-width); padding: 0 5vw; }
+.section { padding: 12vh 0; position: relative; z-index: 10; }
+
+.grid-cols-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+@media (max-width: 900px) {
+    .grid-cols-2 { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* Custom Image Reveals via GSAP and Clip Path */
+.img-reveal-wrapper {
+    overflow: hidden;
+    position: relative;
+    clip-path: inset(0 0 100% 0); /* Start hidden bottom up */
+}
+.img-reveal-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.1); /* Subtle parallax starting scale */
+}

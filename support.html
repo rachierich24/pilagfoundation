@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Us | PILAG Foundation</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+    <nav class="main-nav scrolled">
+        <div class="nav-container">
+            <a href="index.html"><img src="pilaglogo.png" class="logo" alt="Pilag Foundation"></a>
+            <ul class="nav-links">
+                <li><a href="about.html">About</a></li>
+                <li><a href="priorities.html">Priorities</a></li>
+                <li><a href="impact.html">Impact</a></li>
+            </ul>
+            <div class="nav-actions"><a href="support.html" class="btn btn-primary" style="background:var(--clr-text-prime);">Support Us</a></div>
+        </div>
+    </nav>
+
+    <main id="smooth-wrapper" style="padding-top: 15vh;">
+        <div id="smooth-content">
+            <header class="section" style="padding-bottom: 5vh;">
+                <div class="container text-center">
+                    <span class="uppercase-label gs-fade-up">Secure The Future</span>
+                    <h1 class="gs-fade-up delay-1" style="font-size: var(--text-lg); max-width: 800px; margin: 0 auto;">
+                        Fund grassroots climate resilience today.
+                    </h1>
+                    <p class="lead-text gs-fade-up delay-2" style="max-width: 600px; margin: 1.5rem auto;">
+                        Your contribution directly supplies rural districts with policy training, verified ecological tracking data, and legal support.
+                    </p>
+                </div>
+            </header>
+
+            <section class="section" style="background:#FFF;">
+                <div class="container">
+                    
+                    <div class="donation-container gs-fade-up">
+                        <h2>Make a Contribution</h2>
+                        
+                        <form id="traditional-donate-form" onsubmit="event.preventDefault(); processCleanDonation();">
+                            <div class="form-group">
+                                <label>Select Amount</label>
+                                <div class="amount-selector">
+                                    <div class="amount-btn active" data-amount="50">$50</div>
+                                    <div class="amount-btn" data-amount="150">$150</div>
+                                    <div class="amount-btn" data-amount="500">$500</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="donor-name">Full Name</label>
+                                <input type="text" id="donor-name" class="form-input" placeholder="Enter your full name" required>
+                            </div>
+                            
+                            <div class="form-group" style="margin-bottom: 3rem;">
+                                <label for="donor-email">Email Address</label>
+                                <input type="email" id="donor-email" class="form-input" placeholder="Enter your email" required>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1.5rem;">Securely Donate Now</button>
+                        </form>
+                    </div>
+
+                </div>
+            </section>
+            
+            <footer class="section" style="padding-bottom: 3rem; background: var(--clr-bg-deep); border-top: 1px solid rgba(34,34,34,0.05); margin-top:0;">
+                <div class="container grid-cols-2">
+                    <div>
+                        <a href="index.html"><img src="pilaglogo.png" style="max-height: 72px; margin-bottom: 1rem;" alt="Pilag Foundation"></a>
+                        <p style="font-size: var(--text-xs); opacity: 0.7; margin-top: 2rem;">&copy; 2026 PILAG Foundation.</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="js/animations.js"></script>
+    
+    <!-- Lean inline Razorpay processor for elegant card -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btns = document.querySelectorAll('.amount-btn');
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+        });
+
+        function processCleanDonation() {
+            const activeAmountBtn = document.querySelector('.amount-btn.active');
+            if(!activeAmountBtn) return;
+            const amount = parseInt(activeAmountBtn.getAttribute('data-amount')) || 50;
+            const donorName = document.getElementById('donor-name').value;
+            const donorEmail = document.getElementById('donor-email').value;
+
+            // Initialize Razorpay
+            var options = {
+                "key": "rzp_test_YourTestKeyHere",
+                "amount": amount * 100, 
+                "currency": "USD",
+                "name": "PILAG Foundation",
+                "description": "Climate Action Contribution",
+                "image": "https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=200",
+                "handler": function (response){
+                    alert("Payment Authorized! Thank you for supporting grassroots resilience. Transaction ID: " + response.razorpay_payment_id);
+                    document.getElementById('traditional-donate-form').reset();
+                },
+                "prefill": {
+                    "name": donorName,
+                    "email": donorEmail,
+                },
+                "theme": { "color": "#1A3626" } // Deep Forest Green
+            };
+            var rzp = new Razorpay(options);
+            rzp.on('payment.failed', function (response){
+                alert("Payment Failed. Reason: " + response.error.description);
+            });
+            rzp.open();
+        }
+    </script>
+</body>
+</html>
