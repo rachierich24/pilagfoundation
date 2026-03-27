@@ -601,9 +601,9 @@ a, button, [role="button"], .donation-card, .testimonial-card { cursor: none !im
     backdrop-filter: blur(20px) !important;
     background: rgba(249, 246, 240, 0.85) !important;
 }
-.nav-dynamic-cta { transition: all 0.4s ease; }
-.btn { transition: transform 0.25s var(--ease-smooth), box-shadow 0.25s ease, background 0.3s ease !important; }
-.btn:hover { transform: translateY(-3px) scale(1.03) !important; box-shadow: 0 12px 40px rgba(0,0,0,0.15) !important; }
+.btn-magnetic { display: inline-block; position: relative; will-change: transform; transition: none !important; }
+.gs-reveal-text { display: block; overflow: hidden; }
+.btn:hover { transform: translateY(-3px) scale(1.03) !important; box-shadow: 0 12px 60px rgba(34,197,94,0.3) !important; }
 
 /* ─── IMPACT SUMMARY STRIP ───────────────────────────────────────── */
 .impact-strip { background: var(--clr-bg-dark); padding: 8rem 0; overflow: hidden; }
@@ -634,9 +634,10 @@ a, button, [role="button"], .donation-card, .testimonial-card { cursor: none !im
     display: flex; align-items: center; justify-content: space-between;
     background: #FFF; transition: all 0.3s var(--ease-smooth);
 }
-.donation-card:hover, .donation-card.selected { transform: translateY(-4px); border-color: #16a34a; box-shadow: 0 15px 40px rgba(22,163,74,0.12); }
-.donation-card.selected { background: #f0fdf4; border-width: 2px; border-color: #16a34a; }
-.donation-amount { font-family: var(--font-heading); font-size: 2.5rem; font-weight: 900; color: var(--clr-accent-bright); }
+.donation-card:hover, .donation-card.selected { transform: translateY(-6px) scale(1.01); border-color: #22c55e; box-shadow: 0 20px 80px rgba(34,197,94,0.15); }
+.donation-card.selected { background: rgba(34, 197, 94, 0.03); border-width: 2px; border-color: #22c55e; backdrop-filter: blur(5px); }
+.donation-amount { font-family: var(--font-heading); font-size: 2.5rem; font-weight: 900; color: var(--clr-bg-dark); transition: color 0.3s ease; }
+.donation-card.selected .donation-amount { color: #16a34a; }
 .donation-card-check {
     width: 28px; height: 28px; border-radius: 50%; border: 1px solid #ddd;
     display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;

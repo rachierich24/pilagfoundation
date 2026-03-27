@@ -206,7 +206,7 @@ export default function HomePage() {
         gsap.to(marqueeTrack, { xPercent: -50, ease: "none", duration: 15, repeat: -1 });
     }
 
-    // 3. Scrub Text Fill
+    // 3. Scrub Text Fill & Reveal
     const scrubContainer = document.getElementById('scrub-container-1');
     const scrubFill = document.getElementById('scrub-fill-1');
     if (scrubContainer && scrubFill) {
@@ -215,6 +215,15 @@ export default function HomePage() {
             scrollTrigger: { trigger: scrubContainer, start: 'top 80%', end: 'top 30%', scrub: true }
         });
     }
+
+    // ─── ADVANCED: Header Split Text Reveal ───
+    gsap.utils.toArray('.gs-reveal-text').forEach((text: any) => {
+        gsap.fromTo(text, { y: '100%', clipPath: 'inset(0 0 100% 0)' }, {
+            y: '0%', clipPath: 'inset(0 0 0% 0)',
+            duration: 1.5, ease: 'expo.out',
+            scrollTrigger: { trigger: text, start: 'top 90%' }
+        });
+    });
 
     return () => {
         window.removeEventListener('mousemove', moveCursor);
@@ -278,7 +287,7 @@ export default function HomePage() {
                       </div>
 
                       <div className="gs-fade-up delay-1 mt-md" style={{ marginTop: '4rem' }}>
-                          <Link href="/about" className="btn btn-primary">Discover Our Mission</Link>
+                          <Link href="/about" className="btn btn-primary btn-magnetic">Discover Our Mission</Link>
                       </div>
                   </div>
               </section>
@@ -540,8 +549,8 @@ export default function HomePage() {
                       <span className="cta-line">You've seen the action.</span>
                       <span className="cta-line">Now be part of it.</span>
                       <div className="final-cta-buttons">
-                          <Link href="/support" className="btn-volunteer">Register as Volunteer</Link>
-                          <Link href="/support" className="btn-donate-cta">Donate Now ₹</Link>
+                          <Link href="/support" className="btn-volunteer btn-magnetic">Register as Volunteer</Link>
+                          <Link href="/support" className="btn-donate-cta btn-magnetic">Donate Now ₹</Link>
                       </div>
                   </div>
               </section>
