@@ -5,16 +5,16 @@
 /* Preloader Split Mask */
 .preloader {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: var(--clr-bg-deep);
+    background: var(--clr-accent-bright); /* Brand Green background */
     z-index: 2147483647; 
     display: flex; align-items: center; justify-content: center;
     pointer-events: none;
 }
 .preloader-track { height: 7rem; overflow: hidden; position: relative; z-index: 2; }
-.preloader-text { display: block; font-family: var(--font-heading); font-size: 7rem; line-height: 1; color: var(--clr-accent-bright); transform: translateY(100%); }
+.preloader-text { display: block; font-family: var(--font-heading); font-size: 7rem; line-height: 1; color: var(--clr-bg-deep); transform: translateY(100%); }
 
 .split-panel {
-    position: fixed; top: 0; width: 50vw; height: 100vh; background: var(--clr-bg-dark);
+    position: fixed; top: 0; width: 50vw; height: 100vh; background: var(--clr-accent-bright);
     z-index: 2147483646; pointer-events: none;
 }
 .split-left { left: 0; }

@@ -229,6 +229,10 @@ export default function HomePage() {
           <div className="preloader-track">
               <span className="preloader-text">IMPACT</span>
           </div>
+          <span className="preloader-pct">0%</span>
+          <div className="preloader-progress-line">
+              <div className="preloader-progress-fill"></div>
+          </div>
       </div>
       <div className="split-panel split-left"></div>
       <div className="split-panel split-right"></div>
