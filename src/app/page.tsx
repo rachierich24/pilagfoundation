@@ -120,15 +120,18 @@ export default function HomePage() {
             });
         }
 
-        // 7. Kinetic Museum Timeline
+        // 7. Kinetic Drives Horizontal Scroll
         const horizontalWrapper = document.getElementById('horizontal-wrapper');
         const horizontalContainer = document.getElementById('horizontal-container');
         if (horizontalWrapper && horizontalContainer) {
-            const scrollWidth = horizontalContainer.offsetWidth - window.innerWidth;
+            // Add extra scroll so the last panel fully enters view
+            const totalWidth = horizontalContainer.scrollWidth;
+            const viewportW = window.innerWidth;
+            const scrollDist = totalWidth - viewportW;
             const museumTl = gsap.timeline({
-                scrollTrigger: { trigger: horizontalWrapper, pin: true, scrub: 1, start: "top top", end: () => `+=${scrollWidth}` }
+                scrollTrigger: { trigger: horizontalWrapper, pin: true, scrub: 1, start: "top top", end: () => `+=${scrollDist}` }
             });
-            museumTl.to(horizontalContainer, { x: -scrollWidth, ease: "none" }, 0);
+            museumTl.to(horizontalContainer, { x: -scrollDist, ease: "none" }, 0);
             museumTl.to('.timeline-progress-bar', { width: '100%', ease: "none" }, 0);
             
             gsap.utils.toArray('.outlined-dark').forEach((text) => {

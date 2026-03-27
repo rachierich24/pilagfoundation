@@ -287,8 +287,8 @@
     overflow: hidden; width: 100vw; height: 110vh; background: var(--clr-bg-panel); position: relative; 
 }
 .horizontal-container { 
-    display: flex; height: 100vh; width: 400vw; flex-wrap: nowrap; will-change: transform; align-items: center; 
-    padding-left: 10vw;
+    display: flex; height: 100vh; width: max-content; flex-wrap: nowrap; will-change: transform; align-items: center; 
+    padding-left: 5vw; padding-right: 10vw;
 }
 .museum-panel { 
     width: 80vw; height: 100vh; display: flex; align-items: center; justify-content: center; 
@@ -721,10 +721,10 @@ a, button, [role="button"], .donation-card, .testimonial-card { cursor: none !im
 }
 .see-all-drives-text .section-eyebrow { display: block; margin-bottom: 0.5rem; }
 
-/* Drive Card Panel */
-.drive-panel { padding: 0 3vw; }
+/* Drive Card Panel — override museum-panel's default 80vw to fit card tightly */
+.drive-panel { padding: 0 2vw; width: auto !important; flex-shrink: 0; }
 .drive-card {
-    width: 38vw; max-width: 480px; height: 70vh;
+    width: 42vw; max-width: 520px; height: 75vh;
     border-radius: 12px; overflow: hidden; position: relative;
     transition: transform 0.5s var(--ease-smooth), filter 0.5s ease;
     box-shadow: 0 30px 80px rgba(0,0,0,0.5);
