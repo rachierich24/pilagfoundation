@@ -26,19 +26,7 @@ export default function HomePage() {
   useGSAP(() => {
     const mm = gsap.matchMedia();
 
-    // ─── GLOBAL: Custom Cursor ───
-    const cursor = document.getElementById('eco-cursor');
-    const moveCursor = (e: MouseEvent) => {
-        gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1, ease: 'power2.out' });
-    };
-    window.addEventListener('mousemove', moveCursor);
-
-    const handleHover = () => cursor?.classList.add('hovering');
-    const handleUnhover = () => cursor?.classList.remove('hovering');
-    document.querySelectorAll('a, button, .donation-card, .testimonial-card').forEach(el => {
-        el.addEventListener('mouseenter', handleHover);
-        el.addEventListener('mouseleave', handleUnhover);
-    });
+    // Custom cursor logic removed to restore default browser cursor
 
     // ─── GLOBAL: Scroll Progress Bar ───
     gsap.to('#scroll-progress-bar', {
@@ -238,7 +226,6 @@ export default function HomePage() {
     });
 
     return () => {
-        window.removeEventListener('mousemove', moveCursor);
         mm.revert();
     };
   }, { scope: containerRef });

@@ -558,18 +558,7 @@
    ========================================================================== */
 
 /* ─── GLOBAL: Custom Cursor ─────────────────────────────────────── */
-*, *::before, *::after { cursor: none !important; }
-#eco-cursor {
-    position: fixed; top: -20px; left: -20px;
-    width: 20px; height: 20px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(34,197,94,0.9) 0%, rgba(22,163,74,0.3) 60%, transparent 100%);
-    pointer-events: none; z-index: 2147483647;
-    filter: blur(1px); transition: transform 0.1s ease, opacity 0.3s ease;
-    mix-blend-mode: screen;
-}
-#eco-cursor.hovering { transform: scale(3.5); opacity: 0.6; }
-#eco-cursor.clicking { transform: scale(0.8); opacity: 0.9; }
-a, button, [role="button"], .donation-card, .testimonial-card { cursor: none !important; }
+/* Custom cursor removed to restore default browser cursor */
 
 /* ─── GLOBAL: Scroll Progress Bar ───────────────────────────────── */
 #scroll-progress-bar {
