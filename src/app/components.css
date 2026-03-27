@@ -606,7 +606,7 @@ a, button, [role="button"], .donation-card, .testimonial-card { cursor: none !im
 .btn:hover { transform: translateY(-3px) scale(1.03) !important; box-shadow: 0 12px 40px rgba(0,0,0,0.15) !important; }
 
 /* ─── IMPACT SUMMARY STRIP ───────────────────────────────────────── */
-.impact-strip { background: var(--clr-bg-deep); padding: 8rem 0; overflow: hidden; }
+.impact-strip { background: var(--clr-bg-dark); padding: 8rem 0; overflow: hidden; }
 .impact-strip-inner {
     max-width: 1200px; margin: 0 auto; padding: 0 5vw;
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 4rem; text-align: center;
@@ -627,7 +627,7 @@ a, button, [role="button"], .donation-card, .testimonial-card { cursor: none !im
     display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start;
 }
 .section-eyebrow { text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.75rem; color: #16a34a; margin-bottom: 1.5rem; display: block; }
-.conversion-col h2 { font-family: var(--font-heading); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900; line-height: 0.95; margin-bottom: 2rem; color: var(--clr-bg-deep); }
+.conversion-col h2 { font-family: var(--font-heading); font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900; line-height: 0.95; margin-bottom: 2rem; color: var(--clr-accent-bright); }
 .donation-cards { display: flex; flex-direction: column; gap: 1rem; }
 .donation-card {
     border: 1px solid rgba(0,0,0,0.08); border-radius: 12px; padding: 1.5rem 2rem;
@@ -636,7 +636,7 @@ a, button, [role="button"], .donation-card, .testimonial-card { cursor: none !im
 }
 .donation-card:hover, .donation-card.selected { transform: translateY(-4px); border-color: #16a34a; box-shadow: 0 15px 40px rgba(22,163,74,0.12); }
 .donation-card.selected { background: #f0fdf4; border-width: 2px; border-color: #16a34a; }
-.donation-amount { font-family: var(--font-heading); font-size: 2.5rem; font-weight: 900; color: var(--clr-bg-deep); }
+.donation-amount { font-family: var(--font-heading); font-size: 2.5rem; font-weight: 900; color: var(--clr-accent-bright); }
 .donation-card-check {
     width: 28px; height: 28px; border-radius: 50%; border: 1px solid #ddd;
     display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;
@@ -645,7 +645,8 @@ a, button, [role="button"], .donation-card, .testimonial-card { cursor: none !im
 .donation-card.selected .donation-card-check::after { content: '✓'; color: #FFF; font-size: 0.8rem; font-weight: 800; }
 
 /* ─── TRANSPARENCY / TRUST SECTION ──────────────────────────────── */
-.trust-section { padding: 10rem 5vw; background: var(--clr-bg-deep); }
+.trust-section { padding: 10rem 5vw; background: var(--clr-bg-dark); }
+.trust-inner h2, .trust-inner p { color: #FFF; }
 .trust-inner { max-width: 900px; margin: 0 auto; text-align: center; }
 .trust-bars { display: flex; flex-direction: column; gap: 3rem; text-align: left; margin-top: 5rem; }
 .trust-bar-header { display: flex; justify-content: space-between; margin-bottom: 1rem; }
@@ -666,7 +667,7 @@ a, button, [role="button"], .donation-card, .testimonial-card { cursor: none !im
 /* ─── FINAL CTA SECTION ──────────────────────────────────────────── */
 .final-cta-section {
     min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    background: var(--clr-bg-deep); position: relative; overflow: hidden; text-align: center;
+    background: var(--clr-bg-dark); position: relative; overflow: hidden; text-align: center;
 }
 .final-cta-bg-orb {
     position: absolute; width: 70vw; height: 70vw; border-radius: 50%;
