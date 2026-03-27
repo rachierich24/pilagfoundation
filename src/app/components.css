@@ -288,7 +288,7 @@
 }
 .horizontal-container { 
     display: flex; height: 100vh; width: max-content; flex-wrap: nowrap; will-change: transform; align-items: center; 
-    padding-left: 5vw; padding-right: 10vw;
+    padding-left: 2vw; padding-right: 2vw;
 }
 .museum-panel { 
     width: 80vw; height: 100vh; display: flex; align-items: center; justify-content: center; 
@@ -708,7 +708,7 @@ a, button, [role="button"], .donation-card, .testimonial-card { cursor: none !im
 .drives-section { background: var(--clr-bg-dark); }
 
 /* Intro Panel */
-.drive-intro-panel { display: flex; align-items: center; padding: 0 6vw 0 8vw; min-width: 40vw; }
+.drive-intro-panel { display: flex; align-items: center; padding: 0 4vw 0 4vw; min-width: 35vw; }
 .drive-intro-content { max-width: 400px; }
 
 /* See All Drives Banner */
@@ -722,7 +722,7 @@ a, button, [role="button"], .donation-card, .testimonial-card { cursor: none !im
 .see-all-drives-text .section-eyebrow { display: block; margin-bottom: 0.5rem; }
 
 /* Drive Card Panel — override museum-panel's default 80vw to fit card tightly */
-.drive-panel { padding: 0 2vw; width: auto !important; flex-shrink: 0; }
+.drive-panel { padding: 0 1vw; width: auto !important; flex-shrink: 0; }
 .drive-card {
     width: 42vw; max-width: 520px; height: 75vh;
     border-radius: 12px; overflow: hidden; position: relative;
