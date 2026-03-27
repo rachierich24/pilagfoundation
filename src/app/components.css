@@ -284,7 +284,7 @@
 
 /* Horizontal Museum Scroll Segment */
 .horizontal-wrapper { 
-    overflow: hidden; width: 100vw; height: 110vh; background: var(--clr-bg-panel); position: relative; 
+    overflow: hidden; width: 100vw; height: 100vh; background: var(--clr-bg-panel); position: relative; 
 }
 .horizontal-container { 
     display: flex; height: 100vh; width: max-content; flex-wrap: nowrap; will-change: transform; align-items: center; 
