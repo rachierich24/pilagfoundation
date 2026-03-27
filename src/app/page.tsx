@@ -63,10 +63,10 @@ export default function HomePage() {
     }, 'start');
 
     tl.to('.preloader-text', { y: '0%', duration: 1.2, ease: 'power4.out' }, 'start+=0.2')
-      .to('.preloader-text', { scale: 1.1, opacity: 0, filter: 'blur(20px)', duration: 0.8, ease: 'power2.in' }, '+=0.5')
-      .to('.split-left', { x: '-100%', duration: 1.2, ease: 'expo.inOut' }, 'split')
-      .to('.split-right', { x: '100%', duration: 1.2, ease: 'expo.inOut' }, 'split')
-      .to('.preloader', { autoAlpha: 0, duration: 0.5 }, 'split+=0.8');
+      .to('.preloader-text', { scale: 1.2, opacity: 0, filter: 'blur(40px)', duration: 1.2, ease: 'power2.inOut' }, '+=0.3')
+      .to('.split-left', { x: '-100%', duration: 2.0, ease: 'expo.inOut' }, 'split')
+      .to('.split-right', { x: '100%', duration: 2.0, ease: 'expo.inOut' }, 'split')
+      .to('.preloader', { autoAlpha: 0, duration: 1.0 }, 'split+=1.2');
 
     mm.add("(min-width: 769px)", () => {
         // 1. Pinned Mask Reveal Hero
