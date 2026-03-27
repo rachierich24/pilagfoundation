@@ -376,10 +376,15 @@ export default function HomePage() {
                       {/* Section Intro Panel */}
                       <div className="museum-panel drive-intro-panel">
                           <div className="drive-intro-content">
-                              <span className="section-eyebrow" style={{ color: '#22c55e' }}>Take Action</span>
-                              <h2 className="text-colossal outlined-dark" style={{ position: 'static', fontSize: 'clamp(4rem, 8vw, 8rem)', marginBottom: '1rem' }}>UPCOMING
-DRIVES</h2>
-                              <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', maxWidth: '280px', lineHeight: 1.6 }}>Scroll to explore drives happening near you.</p>
+                              <span className="section-eyebrow" style={{ color: '#22c55e', display: 'block', marginBottom: '1.5rem' }}>Take Action</span>
+                              <h2 style={{
+                                  fontFamily: 'var(--font-heading)', fontWeight: 900,
+                                  fontSize: 'clamp(4rem, 7vw, 7rem)', lineHeight: 0.9,
+                                  color: 'transparent',
+                                  WebkitTextStroke: '2px #F9F6F0',
+                                  marginBottom: '2rem', letterSpacing: '-0.02em'
+                              }}>UPCOMING<br />DRIVES</h2>
+                              <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '1rem', maxWidth: '280px', lineHeight: 1.7 }}>Scroll to explore upcoming climate drives near you.</p>
                           </div>
                       </div>
 
@@ -418,6 +423,21 @@ DRIVES</h2>
                           </div>
                       </div>
 
+                  </div>
+              </section>
+
+              {/* ─── SEE ALL DRIVES BANNER ─── */}
+              <section className="see-all-drives-banner">
+                  <div className="see-all-drives-inner">
+                      <div className="see-all-drives-text">
+                          <span className="section-eyebrow" style={{ color: '#22c55e' }}>Ready to Act?</span>
+                          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2rem, 4vw, 3.5rem)', color: '#F9F6F0', fontWeight: 800, lineHeight: 1.05, margin: '0.75rem 0 0' }}>
+                              Find drives near you
+                          </h2>
+                      </div>
+                      <Link href="/drives" className="drive-join-btn" style={{ flexShrink: 0, padding: '1.1rem 2.8rem', fontSize: '0.95rem' }}>
+                          See All Drives →
+                      </Link>
                   </div>
               </section>
 
