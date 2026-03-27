@@ -613,11 +613,11 @@ a, button, [role="button"], .donation-card, .testimonial-card { cursor: none !im
 }
 .impact-stat-number {
     display: block; font-family: var(--font-heading); font-size: clamp(3.5rem, 8vw, 7rem);
-    font-weight: 900; line-height: 1; color: var(--clr-accent-bright); letter-spacing: -0.03em;
+    font-weight: 900; line-height: 1; color: #22c55e; letter-spacing: -0.03em;
 }
 .impact-stat-label {
     display: block; margin-top: 1.5rem; font-size: var(--text-sm); text-transform: uppercase;
-    letter-spacing: 0.2em; opacity: 0.5; color: var(--clr-text-prime);
+    letter-spacing: 0.2em; opacity: 0.7; color: var(--clr-bg-deep);
 }
 
 /* ─── CONVERSION SECTION ─────────────────────────────────────────── */
@@ -647,6 +647,8 @@ a, button, [role="button"], .donation-card, .testimonial-card { cursor: none !im
 /* ─── TRANSPARENCY / TRUST SECTION ──────────────────────────────── */
 .trust-section { padding: 10rem 5vw; background: var(--clr-bg-dark); }
 .trust-inner h2, .trust-inner p { color: #FFF; }
+.trust-eyebrow { text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.75rem; color: #22c55e; margin-bottom: 1.5rem; display: block; }
+.trust-bar-label { color: var(--clr-bg-deep); opacity: 0.9; }
 .trust-inner { max-width: 900px; margin: 0 auto; text-align: center; }
 .trust-bars { display: flex; flex-direction: column; gap: 3rem; text-align: left; margin-top: 5rem; }
 .trust-bar-header { display: flex; justify-content: space-between; margin-bottom: 1rem; }
