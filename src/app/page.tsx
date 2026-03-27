@@ -2,6 +2,14 @@
 
 import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
+import DriveModal from '../components/DriveModal';
+
+const drives = [
+  { title: 'DTU Plantation Drive', location: 'Delhi', date: 'April 5, 2026', impact: '300 Trees Planned', img: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1600' },
+  { title: 'Yamuna Riverbank Cleanup', location: 'Delhi NCR', date: 'April 12, 2026', impact: '2 km Stretch', img: 'https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?q=80&w=1600' },
+  { title: 'Green Awareness Walk', location: 'Noida', date: 'April 19, 2026', impact: '500 Citizens Reached', img: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1600' },
+  { title: 'Jharkhand Forest Mapping', location: 'Jharkhand', date: 'May 3, 2026', impact: '400 ha Surveyed', img: 'https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=1600' },
+];
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -13,6 +21,7 @@ if (typeof window !== "undefined") {
 export default function HomePage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [donationAmount, setDonationAmount] = useState<number>(500);
+  const [activeDrive, setActiveDrive] = useState<(typeof drives)[0] | null>(null);
 
   useGSAP(() => {
     const mm = gsap.matchMedia();
@@ -357,54 +366,58 @@ export default function HomePage() {
                   </div>
               </section>
 
-              <section id="horizontal-wrapper" className="horizontal-wrapper">
+              {/* ─── DRIVES SECTION ─── */}
+              <section id="horizontal-wrapper" className="horizontal-wrapper drives-section">
                   <div className="timeline-progress-container">
                       <div className="timeline-progress-bar"></div>
                   </div>
                   <div id="horizontal-container" className="horizontal-container">
-                      <div className="museum-panel">
-                          <h2 className="text-colossal outlined-dark">FOUNDATIONS</h2>
-                          <div className="museum-card">
-                              <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?q=80&w=1000" alt="River Conservation" />
-                              <div className="card-caption">
-                                  <span>Archive: 2021</span>
-                                  <h4>AMAZON PACT</h4>
-                              </div>
+
+                      {/* Section Intro Panel */}
+                      <div className="museum-panel drive-intro-panel">
+                          <div className="drive-intro-content">
+                              <span className="section-eyebrow" style={{ color: '#22c55e' }}>Take Action</span>
+                              <h2 className="text-colossal outlined-dark" style={{ position: 'static', fontSize: 'clamp(4rem, 8vw, 8rem)', marginBottom: '1rem' }}>UPCOMING
+DRIVES</h2>
+                              <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '1rem', maxWidth: '280px', lineHeight: 1.6 }}>Scroll to explore drives happening near you.</p>
                           </div>
                       </div>
 
-                      <div className="museum-panel">
-                          <h2 className="text-colossal outlined-dark">LITIGATION</h2>
-                          <div className="museum-card" style={{ transform: 'translateY(-10vh)' }}>
-                              <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?q=80&w=1000" alt="Legal Action" />
-                              <div className="card-caption">
-                                  <span>Archive: 2023</span>
-                                  <h4>DEFENSE FUND</h4>
+                      {/* 4 Drive Cards */}
+                      {drives.map((drive, i) => (
+                          <div key={i} className="museum-panel drive-panel">
+                              <div className="drive-card">
+                                  <div className="drive-card-img-wrap">
+                                      <img src={drive.img} alt={drive.title} className="drive-card-img" />
+                                      <div className="drive-card-overlay"></div>
+                                  </div>
+                                  <div className="drive-card-content">
+                                      <span className="drive-tag">{drive.date}</span>
+                                      <h3 className="drive-title">{drive.title}</h3>
+                                      <div className="drive-meta">
+                                          <span>📍 {drive.location}</span>
+                                          <span>🌱 {drive.impact}</span>
+                                      </div>
+                                      <button className="drive-join-btn btn-magnetic" onClick={() => setActiveDrive(drive)}>
+                                          Join Drive
+                                      </button>
+                                  </div>
                               </div>
+                          </div>
+                      ))}
+
+                      {/* Final Explore Panel */}
+                      <div className="museum-panel drives-explore-panel">
+                          <div className="drives-explore-content">
+                              <span className="section-eyebrow" style={{ color: '#22c55e' }}>More Near You</span>
+                              <h2 className="text-colossal" style={{ color: '#F9F6F0', fontSize: 'clamp(3rem, 6vw, 6rem)', lineHeight: 1 }}>Explore All Drives</h2>
+                              <p style={{ color: 'rgba(255,255,255,0.6)', marginTop: '1rem', maxWidth: '300px' }}>Find drives by location, category, and date.</p>
+                              <Link href="/drives" className="drive-join-btn btn-magnetic" style={{ marginTop: '2.5rem', display: 'inline-block', background: 'transparent', border: '2px solid #22c55e', color: '#22c55e' }}>
+                                  View All Drives →
+                              </Link>
                           </div>
                       </div>
 
-                      <div className="museum-panel">
-                          <h2 className="text-colossal outlined-dark">RESOLUTION</h2>
-                          <div className="museum-card" style={{ transform: 'translateY(10vh)' }}>
-                              <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000" alt="Emissions" />
-                              <div className="card-caption">
-                                  <span>Archive: 2025</span>
-                                  <h4>CLEAN AIR ACCORD</h4>
-                              </div>
-                          </div>
-                      </div>
-
-                      <div className="museum-panel">
-                          <h2 className="text-colossal outlined-dark">SOVEREIGNTY</h2>
-                          <div className="museum-card">
-                              <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1000" alt="Future" />
-                              <div className="card-caption">
-                                  <span>Vision: 2030</span>
-                                  <h4>SYSTEMIC SHIFT</h4>
-                              </div>
-                          </div>
-                      </div>
                   </div>
               </section>
 
@@ -557,6 +570,12 @@ export default function HomePage() {
 
           </div>
       </main>
+
+      {/* Drive Registration Modal */}
+      {activeDrive && (
+        <DriveModal drive={activeDrive} onClose={() => setActiveDrive(null)} />
+      )}
+
     </div>
   );
 }

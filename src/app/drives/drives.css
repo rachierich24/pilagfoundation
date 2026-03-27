@@ -1,0 +1,77 @@
+/* ─── DRIVES PAGE STYLES ─────────────────────────────── */
+.drives-page {
+  min-height: 100vh;
+  background: var(--clr-bg-deep);
+}
+.drives-hero {
+  min-height: 50vh;
+  background: var(--clr-bg-dark);
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 8rem 5vw 5rem;
+}
+.drives-hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(4rem, 10vw, 9rem);
+  font-weight: 900; line-height: 0.9;
+  color: #F9F6F0; margin: 1rem 0;
+}
+.drives-hero-sub {
+  font-size: 1.1rem; color: rgba(255,255,255,0.55);
+  max-width: 480px; margin: 0 auto; line-height: 1.6;
+}
+
+/* Filter Bar */
+.drives-filter-bar {
+  display: flex; gap: 0.75rem;
+  padding: 2rem 5vw; max-width: 1200px; margin: 0 auto;
+  flex-wrap: wrap;
+}
+.drives-filter-btn {
+  padding: 0.65rem 1.5rem; border-radius: 100px;
+  border: 1px solid rgba(34,34,34,0.15);
+  background: transparent; font-family: var(--font-body);
+  font-size: 0.85rem; letter-spacing: 0.05em;
+  text-transform: uppercase; cursor: pointer;
+  color: var(--clr-text-muted);
+  transition: all 0.25s ease;
+}
+.drives-filter-btn:hover { border-color: #22c55e; color: #22c55e; }
+.drives-filter-btn.active { background: #1A3626; color: #F9F6F0; border-color: #1A3626; }
+
+/* Drive Grid */
+.drives-grid-section { padding: 2rem 5vw 8rem; max-width: 1300px; margin: 0 auto; }
+.drives-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+@media (max-width: 900px) { .drives-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .drives-grid { grid-template-columns: 1fr; } }
+
+.drives-card {
+  background: #FFF; border-radius: 12px; overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.06);
+  transition: transform 0.4s var(--ease-smooth), box-shadow 0.4s ease;
+}
+.drives-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.1);
+}
+.drives-card-img-wrap { position: relative; height: 220px; overflow: hidden; }
+.drives-card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.drives-card:hover .drives-card-img { transform: scale(1.06); }
+.drives-card-category {
+  position: absolute; top: 1rem; left: 1rem;
+  background: rgba(26,54,38,0.85); color: #F9F6F0;
+  font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 0.3rem 0.8rem; border-radius: 100px; backdrop-filter: blur(6px);
+}
+.drives-card-body { padding: 1.75rem; }
+.drives-card-title {
+  font-family: var(--font-heading); font-size: 1.4rem;
+  line-height: 1.15; color: var(--clr-bg-dark); margin-bottom: 0.75rem;
+}
+.drives-card-meta {
+  display: flex; flex-direction: column; gap: 0.35rem;
+  font-size: 0.82rem; color: var(--clr-text-muted); line-height: 1.4;
+}

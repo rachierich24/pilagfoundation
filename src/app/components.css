@@ -701,3 +701,134 @@ a, button, [role="button"], .donation-card, .testimonial-card { cursor: none !im
     .conversion-inner { grid-template-columns: 1fr; gap: 4rem; }
     .final-cta-buttons { flex-direction: column; align-items: center; }
 }
+
+/* ==========================================================================
+   DRIVES SECTION (Horizontal Scroll)
+   ========================================================================== */
+.drives-section { background: var(--clr-bg-dark); }
+
+/* Intro Panel */
+.drive-intro-panel { display: flex; align-items: center; padding-left: 8vw; }
+.drive-intro-content { max-width: 380px; }
+
+/* Drive Card Panel */
+.drive-panel { padding: 0 3vw; }
+.drive-card {
+    width: 38vw; max-width: 480px; height: 70vh;
+    border-radius: 12px; overflow: hidden; position: relative;
+    transition: transform 0.5s var(--ease-smooth), filter 0.5s ease;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+.drive-card:hover { transform: scale(1.02); filter: brightness(1.05); }
+.drive-card-img-wrap { position: absolute; inset: 0; }
+.drive-card-img { width: 100%; height: 100%; object-fit: cover; }
+.drive-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.05) 100%);
+}
+.drive-card-content {
+    position: absolute; bottom: 0; left: 0; right: 0; padding: 2.5rem;
+    z-index: 2;
+}
+.drive-tag {
+    display: inline-block; font-size: 0.72rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: #22c55e; margin-bottom: 0.75rem;
+    font-family: var(--font-body);
+}
+.drive-title {
+    font-family: var(--font-heading); font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 700; color: #FFF; line-height: 1.1; margin-bottom: 0.75rem;
+}
+.drive-meta {
+    display: flex; gap: 1.25rem; font-family: var(--font-body);
+    font-size: 0.82rem; color: rgba(255,255,255,0.65); margin-bottom: 1.5rem; flex-wrap: wrap;
+}
+.drive-join-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 0.85rem 2rem; background: #22c55e; color: #121A16;
+    font-family: var(--font-body); font-size: 0.85rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    border: none; border-radius: 4px; cursor: pointer; text-decoration: none;
+    transition: all 0.3s var(--ease-smooth);
+}
+.drive-join-btn:hover { background: #4ade80; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(34,197,94,0.4); }
+
+/* Explore Final Panel */
+.drives-explore-panel { display: flex; align-items: center; padding: 0 8vw; }
+.drives-explore-content { max-width: 420px; }
+
+@media (max-width: 768px) {
+    .drive-card { width: 85vw; height: 65vh; }
+    .drive-intro-panel, .drives-explore-panel { padding-left: 5vw; min-width: 90vw; }
+}
+
+/* ==========================================================================
+   DRIVE REGISTRATION MODAL
+   ========================================================================== */
+.modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    z-index: 99999; display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px);
+}
+.drive-modal {
+    background: #FFF; border-radius: 16px; width: min(560px, 95vw);
+    max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+}
+.modal-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 2rem 2.5rem 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+.modal-eyebrow { font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: #22c55e; margin: 0 0 0.3rem; }
+.modal-title { font-family: var(--font-heading); font-size: 1.7rem; line-height: 1; color: var(--clr-bg-dark); margin: 0 0 0.4rem; }
+.modal-meta { font-size: 0.8rem; color: var(--clr-text-muted); margin: 0; }
+.modal-close {
+    background: none; border: none; cursor: pointer; font-size: 1.1rem;
+    color: var(--clr-text-muted); padding: 0.3rem 0.6rem; border-radius: 4px;
+    transition: background 0.2s ease;
+}
+.modal-close:hover { background: rgba(0,0,0,0.06); }
+
+/* Step Indicator */
+.step-indicator { display: flex; gap: 0.5rem; padding: 1rem 2.5rem; }
+.step-dot {
+    width: 28px; height: 3px; border-radius: 2px;
+    background: rgba(0,0,0,0.1); transition: background 0.3s ease, width 0.3s ease;
+}
+.step-dot.active { background: #22c55e; }
+.step-dot.current { width: 42px; }
+
+/* Form */
+.modal-body { padding: 1.5rem 2.5rem 2.5rem; }
+.step-label { font-family: var(--font-heading); font-size: 1.1rem; color: var(--clr-bg-dark); margin-bottom: 1.5rem; }
+.form-step { min-height: 200px; }
+.form-field { margin-bottom: 1.5rem; }
+.form-field label { display: block; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--clr-text-muted); margin-bottom: 0.5rem; }
+.form-field input, .form-field select {
+    width: 100%; padding: 0.9rem 0; background: transparent;
+    border: none; border-bottom: 1px solid rgba(0,0,0,0.18);
+    font-size: 1rem; font-family: var(--font-heading); color: var(--clr-bg-dark);
+    outline: none; transition: border-color 0.25s ease; box-sizing: border-box;
+}
+.form-field input:focus, .form-field select:focus { border-color: #22c55e; }
+.form-actions { display: flex; gap: 1rem; align-items: center; margin-top: 0.5rem; }
+.modal-btn-next {
+    padding: 0.9rem 2rem; background: #1A3626; color: #FFF; border: none;
+    border-radius: 4px; cursor: pointer; font-family: var(--font-body);
+    font-size: 0.85rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.1em; transition: all 0.3s ease;
+}
+.modal-btn-next:hover { background: #22c55e; color: #121A16; transform: translateY(-1px); }
+.modal-btn-back {
+    background: none; border: none; cursor: pointer; color: var(--clr-text-muted);
+    font-size: 0.85rem; text-decoration: underline;
+}
+
+/* Success State */
+.form-success { text-align: center; padding-top: 1rem; }
+.success-icon {
+    font-size: 2.5rem; color: #22c55e; margin-bottom: 1rem; display: block;
+}
+.form-success h4 { font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 0.75rem; }
+.form-success p { color: var(--clr-text-muted); margin-bottom: 0.5rem; max-width: 100%; }
+.success-meta { font-size: 0.82rem; color: #22c55e; margin-top: 1rem; }
