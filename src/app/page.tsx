@@ -414,15 +414,6 @@ export default function HomePage() {
                           </div>
                       ))}
 
-                      {/* Final Explore Panel */}
-                      <div className="museum-panel drives-explore-panel">
-                          <div className="drives-explore-content">
-                              <span className="section-eyebrow" style={{ color: '#22c55e' }}>More Near You</span>
-                              <h2 className="text-colossal" style={{ color: '#F9F6F0', fontSize: 'clamp(3rem, 6vw, 6rem)', lineHeight: 1 }}>Explore All Drives</h2>
-                              <p style={{ color: 'rgba(255,255,255,0.6)', marginTop: '1rem', maxWidth: '300px' }}>Find drives by location, category, and date.</p>
-                          </div>
-                      </div>
-
                   </div>
               </section>
 
