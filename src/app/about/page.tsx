@@ -7,19 +7,18 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import Lenis from 'lenis';
 import Link from 'next/link';
 
-if (typeof window !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
-}
-
 export default function AboutCinematicPage() {
     const containerRef = useRef<HTMLDivElement>(null);
     const heroImgRef = useRef<HTMLImageElement>(null);
     const statementRef = useRef<HTMLHeadingElement>(null);
 
     useGSAP(() => {
+        gsap.registerPlugin(ScrollTrigger);
         const lenis = new Lenis({ duration: 1.2, smoothWheel: true });
-        function raf(time: number) { lenis.raf(time); requestAnimationFrame(raf); }
-        requestAnimationFrame(raf);
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
 
         // Parallax Hero Image
         if (heroImgRef.current) {
@@ -36,6 +35,7 @@ export default function AboutCinematicPage() {
         }
 
         // Split Text Reveal
+        // @ts-ignore
         const words = statementRef.current?.querySelectorAll('.word');
         if (words && words.length > 0) {
             gsap.from(words, {

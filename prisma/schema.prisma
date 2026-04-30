@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+}
+
+model Drive {
+  id        String   @id @default(cuid())
+  title     String
+  location  String
+  date      String
+  impact    String
+  imageUrl  String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Testimonial {
+  id             String   @id @default(cuid())
+  text           String
+  authorName     String
+  authorRole     String
+  authorInitials String
+  isVisible      Boolean  @default(true)
+  createdAt      DateTime @default(now())
+}
+
+model Donation {
+  id         String   @id @default(cuid())
+  donorName  String
+  donorEmail String
+  amount     Int
+  fundType   String   @default("general")
+  status     String   @default("completed")
+  createdAt  DateTime @default(now())
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String
+  content     String
+  coverImage  String   @default("")
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

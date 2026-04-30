@@ -1,236 +1,117 @@
 "use client";
 
-import { useRef } from 'react';
-import Link from 'next/link';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import Lenis from 'lenis';
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import Lenis from "lenis";
+import './impact.css';
 
-if (typeof window !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
-}
+const VIDEO_URL = "/impact_main.mp4";
 
-export default function SavorTrajectoryPage() {
+export default function ImpactPage() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const svgLineRef = useRef<SVGPathElement>(null);
-  const irisSectionRef = useRef<HTMLElement>(null);
-  const webSectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  useGSAP(() => {
-    // 1. Lenis Smooth Scroll Setup
+  useEffect(() => {
+    // Premium Smooth Scrolling
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1,
-      touchMultiplier: 2,
-    });
-    function raf(time: number) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    let mm = gsap.matchMedia();
-
-    // 2. Continuous Central SVG Trajectory Line (Shared)
-    if (svgLineRef.current) {
-        const pathLength = 5000;
-        gsap.set(svgLineRef.current, { strokeDasharray: pathLength, strokeDashoffset: pathLength });
-
-        gsap.to(svgLineRef.current, {
-            strokeDashoffset: 0,
-            ease: "none",
-            scrollTrigger: {
-                trigger: containerRef.current,
-                start: "top top",
-                end: "bottom bottom",
-                scrub: true
-            }
-        });
-    }
-
-    mm.add("(min-width: 769px)", () => {
-        // 3. The "Iris" Reveal Mask (Desktop)
-        if (irisSectionRef.current) {
-            gsap.to('.iris-mask', {
-                clipPath: 'circle(150% at 50% 50%)',
-                ease: "power2.inOut",
-                scrollTrigger: {
-                    trigger: irisSectionRef.current,
-                    start: "top 80%",
-                    end: "top 20%",
-                    scrub: true
-                }
-            });
-            
-            gsap.fromTo('.origins-text', 
-                { y: 100, opacity: 0 },
-                { y: 0, opacity: 1, ease: 'power3.out',
-                  scrollTrigger: {
-                      trigger: irisSectionRef.current,
-                      start: "top 50%",
-                      end: "center center",
-                      scrub: true
-                  }
-                }
-            );
-        }
-
-        // 4. The Pinned "Butter" Web Anatomy Section (Desktop Only Pin)
-        if (webSectionRef.current) {
-            const webTl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: webSectionRef.current,
-                    start: "top top",
-                    end: "+=150%",
-                    pin: true,
-                    scrub: true
-                }
-            });
-
-            gsap.set('.web-item', { opacity: 0 });
-            gsap.set('.web-svg-line', { strokeDasharray: 500, strokeDashoffset: 500 });
-            
-            webTl.to('.web-svg-line', { strokeDashoffset: 0, duration: 1, ease: "none" }, 0)
-                 .to('.web-label-left', { x: 50, opacity: 1, duration: 1, ease: "power2.out" }, 0)
-                 .to('.web-label-right', { x: -50, opacity: 1, duration: 1, ease: "power2.out" }, 0);
-        }
     });
 
-    mm.add("(max-width: 768px)", () => {
-        // Mobile: Show iris content immediately or with simple fade
-        gsap.set('.iris-mask', { clipPath: 'circle(150% at 50% 50%)' });
-        gsap.fromTo('.origins-text', { opacity: 0, y: 30 }, {
-            opacity: 1, y: 0, duration: 1,
-            scrollTrigger: { trigger: '.sv-iris-section', start: 'top 80%' }
-        });
-
-        // Mobile: No pinning for web section, show labels in stack
-        gsap.set('.web-item', { opacity: 1, x: 0 });
-        gsap.utils.toArray('.web-item').forEach(item => {
-            gsap.from(item as HTMLElement, {
-                opacity: 0, y: 20, duration: 0.8,
-                scrollTrigger: { trigger: item as HTMLElement, start: 'top 90%' }
-            });
-        });
-    });
-
-    // 6. Navbar Visibility Toggle (Hide on Hero)
-    ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom top", // Change as needed (e.g., end of hero)
-        onEnter: () => gsap.to('.main-nav', { autoAlpha: 0, duration: 0.3 }),
-        onLeave: () => gsap.to('.main-nav', { autoAlpha: 1, duration: 0.3 }),
-        onEnterBack: () => gsap.to('.main-nav', { autoAlpha: 0, duration: 0.3 }),
-        onLeaveBack: () => gsap.to('.main-nav', { autoAlpha: 1, duration: 0.3 }),
-    });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
 
     return () => {
       lenis.destroy();
-      ScrollTrigger.getAll().forEach(t => t.kill());
-      gsap.to('.main-nav', { autoAlpha: 1, duration: 0 }); // Ensure it returns when unmounting
+      gsap.ticker.remove(lenis.raf);
     };
+  }, []);
+
+  useGSAP(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    // ── THE CORRECT WAY TO SCRUB VIDEO WITH SCROLL ──
+    // Do NOT use tl.to(video, { currentTime }) — it's unreliable.
+    // Instead, use ScrollTrigger's onUpdate to directly write currentTime
+    // based on scroll progress. This is frame-perfect every single time.
+
+    const scrubTrigger = ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top top",
+      end: "+=1000%",
+      pin: true,
+      scrub: 1.2,
+      onUpdate: (self) => {
+        if (video.duration && !isNaN(video.duration)) {
+          video.currentTime = self.progress * video.duration;
+        }
+      },
+    });
+
+    // Separate timeline for text animations — tied to SAME scroll range
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "+=1000%",
+        scrub: 1.2,
+      }
+    });
+
+    // Progress 0→1 maps to 0→20 duration units
+    // Text fades in at ~40% scroll, fades out at ~70% scroll
+    tl.set({}, {}, 0); // anchor start
+    tl.fromTo(".overlay-text",
+      { autoAlpha: 0, y: 30 },
+      { autoAlpha: 1, y: 0, duration: 2, ease: "power2.out" },
+      8
+    );
+    tl.to(".overlay-text",
+      { autoAlpha: 0, y: -30, duration: 2, ease: "power2.in" },
+      14
+    );
+    tl.set({}, {}, 20); // anchor end — ensures full scroll range is honoured
+
+    return () => {
+      scrubTrigger.kill();
+    };
+
   }, { scope: containerRef });
 
   return (
-    <main ref={containerRef} className="sv-page-wrapper">
-      
-      {/* 
-        THE CONTINUOUS GUIDE LINE 
-        Spans the entire scroll height, strictly in the center
-      */}
-      <div className="sv-guide-container">
-        <svg viewBox="0 0 100 5000" preserveAspectRatio="none" className="sv-guide-svg">
-            {/* The line drops straight down. */}
-            <path ref={svgLineRef} d="M50,0 L50,5000" className="sv-guide-path" />
-        </svg>
+    <main className="impact-master-wrapper" style={{ background: "#000" }}>
+      <div ref={containerRef} className="scroll-wrapper" style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
+
+        <video
+          ref={videoRef}
+          src={VIDEO_URL}
+          className="impact-video"
+          muted
+          playsInline
+          preload="auto"
+        />
+
+        {/* Ambient Overlay */}
+        <div className="dark-tint"></div>
+
+        <div className="abs-center overlay-text" style={{ opacity: 0 }}>
+          <h1 style={{ fontFamily: "var(--font-heading), serif", fontSize: "clamp(3rem, 6vw, 6rem)", fontWeight: 600, color: "#fff", margin: 0, lineHeight: 1.1 }}>
+            Impact In Motion
+          </h1>
+          <p style={{ fontFamily: "var(--font-body), sans-serif", letterSpacing: "0.4em", textTransform: "uppercase", color: "#4ade80", fontSize: "1rem", marginTop: "1rem", fontWeight: 600 }}>
+            Scroll to Navigate Time
+          </p>
+        </div>
+
       </div>
-
-      {/* SECTION 1: THE HOOK (Light Theme) */}
-      <section className="sv-hero-section">
-          <div className="sv-hero-content">
-              <h1 className="sv-split-heading">
-                 <span style={{ alignSelf: 'flex-start' }}>Same impact.</span>
-                 <span style={{ alignSelf: 'flex-end', marginTop: '20vh' }}>Better future.</span>
-              </h1>
-          </div>
-      </section>
-
-      {/* SECTION 2: THE IRIS ORIGIN (Dark Theme Reveal) */}
-      <section ref={irisSectionRef} className="sv-iris-section">
-          <div className="iris-mask sv-dark-bg">
-              <div className="sv-content-wrapper">
-                  <span className="sv-taxonomy">I // GROUNDWORK</span>
-                  <h2 className="sv-massive-serif origins-text">Origins</h2>
-                  
-                  <div className="sv-spacer" style={{ height: '30vh' }}></div>
-                  
-                  <p className="sv-body-lead origins-text">
-                     Before the data, there is the earth.<br/>
-                     We start where nature started, beneath<br/>
-                     the canopy, mapping ancestral truth.
-                  </p>
-              </div>
-          </div>
-      </section>
-
-      {/* SECTION 3: THE PINNED WEB (The Product / Impact Core) */}
-      <section ref={webSectionRef} className="sv-web-section sv-dark-bg">
-          <div className="sv-web-content">
-              <h3 className="sv-taxonomy" style={{ position: 'absolute', top: '10vh' }}>II // THE CATALYST</h3>
-              
-              {/* Central Target Image (Pinned) */}
-              <div className="sv-web-center-image">
-                  <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1500" alt="Amazonian Core" />
-              </div>
-
-              {/* Anatomy Labels (Fly in from left/right) */}
-              <div className="sv-web-labels">
-                  
-                  {/* Left Label 1 */}
-                  <div className="web-item web-label-left" style={{ top: '20%', left: '10%' }}>
-                      <h4>Indigenous Data</h4>
-                      <p>2 Million acres strictly documented.</p>
-                      <svg className="web-connect-svg" viewBox="0 0 200 100"><path className="web-svg-line" d="M0,50 L200,80"/></svg>
-                  </div>
-
-                  {/* Right Label 1 */}
-                  <div className="web-item web-label-right" style={{ top: '30%', right: '10%', textAlign: 'left' }}>
-                      <h4>Multinational Injunctions</h4>
-                      <p>Supreme Court halts rapid deforestation.</p>
-                      <svg className="web-connect-svg-right" viewBox="0 0 200 100"><path className="web-svg-line" d="M200,50 L0,80"/></svg>
-                  </div>
-
-                  {/* Left Label 2 */}
-                  <div className="web-item web-label-left" style={{ bottom: '20%', left: '15%' }}>
-                      <h4>Sovereign Power</h4>
-                      <p>Establishing ancestral legal precedents.</p>
-                      <svg className="web-connect-svg" viewBox="0 0 200 100" style={{ transform: 'scaleY(-1)' }}><path className="web-svg-line" d="M0,50 L200,80"/></svg>
-                  </div>
-
-              </div>
-          </div>
-      </section>
-
-      {/* SECTION 4: THE GALLERY CLOSER */}
-      <section className="sv-footer-section sv-dark-bg">
-          <div className="sv-content-wrapper" style={{ alignItems: 'center' }}>
-              <h2 className="sv-massive-serif">...so life could flourish</h2>
-              <div className="sv-btn-trajectory-wrapper mt-lg">
-                  <Link href="/support" className="sv-trajectory-btn">
-                      <span>Fund</span>
-                      <span className="sv-draw-dash"></span>
-                      <span>The Next Phase</span>
-                  </Link>
-              </div>
-          </div>
-      </section>
-
     </main>
   );
 }

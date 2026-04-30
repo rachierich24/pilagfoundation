@@ -6,4 +6,6 @@
 html, body {
   max-width: 100vw;
   overflow-x: hidden;
+  background: var(--clr-bg-panel);
+  color: var(--clr-text-prime);
 }

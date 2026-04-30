@@ -14,6 +14,7 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
+// @ts-ignore
 if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 }
@@ -23,56 +24,101 @@ export default function HomePage() {
   const [donationAmount, setDonationAmount] = useState<number>(500);
   const [activeDrive, setActiveDrive] = useState<(typeof drives)[0] | null>(null);
 
+  useEffect(() => {
+    // Fail-safe: Forcefully hide the preloader after 5 seconds if it gets stuck
+    const timeout = setTimeout(() => {
+      const preloader = document.querySelector('.preloader') as HTMLElement;
+      if (preloader && getComputedStyle(preloader).display !== 'none') {
+        console.warn('Preloader fail-safe triggered after 5s.');
+        preloader.style.opacity = '0';
+        setTimeout(() => {
+          preloader.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }, 500);
+        const nav = document.querySelector('.main-nav') as HTMLElement;
+        if (nav) {
+          nav.style.opacity = '1';
+          nav.style.visibility = 'visible';
+          nav.style.transform = 'translateY(0)';
+        }
+      }
+    }, 5000);
+    return () => clearTimeout(timeout);
+  }, []);
+
   useGSAP(() => {
     const mm = gsap.matchMedia();
 
     // Custom cursor logic removed to restore default browser cursor
 
-    // ─── GLOBAL: Scroll Progress Bar ───
-    gsap.to('#scroll-progress-bar', {
-        width: '100%', ease: 'none',
-        scrollTrigger: { trigger: 'body', start: 'top top', end: 'bottom bottom', scrub: 0.3 }
-    });
-
-    // ─── 0. Preloader Sequence (Enhanced) ───
+    // ─── 0. Preloader Sequence (Iris Reveal) ───
     const tl = gsap.timeline({
         onComplete: () => {
+            const preloader = document.querySelector('.preloader') as HTMLElement;
+            if (preloader) {
+                gsap.to(preloader, { autoAlpha: 0, duration: 0.5, onComplete: () => {
+                   preloader.style.display = 'none';
+                   ScrollTrigger.refresh(); // Crucial to fix blank spaces/misalignments
+                }});
+            }
             document.body.style.overflow = 'auto';
-            gsap.to('.main-nav', { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out' });
+            const nav = document.querySelector('.main-nav');
+            if (nav) {
+                gsap.to(nav, { autoAlpha: 1, y: 0, duration: 1.0, ease: 'power3.out' });
+            }
         }
     });
 
     document.body.style.overflow = 'hidden';
-    gsap.set('.main-nav', { autoAlpha: 0, y: -20 });
+    const navEl = document.querySelector('.main-nav');
+    if (navEl) gsap.set(navEl, { autoAlpha: 0, y: -24 });
 
     // Preloader progress counter
     const prgCounter = { value: 0 };
+    tl.to('.preloader-text', { opacity: 1, y: -8, duration: 2.2, ease: 'power2.out' }, 0.4);
+
     tl.to(prgCounter, {
-        value: 100, duration: 2, ease: 'power2.inOut',
+        value: 100, duration: 3.0, ease: 'power2.inOut',
         onUpdate: () => {
             const pct = Math.floor(prgCounter.value);
             const pctEl = document.querySelector('.preloader-pct');
             const fillEl = document.querySelector('.preloader-progress-fill') as HTMLElement;
-            if (pctEl) pctEl.textContent = `${pct}%`;
+            if (pctEl) pctEl.textContent = `${pct.toString().padStart(3, '0')}`;
             if (fillEl) fillEl.style.width = `${pct}%`;
-            if (pct > 80) document.querySelector('.preloader-text')?.classList.add('sharp');
         }
-    }, 'start');
+    }, 0);
 
-    tl.to('.preloader-text', { y: '0%', duration: 1.2, ease: 'power4.out' }, 'start+=0.2')
-      .to('.preloader-text', { scale: 1.1, opacity: 0, filter: 'blur(20px)', duration: 0.8, ease: 'power2.in' }, '+=0.5')
-      .to('.split-left', { x: '-100%', duration: 1.2, ease: 'expo.inOut' }, 'split')
-      .to('.split-right', { x: '100%', duration: 1.2, ease: 'expo.inOut' }, 'split')
-      .to('.preloader', { autoAlpha: 0, duration: 0.5 }, 'split+=0.8');
+    tl.to('.preloader-text', { opacity: 0, scale: 1.1, duration: 0.7, ease: 'power2.inOut' }, '+=0.3')
+      .to('.preloader-pct-wrapper', { opacity: 0, duration: 0.6, ease: 'power2.inOut' }, '-=0.5')
+      .to('.preloader', {
+          clipPath: 'circle(0% at 50% 50%)',
+          duration: 1.6,
+          ease: 'expo.inOut',
+      }, '+=0.1');
 
     mm.add("(min-width: 769px)", () => {
-        // 1. Pinned Mask Reveal Hero
+        // 1. One-Way Tactical Mask Reveal Hero
         const heroSection = document.getElementById('hero-pin-trigger');
         const heroMaskImg = document.getElementById('hero-mask-img');
         if (heroSection && heroMaskImg) {
-            gsap.to(heroMaskImg, {
-                width: '100vw', height: '100vh', ease: 'none',
-                scrollTrigger: { trigger: heroSection, start: 'top top', end: '+=150%', scrub: true, pin: true }
+            // Create the animation separately so we can control its progress manually
+            const heroAnim = gsap.to(heroMaskImg, {
+                width: '100vw', height: '100vh', ease: 'none', paused: true
+            });
+
+            let maxProgress = 0;
+            const heroScroll = ScrollTrigger.create({
+                trigger: heroSection,
+                start: 'top top',
+                end: '+=150%',
+                pin: true,
+                onUpdate: (self) => {
+                    // Only update if scrolling forward to maintain the "Latching" behavior
+                    if (self.progress > maxProgress) {
+                        maxProgress = self.progress;
+                        heroAnim.progress(maxProgress);
+                    }
+                }
             });
         }
 
@@ -125,8 +171,22 @@ export default function HomePage() {
             gsap.utils.toArray('.outlined-dark').forEach((text) => {
                 gsap.to(text as HTMLElement, { x: -200, scrollTrigger: { trigger: horizontalWrapper, scrub: 2 } });
             });
-            gsap.utils.toArray('.museum-card').forEach(card => {
-                gsap.fromTo(card as HTMLElement, { rotateY: -15 }, { rotateY: 15, scrollTrigger: { trigger: horizontalWrapper, scrub: 1 } });
+            gsap.utils.toArray('.drive-card').forEach(card => {
+                const el = card as HTMLElement;
+                // Base scroll parallax rotation
+                const tl = gsap.timeline({ scrollTrigger: { trigger: horizontalWrapper, scrub: 1 } });
+                tl.fromTo(el, { rotateY: -25, rotateX: 5, z: -100 }, { rotateY: 25, rotateX: -5, z: 0 });
+
+                // Interactive 3D mouse tracking
+                el.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect();
+                    const xPos = (e.clientX - rect.left) / rect.width - 0.5;
+                    const yPos = (e.clientY - rect.top) / rect.height - 0.5;
+                    gsap.to(el, { rotateY: xPos * 30, rotateX: -yPos * 30, z: 50, duration: 0.5, ease: 'power2.out' });
+                });
+                el.addEventListener('mouseleave', () => {
+                    gsap.to(el, { rotateY: 0, rotateX: 0, z: 0, duration: 1, ease: 'elastic.out(1, 0.5)' });
+                });
             });
         }
 
@@ -190,7 +250,13 @@ export default function HomePage() {
     });
 
     mm.add("(max-width: 768px)", () => {
-        gsap.utils.toArray('.gs-fade-up, .pinned-slide, .museum-card, .impact-stat, .testimonial-card').forEach(elem => {
+        gsap.utils.toArray('.gs-fade-up, .pinned-slide, .drive-card, .impact-stat').forEach(elem => {
+            gsap.fromTo(elem as HTMLElement, { y: 30, opacity: 0 }, {
+                y: 0, opacity: 1, duration: 1, scrollTrigger: { trigger: elem as HTMLElement, start: 'top 90%' }
+            });
+        });
+        // Mobile fallback for testimonials (flat)
+        gsap.utils.toArray('.testimonial-card').forEach(elem => {
             gsap.fromTo(elem as HTMLElement, { y: 30, opacity: 0 }, {
                 y: 0, opacity: 1, duration: 1, scrollTrigger: { trigger: elem as HTMLElement, start: 'top 90%' }
             });
@@ -225,6 +291,19 @@ export default function HomePage() {
         });
     });
 
+    // ─── DESKTOP ISOMETRIC REVEAL (Testimonials) ───
+    mm.add("(min-width: 769px)", () => {
+       gsap.utils.toArray('.testimonial-card').forEach((card, i) => {
+            gsap.fromTo(card as HTMLElement, 
+                { opacity: 0, z: -800, rotateX: 50, rotateY: -30, rotateZ: -10, y: 150 }, 
+                { opacity: 1, z: 0, rotateX: 0, rotateY: 0, rotateZ: 0, y: 0, duration: 1.5, ease: 'power3.out', 
+                  scrollTrigger: { trigger: card as HTMLElement, start: 'top 90%' },
+                  delay: (i as number) * 0.15 
+                }
+            );
+       });
+    });
+
     return () => {
         mm.revert();
     };
@@ -232,18 +311,18 @@ export default function HomePage() {
 
   return (
     <div ref={containerRef}>
-      {/* Cinematic GSAP Preloader */}
+      {/* Cinematic Premium Preloader */}
       <div className="preloader">
           <div className="preloader-track">
               <span className="preloader-text">IMPACT</span>
           </div>
-          <span className="preloader-pct">0%</span>
-          <div className="preloader-progress-line">
-              <div className="preloader-progress-fill"></div>
+          <div className="preloader-pct-wrapper">
+              <span className="preloader-pct">000</span>
+              <div className="preloader-progress-line">
+                  <div className="preloader-progress-fill"></div>
+              </div>
           </div>
       </div>
-      <div className="split-panel split-left"></div>
-      <div className="split-panel split-right"></div>
       
       <main id="smooth-wrapper">
           <div id="smooth-content">
@@ -357,11 +436,11 @@ export default function HomePage() {
               </section>
 
               {/* ─── DRIVES SECTION ─── */}
-              <section id="horizontal-wrapper" className="horizontal-wrapper drives-section">
+              <section id="horizontal-wrapper" className="horizontal-wrapper drives-section" style={{ perspective: '1200px' }}>
                   <div className="timeline-progress-container">
                       <div className="timeline-progress-bar"></div>
                   </div>
-                  <div id="horizontal-container" className="horizontal-container">
+                  <div id="horizontal-container" className="horizontal-container" style={{ transformStyle: 'preserve-3d' }}>
 
                       {/* Section Intro Panel */}
                       <div className="museum-panel drive-intro-panel">
@@ -514,10 +593,10 @@ export default function HomePage() {
               </section>
 
               {/* ─── NEW: COMMUNITY SECTION ─── */}
-              <section className="community-section">
-                  <div className="community-inner">
+              <section className="community-section" style={{ perspective: '2000px', overflow: 'hidden' }}>
+                  <div className="community-inner" style={{ transformStyle: 'preserve-3d' }}>
                       <h2 className="community-heading">Our Community. <br/> Our Strength.</h2>
-                      <div className="community-grid">
+                      <div className="community-grid" style={{ transformStyle: 'preserve-3d' }}>
                           <div className="testimonial-card">
                               <p className="testimonial-text">"Pilag Foundation gave us the tools to map our ancestral lands when the government said they didn't exist."</p>
                               <div className="testimonial-author">

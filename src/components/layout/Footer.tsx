@@ -12,7 +12,6 @@ export default function Footer() {
                 <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', marginBottom: '1rem' }}>Initiatives</h4>
                 <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     <li><Link href="/impact" style={{ color: 'var(--clr-text-prime)', textDecoration: 'none' }}>Our Impact</Link></li>
-                    <li><Link href="/priorities" style={{ color: 'var(--clr-text-prime)', textDecoration: 'none' }}>Core Priorities</Link></li>
                     <li><Link href="/support" style={{ color: 'var(--clr-accent-bright)', fontWeight: 600, textDecoration: 'none' }}>Donate to the Fund</Link></li>
                 </ul>
             </div>
