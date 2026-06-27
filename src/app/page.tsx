@@ -19,6 +19,14 @@ if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
 }
 
+const splitText = (text: string) => {
+  return text.split('').map((char, index) => (
+    <span key={index} className="char" style={{ display: 'inline-block' }}>
+      {char === ' ' ? '\u00A0' : char}
+    </span>
+  ));
+};
+
 export default function HomePage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [donationAmount, setDonationAmount] = useState<number>(500);
@@ -66,6 +74,36 @@ export default function HomePage() {
             if (nav) {
                 gsap.to(nav, { autoAlpha: 1, y: 0, duration: 1.0, ease: 'power3.out' });
             }
+
+            // ─── NEW: Unified Hero Entrance Timeline ───
+            const entranceTl = gsap.timeline();
+            
+            // 1. Fade/Scale in Orbs
+            entranceTl.fromTo('.hero-orb', 
+                { opacity: 0, scale: 0.8 },
+                { opacity: 0.18, scale: 1, duration: 2.0, ease: 'power2.out', stagger: 0.3 }, 
+                0
+            );
+            
+            // 2. Stagger reveal colossal characters
+            entranceTl.fromTo('.hero-pinned .char', 
+                { y: '110%', rotate: 4, opacity: 0 }, 
+                { y: '0%', rotate: 0, opacity: 1, duration: 1.4, ease: 'expo.out', stagger: 0.015 }, 
+                0.2
+            );
+            
+            // 3. Slide/fade in the glass card
+            entranceTl.fromTo('#hero-context-card', 
+                { opacity: 0, y: 30, scale: 0.95 },
+                { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: 'power3.out' }, 
+                0.6
+            );
+
+            // 4. Subtle drifting ambient movement for orbs (desktop only)
+            if (typeof window !== "undefined" && window.innerWidth > 768) {
+                gsap.to('#hero-orb-1', { x: 30, y: -20, duration: 8, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+                gsap.to('#hero-orb-2', { x: -35, y: 30, duration: 10, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+            }
         }
     });
 
@@ -101,10 +139,32 @@ export default function HomePage() {
         const heroSection = document.getElementById('hero-pin-trigger');
         const heroMaskImg = document.getElementById('hero-mask-img');
         if (heroSection && heroMaskImg) {
-            // Create the animation separately so we can control its progress manually
-            const heroAnim = gsap.to(heroMaskImg, {
-                width: '100vw', height: '100vh', ease: 'none', paused: true
-            });
+            // Initial style setup for desktop hero elements
+            gsap.set(heroMaskImg, { scale: 1.15, borderRadius: '12px' });
+
+            const scrollTl = gsap.timeline({ paused: true });
+            
+            // Mask image expansion + zoom content + clear border radius
+            scrollTl.to(heroMaskImg, {
+                width: '100vw', height: '100vh', borderRadius: '0px', scale: 1.0, ease: 'none'
+            }, 0);
+
+            // Parallax shift for colossal text
+            const colossalBack = document.getElementById('hero-colossal-back');
+            const colossalFront = document.getElementById('hero-colossal-front');
+            if (colossalBack && colossalFront) {
+                const backSolid = colossalBack.querySelector('.text-colossal-solid');
+                const backOutline = colossalBack.querySelector('.text-colossal-outline');
+                const frontSolid = colossalFront.querySelector('.text-colossal-solid-overlay');
+                
+                if (backSolid) scrollTl.to(backSolid, { xPercent: -20, ease: 'none' }, 0);
+                if (frontSolid) scrollTl.to(frontSolid, { xPercent: -20, ease: 'none' }, 0);
+                if (backOutline) scrollTl.to(backOutline, { xPercent: 20, ease: 'none' }, 0);
+            }
+
+            // Fade out floating card and decorative elements
+            scrollTl.to('#hero-context-card', { autoAlpha: 0, y: 60, scale: 0.95, ease: 'none' }, 0);
+            scrollTl.to('.hero-orb', { autoAlpha: 0, scale: 1.3, ease: 'none' }, 0);
 
             let maxProgress = 0;
             const heroScroll = ScrollTrigger.create({
@@ -116,7 +176,7 @@ export default function HomePage() {
                     // Only update if scrolling forward to maintain the "Latching" behavior
                     if (self.progress > maxProgress) {
                         maxProgress = self.progress;
-                        heroAnim.progress(maxProgress);
+                        scrollTl.progress(maxProgress);
                     }
                 }
             });
@@ -328,13 +388,34 @@ export default function HomePage() {
           <div id="smooth-content">
               
               <section id="hero-pin-trigger" className="hero-pinned">
-                  <div className="hero-colossal-layer">
-                      <h1 className="text-colossal">DEFEND</h1>
-                      <h1 className="text-colossal text-colossal-outline">THE CLIMATE.</h1>
+                  <div className="hero-noise-overlay"></div>
+                  <div className="hero-orb hero-orb-1" id="hero-orb-1"></div>
+                  <div className="hero-orb hero-orb-2" id="hero-orb-2"></div>
+
+                  <div className="hero-colossal-layer" id="hero-colossal-back">
+                      <h1 className="text-colossal text-colossal-solid">{splitText("DEFEND")}</h1>
+                      <h1 className="text-colossal text-colossal-outline">{splitText("THE CLIMATE.")}</h1>
                   </div>
+
                   <img id="hero-mask-img" src="https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=2500&auto=format&fit=crop" className="hero-pinned-img" alt="Forest Deforestation" />
-                  <div className="hero-colossal-front">
-                      <h1 className="text-colossal" style={{ color: 'transparent', WebkitTextStroke: '1px rgba(255,255,255,0.8)' }}>DEFEND</h1>
+
+                  <div className="hero-colossal-front" id="hero-colossal-front">
+                      <h1 className="text-colossal text-colossal-solid-overlay" style={{ color: 'transparent', WebkitTextStroke: '1px rgba(255,255,255,0.8)' }}>{splitText("DEFEND")}</h1>
+                  </div>
+
+                  <div className="hero-glass-card" id="hero-context-card">
+                      <div className="hero-glass-card-eyebrow">PILAG Foundation</div>
+                      <p className="hero-glass-card-text">
+                          Bridging the gap between global climate policies and local realities. We defend India's most vulnerable ecosystems through high-resolution mapping and aggressive legal defense.
+                      </p>
+                      <div className="hero-glass-card-ctas">
+                          <Link href="#horizontal-wrapper" className="hero-btn-primary btn-magnetic">
+                              See Drives
+                          </Link>
+                          <Link href="/support" className="hero-btn-secondary btn-magnetic">
+                              Donate Now
+                          </Link>
+                      </div>
                   </div>
               </section>
 

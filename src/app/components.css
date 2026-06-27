@@ -85,21 +85,201 @@
 /* High-Energy Pinned Hero Setup */
 .hero-pinned {
     height: 100vh; width: 100vw; position: relative; overflow: hidden;
-    display: flex; justify-content: center; align-items: center; background: var(--clr-bg-dark);
+    display: flex; justify-content: center; align-items: center; background: #0c120e; /* Deep green-charcoal */
     margin-top: 0 !important;
+    perspective: 1200px;
 }
 .hero-pinned-img {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
     width: 30vw; height: 40vh; /* Starts as a small slit/box */
     object-fit: cover; z-index: 2;
+    border-radius: 12px;
+    box-shadow: 0 30px 100px rgba(0,0,0,0.6);
+    will-change: width, height, border-radius;
 }
 .hero-colossal-layer {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; text-align: center;
     z-index: 1; pointer-events: none;
+    will-change: transform;
 }
 .hero-colossal-front {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; text-align: center;
     z-index: 3; pointer-events: none;
+    will-change: transform;
+}
+
+/* Premium Noise Overlay */
+.hero-noise-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Glassmorphic/Colored Blur Orbs */
+.hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform;
+}
+.hero-orb-1 {
+    width: 45vw; height: 45vw;
+    background: radial-gradient(circle, #22c55e 0%, transparent 70%);
+    top: -10%; left: -10%;
+}
+.hero-orb-2 {
+    width: 40vw; height: 40vw;
+    background: radial-gradient(circle, #C85A3F 0%, transparent 70%);
+    bottom: -5%; right: -5%;
+}
+
+/* Floating Glassmorphic Context Card */
+.hero-glass-card {
+    position: absolute;
+    bottom: 8vh;
+    left: 8vw;
+    z-index: 10;
+    max-width: 440px;
+    background: rgba(18, 26, 22, 0.65);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 2.2rem;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    will-change: transform, opacity;
+}
+.hero-glass-card:hover {
+    border-color: rgba(34, 197, 94, 0.35);
+    box-shadow: 0 30px 80px rgba(34, 197, 94, 0.15);
+}
+.hero-glass-card-eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: #22c55e;
+    margin-bottom: 0.8rem;
+}
+.hero-glass-card-text {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 1.8rem 0;
+}
+.hero-glass-card-ctas {
+    display: flex;
+    gap: 1.2rem;
+}
+.hero-btn-primary {
+    background: #22c55e;
+    color: #121A16;
+    padding: 0.85rem 1.8rem;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid #22c55e;
+    display: inline-flex;
+    align-items: center;
+}
+.hero-btn-primary:hover {
+    background: #16a34a;
+    border-color: #16a34a;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(34, 197, 94, 0.35);
+}
+.hero-btn-secondary {
+    background: transparent;
+    color: #FFF;
+    padding: 0.85rem 1.8rem;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: inline-flex;
+    align-items: center;
+}
+.hero-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.45);
+    transform: translateY(-2px);
+}
+
+/* Responsive Mobile Layout for Hero Pinned */
+@media (max-width: 768px) {
+    .hero-pinned {
+        height: auto;
+        min-height: 100vh;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        padding: 120px 6vw 40px;
+        background: #0c120e;
+        overflow: visible;
+    }
+    .hero-colossal-layer, .hero-colossal-front {
+        position: relative;
+        top: 0; left: 0;
+        transform: none !important;
+        width: 100%;
+        text-align: left;
+        pointer-events: auto;
+    }
+    .hero-colossal-front {
+        display: none; /* Hide outline text overlay on mobile as there's no hover/pin masking */
+    }
+    .hero-pinned-img {
+        position: relative;
+        top: 0; left: 0;
+        transform: none !important;
+        width: 100% !important;
+        height: 35vh !important;
+        margin: 2.5rem 0;
+        border-radius: 12px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    }
+    .hero-glass-card {
+        position: relative;
+        bottom: 0; left: 0;
+        width: 100%;
+        max-width: 100%;
+        opacity: 1 !important;
+        transform: none !important;
+        padding: 1.8rem;
+        margin-top: 1rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: none;
+    }
+    .hero-glass-card-ctas {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    .hero-btn-primary, .hero-btn-secondary {
+        justify-content: center;
+        width: 100%;
+    }
 }
 
 /* Standard Buttons etc. (Retained from previous build) */

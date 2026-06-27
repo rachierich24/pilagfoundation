@@ -1,13 +1,17 @@
 import { PrismaClient } from '@prisma/client';
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
+import { PrismaNeon } from '@prisma/adapter-neon';
+import { neonConfig, Pool } from '@neondatabase/serverless';
+
+// Use WebSockets for Neon connections in serverless/edge environments
+neonConfig.webSocketConstructor =
+  typeof WebSocket !== 'undefined' ? WebSocket : require('ws');
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
 function createPrismaClient() {
-  // Prisma migrate creates dev.db at project ROOT (file:./dev.db resolves from cwd)
-  const adapter = new PrismaBetterSqlite3({
-    url: `${process.cwd()}/dev.db`,
-  });
+  const connectionString = process.env.DATABASE_URL!;
+  const pool = new Pool({ connectionString });
+  const adapter = new PrismaNeon(pool);
   return new PrismaClient({ adapter });
 }
 
@@ -16,3 +20,4 @@ export const prisma = globalForPrisma.prisma || createPrismaClient();
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
 export default prisma;
+
