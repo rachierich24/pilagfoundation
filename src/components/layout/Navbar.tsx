@@ -13,19 +13,26 @@ export default function Navbar() {
     const navLinksRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        let scrollTimeout: ReturnType<typeof setTimeout>;
         const handleScroll = () => {
-            const currentY = window.scrollY;
-            const nav = navRef.current;
-            if (!nav) return;
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const currentY = window.scrollY;
+                const nav = navRef.current;
+                if (!nav) return;
 
-            setScrolled(currentY > 60);
+                setScrolled(currentY > 60);
 
-            // The pill remains sticky and shrinks via the 'nav-scrolled' CSS class toggle.
-            lastScrollY.current = currentY;
+                // The pill remains sticky and shrinks via the 'nav-scrolled' CSS class toggle.
+                lastScrollY.current = currentY;
+            }, 10);
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            clearTimeout(scrollTimeout);
+        };
     }, []);
 
     // Animate mobile overlay open/close

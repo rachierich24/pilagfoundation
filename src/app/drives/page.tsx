@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import gsap from 'gsap';
+import Image from 'next/image';
 import DriveModal from '../../components/DriveModal';
 import './drives.css';
+import heroData from '../../data/hero.json';
 
 const allDrives = [
   { title: 'DTU Plantation Drive', location: 'Delhi', date: 'April 5, 2026', impact: '300 Trees Planned', category: 'Plantation', img: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800' },
@@ -32,9 +34,9 @@ export default function DrivesPage() {
       {/* Hero */}
       <section className="drives-hero">
         <div className="drives-hero-inner">
-          <span className="section-eyebrow" style={{ color: '#22c55e' }}>Climate Action</span>
-          <h1 className="drives-hero-title">Join a Drive</h1>
-          <p className="drives-hero-sub">Be part of real, measurable climate action — on the ground.</p>
+          <span className="section-eyebrow" style={{ color: '#22c55e' }}>{heroData.drivesHero.eyebrow}</span>
+          <h1 className="drives-hero-title">{heroData.drivesHero.title}</h1>
+          <p className="drives-hero-sub">{heroData.drivesHero.subtitle}</p>
         </div>
       </section>
 
@@ -55,7 +57,7 @@ export default function DrivesPage() {
           {filtered.map((drive, i) => (
             <div key={i} className="drives-card">
               <div className="drives-card-img-wrap">
-                <img src={drive.img} alt={drive.title} className="drives-card-img" />
+                <Image src={drive.img} alt={drive.title} width={800} height={533} className="drives-card-img" loading="lazy" />
                 <span className="drives-card-category">{drive.category}</span>
               </div>
               <div className="drives-card-body">

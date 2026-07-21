@@ -2,6 +2,16 @@
 @import './components.css';
 @import './animations.css';
 
+/* Extracted Section Styles */
+@import '../styles/sections/Preloader.css';
+@import '../styles/sections/PinnedEditorial.css';
+@import '../styles/sections/MuseumDrives.css';
+@import '../styles/sections/ImpactStrip.css';
+@import '../styles/sections/Conversion.css';
+@import '../styles/sections/Trust.css';
+@import '../styles/sections/Community.css';
+@import '../styles/sections/FinalCTA.css';
+
 /* NextJS specifics */
 html, body {
   max-width: 100vw;

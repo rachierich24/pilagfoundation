@@ -38,4 +38,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET || "pilag-admin-secret-key-change-in-production",
+  trustHost: true,
 });

@@ -21,6 +21,7 @@ export default function DriveModal({ drive, onClose }: DriveModalProps) {
   const stepRefs = [useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null)];
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({ name: '', college: '', phone: '', interest: 'Plantation' });
+  const [formError, setFormError] = useState('');
 
   // Animate in on mount
   useEffect(() => {
@@ -37,6 +38,20 @@ export default function DriveModal({ drive, onClose }: DriveModalProps) {
   };
 
   const goToStep = (next: number) => {
+    setFormError('');
+    if (step === 0 && next === 1) {
+      if (!formData.name.trim() || !formData.college.trim()) {
+        setFormError('Please fill in both fields to continue.');
+        return;
+      }
+    }
+    if (step === 1 && next === 2) {
+      if (!/^[+]?[\d\s-]{10,}$/.test(formData.phone.trim())) {
+        setFormError('Please enter a valid phone number.');
+        return;
+      }
+    }
+    
     const cur = stepRefs[step].current;
     const nxt = stepRefs[next].current;
     gsap.to(cur, { x: -30, opacity: 0, duration: 0.3, ease: 'power2.in', onComplete: () => {
@@ -87,6 +102,7 @@ export default function DriveModal({ drive, onClose }: DriveModalProps) {
               <input name="college" value={formData.college} onChange={handleChange} placeholder="e.g. DTU, Delhi" />
             </div>
             <button className="modal-btn-next" onClick={() => goToStep(1)}>Continue →</button>
+            {formError && step === 0 && <p style={{ color: '#ef4444', fontSize: '0.85rem', marginTop: '1rem' }}>{formError}</p>}
           </div>
 
           {/* Step 1: Contact & Interest */}
@@ -110,6 +126,7 @@ export default function DriveModal({ drive, onClose }: DriveModalProps) {
               <button className="modal-btn-back" onClick={() => goToStep(0)}>← Back</button>
               <button className="modal-btn-next" onClick={() => goToStep(2)}>Register Now</button>
             </div>
+            {formError && step === 1 && <p style={{ color: '#ef4444', fontSize: '0.85rem', marginTop: '1rem' }}>{formError}</p>}
           </div>
 
           {/* Step 2: Success */}

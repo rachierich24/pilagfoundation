@@ -1,0 +1,364 @@
+/* ==========================================================================
+   CINEMATIC PINNED EDITORIAL
+   ========================================================================== */
+
+/* ????????? TYPOGRAPHY ENHANCEMENTS ????????? */
+.text-colossal {
+    font-family: var(--font-heading);
+    font-size: clamp(4rem, 12vw, 15rem);
+    line-height: 0.85;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin: 0;
+    color: #FFF;
+    will-change: transform, opacity;
+}
+
+/* SplitType helpers */
+.line {
+    overflow: hidden; /* For masking characters */
+    padding-bottom: 0.1em;
+}
+.char {
+    display: inline-block;
+    will-change: transform, opacity, filter;
+    transform-origin: center bottom;
+}
+
+/* ????????? SCATTER PARALLAX & MARQUEE ????????? */
+.marquee-band {
+    width: 100vw;
+    overflow: hidden;
+    background: var(--clr-accent-bright);
+    color: #FFF;
+    padding: 2rem 0;
+    display: flex;
+    align-items: center;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    transform: rotate(-2deg);
+    z-index: 10;
+}
+
+.marquee-track-horizontal {
+    display: flex;
+    white-space: nowrap;
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.marquee-item { padding: 0 2rem; display: inline-block; }
+
+.scrub-text-container {
+    font-size: clamp(3rem, 6vw, 7rem);
+    font-family: var(--font-heading);
+    line-height: 1.1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15); /* Slightly brighter for dark theme */
+    position: relative;
+    max-width: 1200px;
+    margin: 15vh auto;
+}
+.scrub-text-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--clr-accent-bright);
+    -webkit-text-stroke: 0;
+    clip-path: inset(0 100% 0 0);
+}
+
+.gallery-scatter {
+    position: relative;
+    width: 100%;
+    height: 120vh;
+    margin: 10vh 0;
+}
+.scatter-img {
+    position: absolute;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    will-change: transform;
+}
+.scatter-img img { width: 100%; height: 100%; object-fit: cover; }
+.scatter-1 { width: 30vw; height: 40vh; left: 5%; top: 10%; z-index: 3; }
+.scatter-2 { width: 40vw; height: 60vh; right: 5%; top: 30%; z-index: 1; }
+.scatter-3 { width: 25vw; height: 35vh; left: 45%; top: 70%; z-index: 4; }
+
+/* ????????? CINEMATIC GALLERY STRUCTURE ????????? */
+.pinned-gallery-wrapper {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background: #060907; /* Deep cinematic black-green */
+    perspective: 1200px;
+}
+
+/* Atmosphere Layers */
+.ambient-grain {
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    z-index: 99;
+    pointer-events: none;
+    animation: grainShift 8s steps(10) infinite;
+}
+
+@keyframes grainShift {
+    0%, 100% { transform: translate(0, 0); }
+    25% { transform: translate(-2%, -2%); }
+    50% { transform: translate(1%, 2%); }
+    75% { transform: translate(-1%, -1%); }
+}
+
+.depth-fog {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 60%;
+    background: linear-gradient(to top, rgba(6,9,7,0.8) 0%, transparent 100%);
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* Dynamic Lighting */
+.gallery-orb {
+    position: absolute;
+    width: 60vw;
+    height: 60vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 30%, transparent 70%);
+    filter: blur(60px);
+    z-index: 2;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    will-change: transform;
+}
+
+.pinned-gallery-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+}
+
+/* ????????? SLIDE ARCHITECTURE ????????? */
+.pinned-slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    transform-style: preserve-3d;
+}
+
+.pinned-slide.active { opacity: 1; visibility: visible; z-index: 2; }
+
+/* Image Reveal Wrapper */
+.pinned-bg-wrapper {
+    position: absolute;
+    right: 0; top: 0;
+    width: 65%; height: 100%;
+    overflow: hidden;
+    clip-path: inset(100% 0 0 0); /* Bottom up reveal initially */
+    z-index: 1;
+    will-change: clip-path, transform, filter;
+    /* Soft edge mask for cinematic fade */
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 100%);
+}
+
+.pinned-bg {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transform: scale(1.25);
+    filter: blur(10px) brightness(0.6);
+    will-change: transform, filter;
+}
+
+/* Content */
+.pinned-content {
+    position: relative;
+    left: 8%;
+    z-index: 10;
+    max-width: 650px;
+    opacity: 0;
+    transform: translateZ(50px);
+    will-change: transform, opacity;
+}
+
+.pinned-content .lead-text {
+    color: #FFF;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 300;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(20px);
+    will-change: transform, opacity;
+    max-width: 80%;
+}
+
+/* ????????? GLASSMORPHIC STAT CARD ????????? */
+.stat-popup {
+    position: absolute;
+    background: rgba(20, 25, 22, 0.6);
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    color: #FFF;
+    z-index: 20;
+    opacity: 0;
+    transform: scale(0.9) translateZ(80px);
+    box-shadow: 
+        0 30px 60px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.2);
+    will-change: transform, opacity;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow: hidden;
+}
+
+/* Inner noise texture for card */
+.stat-popup::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.15;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+
+/* Border Glow micro-reflection */
+.stat-popup::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: skewX(-20deg);
+    animation: cardSweep 6s infinite ease-in-out;
+}
+
+@keyframes cardSweep {
+    0%, 50% { left: -100%; }
+    100% { left: 200%; }
+}
+
+.stat-popup h5 { 
+    font-family: var(--font-heading); 
+    font-size: 3rem; 
+    margin: 0; 
+    color: #FFF; 
+    line-height: 1;
+    position: relative;
+    z-index: 2;
+}
+.stat-popup h5 span {
+    color: var(--clr-accent-bright);
+}
+.stat-popup p { 
+    font-size: 0.85rem; 
+    margin: 0; 
+    opacity: 0.6; 
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+    z-index: 2;
+}
+
+/* ????????? DECORATIVE EDITORIAL ELEMENTS ????????? */
+.editorial-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: 
+        linear-gradient(rgba(255,255,255,1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+    background-size: 25vw 25vh;
+}
+
+.slide-counter {
+    position: absolute;
+    left: 8%;
+    bottom: 10%;
+    z-index: 20;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.slide-counter-line {
+    width: 40px;
+    height: 1px;
+    background: rgba(255,255,255,0.3);
+}
+
+.crosshair {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    z-index: 20;
+    pointer-events: none;
+    opacity: 0.3;
+}
+.crosshair::before, .crosshair::after {
+    content: '';
+    position: absolute;
+    background: #FFF;
+}
+.crosshair::before { top: 50%; left: 0; width: 100%; height: 1px; transform: translateY(-50%); }
+.crosshair::after { left: 50%; top: 0; height: 100%; width: 1px; transform: translateX(-50%); }
+
+.crosshair-1 { top: 15%; right: 10%; }
+.crosshair-2 { bottom: 15%; right: 30%; }
+
+/* ????????? MOBILE RESPONSIVENESS ????????? */
+@media (max-width: 768px) {
+    .pinned-gallery-wrapper { height: auto; overflow: visible; background: var(--clr-bg-dark); }
+    .pinned-gallery-container { height: auto; display: flex; flex-direction: column; align-items: stretch; }
+    .pinned-slide {
+        position: relative; opacity: 1; visibility: visible;
+        height: auto; min-height: 100vh;
+        display: flex; flex-direction: column; justify-content: center;
+        padding-top: 10vh;
+    }
+    .pinned-bg-wrapper { 
+        position: relative; width: 100%; height: 50vh; 
+        clip-path: none; mask-image: none; -webkit-mask-image: none; 
+        order: 1;
+    }
+    .pinned-bg { transform: none; filter: none; }
+    .pinned-content { 
+        position: relative; left: 0; width: 100%; 
+        transform: none !important; opacity: 1 !important; 
+        padding: 2rem 5vw; order: 2;
+    }
+    .pinned-content .text-colossal { font-size: 3.5rem; margin-bottom: 1rem; }
+    .stat-popup { 
+        position: relative; transform: none !important; opacity: 1 !important; 
+        margin: 0 5vw 2rem; order: 3;
+    }
+    .editorial-grid, .crosshair, .slide-counter { display: none; }
+}

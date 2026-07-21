@@ -1,0 +1,122 @@
+/* ????????? TRANSPARENCY / TRUST SECTION ???????????????????????????????????????????????????????????????????????????????????????????????? */
+.trust-section {
+    padding: 10rem 5vw;
+    background: #060907; /* Deep cinematic dark */
+    position: relative;
+}
+
+/* Ambient glow */
+.trust-section::before {
+    content: '';
+    position: absolute;
+    bottom: -10%; left: 10%;
+    width: 50vw; height: 50vw;
+    background: radial-gradient(circle, rgba(34, 197, 94, 0.08) 0%, transparent 60%);
+    filter: blur(80px);
+    pointer-events: none;
+}
+
+.trust-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.trust-inner h2,
+.trust-inner p {
+    color: #FFF;
+}
+
+.trust-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 0.75rem;
+    color: #4ade80;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(74, 222, 128, 0.2);
+    border-radius: 50px;
+    background: rgba(74, 222, 128, 0.05);
+}
+
+.trust-heading {
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.trust-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    text-align: left;
+    margin-top: 6rem;
+}
+
+.trust-bar-item {
+    position: relative;
+}
+
+.trust-bar-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    align-items: flex-end;
+}
+
+.trust-bar-label {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+}
+
+.trust-bar-pct {
+    color: #4ade80;
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 2rem;
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(74, 222, 128, 0.4);
+}
+
+/* Glass Tube Track */
+.trust-bar-track {
+    height: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    width: 100%;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+}
+
+/* Neon Glow Fill */
+.trust-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #16a34a, #4ade80);
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 0 20px rgba(74, 222, 128, 0.6), inset 0 1px 2px rgba(255,255,255,0.8);
+}
+
+/* Moving inner glow line */
+.trust-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: barShine 3s infinite;
+}
+
+@keyframes barShine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}

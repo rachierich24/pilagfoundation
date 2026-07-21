@@ -1,0 +1,372 @@
+.heroContainer {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0c120e;
+  margin-top: 0;
+  perspective: 1200px;
+  will-change: transform;
+}
+
+.heroContainer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.8) 100%);
+  z-index: 5;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+.bottomGradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50vh;
+  background: linear-gradient(to top, rgba(12, 18, 14, 0.98) 0%, rgba(12, 18, 14, 0.6) 50%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  will-change: opacity;
+}
+
+.noiseOverlay {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ambient Glowing Orbs */
+.glowOrb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform, opacity;
+}
+
+.glowOrbPrimary {
+  width: 50vw;
+  height: 50vw;
+  max-width: 650px;
+  max-height: 650px;
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.25) 0%, rgba(34, 197, 94, 0.05) 50%, transparent 70%);
+  top: -12%;
+  left: -10%;
+  mix-blend-mode: screen;
+  filter: blur(30px);
+}
+
+.glowOrbSecondary {
+  width: 45vw;
+  height: 45vw;
+  max-width: 600px;
+  max-height: 600px;
+  background: radial-gradient(circle, rgba(200, 90, 63, 0.2) 0%, rgba(200, 90, 63, 0.05) 50%, transparent 70%);
+  bottom: -8%;
+  right: -8%;
+  mix-blend-mode: screen;
+  filter: blur(30px);
+}
+
+/* Central Image Mask & Wrapper - Centered Card to Fullscreen */
+.imageWrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 48vw;
+  height: 52vh;
+  z-index: 2;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3), var(--shadow-depth), 0 0 80px rgba(26, 54, 38, 0.2);
+  will-change: width, height, border-radius, transform, opacity, box-shadow;
+}
+
+.pinnedImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.2);
+  will-change: transform;
+}
+
+/* Typography Layers */
+.colossalLayer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* Typography Over-Image Layer */
+.colossalFront {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  z-index: 6;
+  pointer-events: none;
+  opacity: 1;
+  will-change: transform, opacity;
+}
+
+.textColossal {
+  font-family: var(--font-heading, 'Inter', sans-serif);
+  font-size: clamp(3.8rem, 10.5vw, 12rem);
+  font-weight: 900;
+  letter-spacing: -0.035em;
+  line-height: 0.88;
+  text-transform: uppercase;
+  margin: 0;
+  user-select: none;
+}
+
+.textColossalSolid {
+  color: var(--clr-soft-white);
+  text-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.textColossalOutline {
+  color: rgba(255, 255, 255, 0.1);
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.85);
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5));
+}
+
+/* Context Card & CTAs */
+.glassCard {
+  position: absolute;
+  bottom: 6vh;
+  left: 6vw;
+  z-index: 10;
+  max-width: 460px;
+  background: rgba(14, 22, 18, 0.78);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(34, 197, 94, 0.22);
+  border-radius: 20px;
+  padding: 2.2rem;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 0 30px rgba(34, 197, 94, 0.08);
+  will-change: transform, opacity;
+}
+
+.glassCardEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #4ade80;
+  margin-bottom: 0.7rem;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+}
+
+.eyebrowDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+}
+
+.glassCardText {
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.96rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0 0 1.8rem 0;
+}
+
+.glassCardCtas {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+/* Action Buttons */
+.btnPrimary {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: #0c120e;
+  padding: 0.9rem 1.9rem;
+  border-radius: 10px;
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(34, 197, 94, 0.6);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+}
+
+.btnPrimaryIcon {
+  transition: transform 0.3s ease;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.btnPrimary:hover {
+  background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+  border-color: #4ade80;
+  transform: translate3d(0, -3px, 0) scale(1.02);
+  box-shadow: 0 14px 35px rgba(34, 197, 94, 0.45);
+}
+
+.btnPrimary:hover .btnPrimaryIcon {
+  transform: translateX(4px);
+}
+
+.btnSecondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: #FFFFFF;
+  padding: 0.9rem 1.9rem;
+  border-radius: 10px;
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.btnSecondaryIcon {
+  transition: transform 0.3s ease;
+  font-size: 1.05rem;
+  line-height: 1;
+  opacity: 0.8;
+}
+
+.btnSecondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.55);
+  color: #FFFFFF;
+  transform: translate3d(0, -3px, 0) scale(1.02);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+
+.btnSecondary:hover .btnSecondaryIcon {
+  transform: translateX(3px);
+}
+
+.mobileCtaBar {
+  display: none;
+}
+
+/* Responsive Breakpoint Layout (< 768px) */
+@media (max-width: 768px) {
+  .heroContainer {
+    height: auto;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 110px 5vw 100px;
+    background: #0c120e;
+    overflow: visible;
+  }
+
+  .colossalLayer,
+  .colossalFront {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none !important;
+    width: 100%;
+    text-align: left;
+    pointer-events: auto;
+  }
+
+  .colossalFront {
+    display: none;
+  }
+
+  .imageWrap {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none !important;
+    width: 100% !important;
+    height: 40vh !important;
+    margin: 1.8rem 0;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(34, 197, 94, 0.15);
+  }
+
+  .glassCard {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    opacity: 1 !important;
+    transform: none !important;
+    padding: 1.6rem;
+    margin-top: 0.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .glassCardCtas {
+    display: none;
+  }
+
+  .mobileCtaBar {
+    position: fixed;
+    bottom: 1.2rem;
+    left: 4vw;
+    right: 4vw;
+    z-index: 99;
+    display: flex;
+    gap: 0.8rem;
+    padding: 0.6rem;
+    background: rgba(14, 22, 18, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7), 0 0 20px rgba(34, 197, 94, 0.15);
+  }
+
+  .mobileCtaBar .btnPrimary,
+  .mobileCtaBar .btnSecondary {
+    flex: 1;
+    width: 100%;
+    padding: 0.85rem 0.5rem;
+    font-size: 0.78rem;
+    border-radius: 10px;
+  }
+}
