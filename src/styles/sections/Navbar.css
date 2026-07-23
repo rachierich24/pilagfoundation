@@ -1,0 +1,338 @@
+/* ─── AWWWARDS-GRADE GLASSMORPHIC NAVBAR ─────────────────────────────── */
+.main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99999;
+    padding: 1.4rem 0;
+    pointer-events: none;
+    transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.main-nav.nav-scrolled {
+    padding: 0.8rem 0;
+}
+
+/* Floating Glassmorphic Pill Container */
+.nav-pill {
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.78) !important;
+    backdrop-filter: blur(28px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.95) !important;
+    border-radius: 100px;
+    padding: 0.65rem 1.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: auto;
+    box-shadow: 
+        0 12px 35px rgba(15, 23, 42, 0.07),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    width: 90vw;
+    max-width: 1240px;
+    gap: 2rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    position: relative;
+}
+
+.main-nav.nav-scrolled .nav-pill {
+    background: rgba(255, 255, 255, 0.88) !important;
+    border-color: rgba(16, 185, 129, 0.25) !important;
+    box-shadow: 
+        0 16px 40px rgba(15, 23, 42, 0.1),
+        0 0 20px rgba(16, 185, 129, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+    padding: 0.55rem 1.6rem !important;
+}
+
+/* Logo Styling */
+.nav-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.logo {
+    display: block;
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.nav-logo-link:hover .logo {
+    transform: scale(1.05);
+}
+
+.nav-brand-badge {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: #047857;
+    text-transform: uppercase;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 3px 9px;
+    border-radius: 100px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.nav-brand-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 6px #10B981;
+}
+
+/* Desktop Links */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-link-item {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #0F172A !important;
+    text-decoration: none;
+    position: relative;
+    padding: 0.3rem 0;
+    transition: color 0.3s ease;
+}
+
+.nav-link-item::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #10B981, #34D399);
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateX(-50%);
+    opacity: 0;
+}
+
+.nav-link-item:hover {
+    color: #10B981 !important;
+}
+
+.nav-link-item:hover::after,
+.nav-link-item.active::after {
+    width: 100%;
+    opacity: 1;
+}
+
+/* CTA Pill Button */
+.nav-cta-btn {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+    color: #FFFFFF !important;
+    padding: 0.65rem 1.4rem;
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 8px 22px rgba(16, 185, 129, 0.32);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-cta-btn:hover {
+    background: linear-gradient(135deg, #34D399 0%, #10B981 100%) !important;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(16, 185, 129, 0.45);
+}
+
+/* Hamburger Button */
+.nav-hamburger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 100001;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.ham-bar {
+    width: 22px;
+    height: 2px;
+    background: #0F172A;
+    border-radius: 2px;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-hamburger.is-open .ham-bar--top {
+    transform: translateY(7px) rotate(45deg);
+    background: #F4EFE6;
+}
+
+.nav-hamburger.is-open .ham-bar--mid {
+    opacity: 0;
+    transform: translateX(10px);
+}
+
+.nav-hamburger.is-open .ham-bar--bot {
+    transform: translateY(-7px) rotate(-45deg);
+    background: #F4EFE6;
+}
+
+/* Fullscreen Mobile Drawer Overlay */
+.mobile-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    background: rgba(6, 14, 10, 0.96);
+    backdrop-filter: blur(32px) saturate(180%);
+    -webkit-backdrop-filter: blur(32px) saturate(180%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 6rem 6vw 3rem 6vw;
+    color: #F4EFE6;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: 100vh;
+    box-sizing: border-box;
+}
+
+.mobile-nav-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.mobile-nav-eyebrow {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #10B981;
+    margin-bottom: 0.8rem;
+}
+
+.mobile-nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    padding: 0.95rem 1.2rem;
+    min-height: 52px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    color: #F4EFE6;
+    transition: all 0.3s ease;
+    touch-action: manipulation;
+}
+
+.mobile-nav-item:hover,
+.mobile-nav-item:active {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.4);
+    transform: translateX(4px);
+}
+
+.mobile-nav-num {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #10B981;
+}
+
+.mobile-nav-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+}
+
+.mobile-nav-arrow {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.4);
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.mobile-nav-item:hover .mobile-nav-arrow {
+    color: #34D399;
+    transform: translateX(4px);
+}
+
+.mobile-overlay-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    font-size: 0.78rem;
+    color: rgba(244, 239, 230, 0.6);
+    line-height: 1.5;
+    text-align: center;
+}
+
+@media (max-width: 992px) {
+    .desktop-only {
+        display: none !important;
+    }
+    .mobile-only {
+        display: flex !important;
+    }
+    .nav-pill {
+        width: 92vw;
+        max-width: 100%;
+        padding: 0.55rem 1.2rem;
+        box-sizing: border-box;
+    }
+    .logo {
+        height: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-nav {
+        padding: 0.8rem 0;
+    }
+    .main-nav.nav-scrolled {
+        padding: 0.5rem 0;
+    }
+    .nav-pill {
+        width: 94vw;
+        padding: 0.45rem 1rem !important;
+    }
+    .mobile-overlay {
+        padding: 5.5rem 5vw 2rem 5vw;
+    }
+}
+
+@media (min-width: 993px) {
+    .mobile-only {
+        display: none !important;
+    }
+}

@@ -1,112 +1,179 @@
-/* ????????? IMPACT SUMMARY STRIP ??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????? */
+/* ==========================================================================
+   LIVE GLASSMORPHIC IMPACT DASHBOARD (AWWWARDS GRADE)
+   ========================================================================== */
+
 .impact-strip {
-    background: #060907;
-    padding: 10rem 5vw;
+    background: #040806;
+    padding: 8vh 5vw 10vh 5vw;
     position: relative;
     overflow: hidden;
 }
 
-/* Ambient backdrop glow for glass strip */
+/* Ambient Radial Glow behind the container */
 .impact-strip::before {
     content: '';
     position: absolute;
     top: 50%; left: 50%;
-    width: 60vw; height: 30vh;
-    background: radial-gradient(ellipse, rgba(34, 197, 94, 0.15) 0%, transparent 60%);
+    width: 70vw; height: 45vh;
+    background: radial-gradient(ellipse, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.03) 50%, transparent 70%);
     transform: translate(-50%, -50%);
-    filter: blur(60px);
+    filter: blur(90px);
     pointer-events: none;
     z-index: 0;
 }
 
-.impact-strip-inner {
-    max-width: 1400px;
+.impact-strip-container {
+    max-width: 1380px;
     margin: 0 auto;
-    padding: 4rem 5vw;
+    position: relative;
+    z-index: 2;
+}
+
+/* Header HUD Badge Tag */
+.impact-hud-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.impact-hud-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.5rem 1.4rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    border-radius: 100px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    color: #34D399;
+    text-transform: uppercase;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Glassmorphic Container Card */
+.impact-strip-inner {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 4rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding: 4rem 3vw;
     text-align: center;
-    
-    /* Premium Glassmorphic Pill */
     position: relative;
     z-index: 2;
-    background: rgba(20, 25, 22, 0.6);
-    backdrop-filter: blur(24px) saturate(150%);
-    -webkit-backdrop-filter: blur(24px) saturate(150%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 40px;
+    background: rgba(255, 255, 255, 0.03) !important;
+    backdrop-filter: blur(32px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 32px !important;
     box-shadow: 
-        0 40px 80px rgba(0, 0, 0, 0.5),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        0 30px 80px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(16, 185, 129, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
 }
 
-/* Noise overlay inside the glass pill */
-.impact-strip-inner::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.15;
-    mix-blend-mode: overlay;
-    border-radius: inherit;
-    pointer-events: none;
-}
-
-.impact-stat {
+.impact-stat-item {
     position: relative;
     z-index: 2;
-    padding: 2rem 0;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.impact-stat:hover {
-    transform: translateY(-5px);
+.impact-stat-item:hover {
+    transform: translateY(-6px);
+}
+
+.impact-icon-wrap {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    color: #34D399;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.4rem;
+    box-shadow: 0 0 24px rgba(16, 185, 129, 0.22);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.impact-stat-item:hover .impact-icon-wrap {
+    background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+    color: #040806;
+    transform: scale(1.12);
+    box-shadow: 0 0 35px rgba(52, 211, 153, 0.5);
 }
 
 .impact-stat-number {
     display: block;
-    font-family: var(--font-heading);
-    font-size: clamp(3.5rem, 8vw, 7rem);
-    font-weight: 900;
-    line-height: 0.9;
-    letter-spacing: -0.02em;
-    
-    /* Silver-Green Metallic Gradient */
-    background: linear-gradient(135deg, #FFF 0%, #a7f3d0 30%, #22c55e 80%, #059669 100%);
+    font-family: 'Outfit', sans-serif !important;
+    font-size: clamp(2.6rem, 4.8vw, 4.6rem) !important;
+    font-weight: 800 !important;
+    line-height: 0.98 !important;
+    letter-spacing: -0.025em !important;
+    color: #F4EFE6 !important;
+    background: linear-gradient(135deg, #FFFFFF 30%, #34D399 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: 0 10px 30px rgba(34, 197, 94, 0.2);
+    margin-bottom: 0.8rem;
 }
 
 .impact-stat-label {
     display: block;
-    margin-top: 1.5rem;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 0.78rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.14em !important;
+    font-weight: 700 !important;
+    color: rgba(244, 239, 230, 0.75) !important;
 }
 
-.impact-stat:not(:last-child) {
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
-    padding-right: 4rem;
+.impact-stat-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -0.75rem;
+    top: 15%;
+    bottom: 15%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(52, 211, 153, 0.25), transparent);
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
+    .impact-strip-inner {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    .impact-stat-item:not(:last-child)::after { display: none; }
+}
+
+@media (max-width: 640px) {
+    .impact-strip {
+        padding: 5vh 4vw;
+    }
+    .impact-hud-header {
+        margin-bottom: 1.8rem;
+    }
+    .impact-hud-badge {
+        font-size: 0.68rem;
+        padding: 0.4rem 1rem;
+    }
     .impact-strip-inner {
         grid-template-columns: 1fr;
-        gap: 0;
-        padding: 4rem 2rem;
-        border-radius: 30px;
+        gap: 1.8rem;
+        padding: 2.2rem 1.2rem !important;
+        border-radius: 24px !important;
     }
-    .impact-stat:not(:last-child) {
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        padding-right: 0;
-        padding-bottom: 3rem;
-        margin-bottom: 3rem;
+    .impact-stat-number {
+        font-size: clamp(2.2rem, 8vw, 3.8rem) !important;
+    }
+    .impact-stat-label {
+        font-size: 0.72rem !important;
     }
 }

@@ -1,10 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
+import { HeartHandshake } from 'lucide-react';
 import gsap from 'gsap';
+import '../../styles/sections/Navbar.css';
 
 export default function Navbar() {
+    const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const navRef = useRef<HTMLElement>(null);
@@ -21,9 +25,7 @@ export default function Navbar() {
                 const nav = navRef.current;
                 if (!nav) return;
 
-                setScrolled(currentY > 60);
-
-                // The pill remains sticky and shrinks via the 'nav-scrolled' CSS class toggle.
+                setScrolled(currentY > 40);
                 lastScrollY.current = currentY;
             }, 10);
         };
@@ -45,19 +47,19 @@ export default function Navbar() {
             document.body.style.overflow = 'hidden';
             gsap.set(overlay, { display: 'flex' });
             gsap.fromTo(overlay,
-                { opacity: 0, backdropFilter: 'blur(0px)' },
-                { opacity: 1, backdropFilter: 'blur(24px)', duration: 0.5, ease: 'power3.out' }
+                { opacity: 0 },
+                { opacity: 1, duration: 0.45, ease: 'power3.out' }
             );
             if (links) {
                 gsap.fromTo(links,
-                    { y: 60, opacity: 0, rotateX: -20 },
-                    { y: 0, opacity: 1, rotateX: 0, duration: 0.7, ease: 'expo.out', stagger: 0.08, delay: 0.15 }
+                    { y: 40, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out', stagger: 0.08, delay: 0.1 }
                 );
             }
         } else {
             document.body.style.overflow = '';
             gsap.to(overlay, {
-                opacity: 0, duration: 0.4, ease: 'power3.in',
+                opacity: 0, duration: 0.35, ease: 'power3.in',
                 onComplete: () => { gsap.set(overlay, { display: 'none' }); }
             });
         }
@@ -73,28 +75,43 @@ export default function Navbar() {
                 aria-label="Main Navigation"
             >
                 <div className="nav-pill">
-                    {/* Logo */}
-                    <Link href="/" className="nav-logo-link" onClick={closeMenu}>
-                        <img src="/pilaglogo.png" className="logo" alt="PILAG Foundation" />
-                    </Link>
+                    {/* Logo & Brand Badge */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <Link href="/" className="nav-logo-link" onClick={closeMenu}>
+                            <img src="/pilaglogo.png" className="logo" alt="PILAG Foundation" />
+                        </Link>
+                    </div>
 
-                    {/* Desktop Links */}
+                    {/* Desktop Navigation Links */}
                     <ul className="nav-links desktop-only" role="list">
-                        <li><Link href="/about" className="nav-link-item">About</Link></li>
-                        <li><Link href="/impact" className="nav-link-item">Impact</Link></li>
-                        <li><Link href="/drives" className="nav-link-item">Drives</Link></li>
+                        <li>
+                            <Link href="/about" className={`nav-link-item${pathname === '/about' ? ' active' : ''}`}>
+                                About
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href="/impact" className={`nav-link-item${pathname === '/impact' ? ' active' : ''}`}>
+                                Impact
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href="/drives" className={`nav-link-item${pathname === '/drives' ? ' active' : ''}`}>
+                                Drives
+                            </Link>
+                        </li>
                     </ul>
 
-                    {/* Desktop CTA */}
+                    {/* Desktop Action CTA Button */}
                     <Link
                         href="/support"
-                        className="nav-cta-btn desktop-only btn-magnetic"
+                        className="nav-cta-btn desktop-only"
                         id="nav-dynamic-cta"
                     >
-                        Support Us
+                        <span>Support Us</span>
+                        <HeartHandshake className="w-3.5 h-3.5" />
                     </Link>
 
-                    {/* Hamburger */}
+                    {/* Hamburger Button for Mobile */}
                     <button
                         className={`nav-hamburger mobile-only${isOpen ? ' is-open' : ''}`}
                         onClick={() => setIsOpen(v => !v)}
@@ -108,21 +125,21 @@ export default function Navbar() {
                 </div>
             </nav>
 
-            {/* Fullscreen Mobile Overlay */}
+            {/* Fullscreen Mobile Drawer Overlay */}
             <div ref={overlayRef} className="mobile-overlay" style={{ display: 'none' }} aria-hidden={!isOpen}>
-                <div className="mobile-overlay-bg"></div>
                 <div ref={navLinksRef} className="mobile-nav-inner">
-                    <div className="mobile-nav-eyebrow">Navigation</div>
+                    <div className="mobile-nav-eyebrow">PILAG Foundation Navigation</div>
                     {[
-                        { href: '/about', label: 'About', num: '01' },
-                        { href: '/impact', label: 'Impact', num: '02' },
-                        { href: '/drives', label: 'Drives', num: '03' },
-                        { href: '/support', label: 'Support Us', num: '04' },
+                        { href: '/', label: 'Home', num: '01' },
+                        { href: '/about', label: 'About PILAG', num: '02' },
+                        { href: '/impact', label: 'Grassroots Impact', num: '03' },
+                        { href: '/drives', label: 'Community Drives', num: '04' },
+                        { href: '/support', label: 'Support Legal Defense', num: '05' },
                     ].map(({ href, label, num }) => (
                         <Link
                             key={href}
                             href={href}
-                            className="mobile-nav-item"
+                            className={`mobile-nav-item${pathname === href ? ' active' : ''}`}
                             onClick={closeMenu}
                         >
                             <span className="mobile-nav-num">{num}</span>
@@ -130,6 +147,7 @@ export default function Navbar() {
                             <span className="mobile-nav-arrow">→</span>
                         </Link>
                     ))}
+
                     <div className="mobile-overlay-footer">
                         <span>PILAG Foundation — People&apos;s Initiative for Local Administration and Governance</span>
                     </div>

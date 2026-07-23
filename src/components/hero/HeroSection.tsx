@@ -32,14 +32,17 @@ export default function HeroSection() {
       const mm = gsap.matchMedia();
 
       // Ensure crisp initial centered card state
+      // Ensure crisp initial centered card state
       if (imageWrapRef.current) {
         gsap.set(imageWrapRef.current, {
           xPercent: -50,
           yPercent: -50,
+          x: 0,
+          y: 0,
           top: "50%",
           left: "50%",
-          width: "48vw",
-          height: "52vh",
+          width: "52vw",
+          height: "56vh",
           maxWidth: "none",
           borderRadius: "20px",
           opacity: 1,
@@ -47,7 +50,7 @@ export default function HeroSection() {
       }
 
       if (pinnedImgRef.current) {
-        gsap.set(pinnedImgRef.current, { scale: 1.25 });
+        gsap.set(pinnedImgRef.current, { scale: 1.25, transformOrigin: "center center" });
       }
 
       if (orb1Ref.current && orb2Ref.current) {

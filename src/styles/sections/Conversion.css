@@ -1,242 +1,443 @@
-/* ????????? CONVERSION SECTION ????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????? */
+/* ─── AWWWARDS GLASSMORPHIC CONVERSION & ACTION HUB ─── */
 .conversion-section {
-    padding: 10rem 5vw;
-    background: #EADFC8; /* Light warm background */
+    background: #040806 !important; /* Obsidian dark forest ground */
+    padding: 9rem 6vw !important;
     position: relative;
     overflow: hidden;
+    color: #F4EFE6;
+    font-family: 'Plus Jakarta Sans', var(--font-body, sans-serif);
 }
 
-/* Ambient lighting for light mode */
-.conversion-section::before {
-    content: '';
+/* Ambient Radial Glows */
+.conversion-bg-glow-left {
     position: absolute;
-    top: -20%; left: -10%;
-    width: 60vw; height: 60vw;
-    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
-    filter: blur(80px);
-    z-index: 0;
+    top: 20%;
+    left: -5%;
+    width: 650px;
+    height: 650px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.02) 50%, transparent 75%);
     pointer-events: none;
+    z-index: 1;
+    filter: blur(70px);
+}
+
+.conversion-bg-glow-right {
+    position: absolute;
+    bottom: 10%;
+    right: -5%;
+    width: 650px;
+    height: 650px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.03) 50%, transparent 75%);
+    pointer-events: none;
+    z-index: 1;
+    filter: blur(70px);
 }
 
 .conversion-inner {
-    max-width: 1200px;
+    max-width: 1380px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    align-items: start;
+    gap: 3.5rem;
+    align-items: stretch;
     position: relative;
     z-index: 2;
 }
 
-.section-eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    font-size: 0.75rem;
-    color: #1A3626;
-    margin-bottom: 1.5rem;
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background: rgba(26, 54, 38, 0.05);
-    border: 1px solid rgba(26, 54, 38, 0.1);
-    border-radius: 50px;
-    font-weight: 700;
-}
-
-.volunteer-col,
-.donation-col {
+/* Glassmorphic Panel Cards */
+.conversion-card-panel {
+    background: rgba(255, 255, 255, 0.035) !important;
+    backdrop-filter: blur(32px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 32px !important;
+    padding: 3.8rem 3.2rem !important;
+    box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(16, 185, 129, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    justify-content: space-between;
+    box-sizing: border-box;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
 }
 
-.volunteer-col h2,
-.donation-col h2 {
-    font-family: var(--font-heading);
-    font-size: clamp(3.5rem, 5vw, 5rem);
-    font-weight: 900;
-    line-height: 0.95;
-    color: #1A3626;
-    letter-spacing: -0.02em;
+.conversion-card-panel:hover {
+    border-color: rgba(16, 185, 129, 0.3) !important;
+    box-shadow: 
+        0 35px 90px rgba(0, 0, 0, 0.7),
+        0 0 50px rgba(16, 185, 129, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
 }
 
-.volunteer-col p {
-    font-size: 1.15rem;
-    line-height: 1.6;
-    color: rgba(26, 54, 38, 0.7);
-    max-width: 90%;
-    margin-bottom: 2rem;
+/* Eyebrow Badge */
+.conversion-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.45rem 1.1rem;
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 100px;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: #34D399;
+    text-transform: uppercase;
+    margin-bottom: 1.8rem;
+    width: fit-content;
+    backdrop-filter: blur(12px);
 }
 
-/* GLASSMORPHIC DONATION CARDS */
+.conversion-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 8px #10B981;
+}
+
+.conversion-heading {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: clamp(2.8rem, 4.4vw, 4.4rem) !important;
+    font-weight: 800 !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.025em !important;
+    color: #F4EFE6 !important;
+    margin-bottom: 1.5rem !important;
+    text-transform: uppercase !important;
+}
+
+.conversion-heading-highlight {
+    color: #10B981 !important;
+    background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.conversion-subtext {
+    font-size: 1.05rem !important;
+    line-height: 1.65 !important;
+    color: rgba(244, 239, 230, 0.75) !important;
+    margin-bottom: 2rem !important;
+    font-weight: 400;
+}
+
+/* Volunteer Benefits List */
+.conversion-benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.8rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.conversion-benefits-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    font-size: 0.95rem;
+    color: rgba(244, 239, 230, 0.85);
+    font-weight: 500;
+}
+
+.benefit-icon-check {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Volunteer CTA Button */
+.conversion-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+    color: #FFFFFF !important;
+    padding: 1rem 1.8rem 1rem 2.2rem;
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.conversion-cta-btn:hover {
+    background: linear-gradient(135deg, #34D399 0%, #10B981 100%) !important;
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 16px 45px rgba(16, 185, 129, 0.5);
+}
+
+.cta-arrow-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Glassmorphic Donation Cards */
 .donation-cards {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    margin-top: 1rem;
-    perspective: 1000px;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
 }
 
 .donation-card {
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    border-radius: 16px;
-    padding: 1.5rem 2rem;
+    background: rgba(255, 255, 255, 0.04) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 20px !important;
+    padding: 1.4rem 1.8rem !important;
     display: flex;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease;
-    transform-style: preserve-3d;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02), inset 0 1px 0 rgba(255,255,255,0.6);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
 }
 
 .donation-card:hover {
-    transform: translateY(-5px) rotateX(2deg);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255,255,255,0.8);
-    background: rgba(255, 255, 255, 0.6);
+    transform: translateY(-3px) !important;
+    border-color: rgba(16, 185, 129, 0.35) !important;
+    background: rgba(255, 255, 255, 0.07) !important;
 }
 
 .donation-card.selected {
-    background: rgba(255, 255, 255, 0.8);
-    border-color: #22c55e;
-    box-shadow: 0 20px 50px rgba(34, 197, 94, 0.15), inset 0 0 0 1px #22c55e;
-    transform: translateY(-8px) scale(1.02);
+    background: rgba(16, 185, 129, 0.12) !important;
+    border-color: #10B981 !important;
+    box-shadow: 0 15px 40px rgba(16, 185, 129, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+    transform: translateY(-4px) scale(1.01) !important;
+}
+
+.donation-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.donation-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .donation-amount {
-    font-family: var(--font-heading);
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: #1A3626;
-    transition: color 0.3s ease;
-    line-height: 1;
-    margin-bottom: 0.25rem;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 2.2rem !important;
+    font-weight: 800 !important;
+    color: #F4EFE6 !important;
+    line-height: 1 !important;
 }
 
 .donation-card.selected .donation-amount {
-    color: #16a34a;
+    color: #34D399 !important;
+}
+
+.donation-pop-tag {
+    font-size: 0.64rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: #34D399;
+    background: rgba(16, 185, 129, 0.18);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    padding: 3px 8px;
+    border-radius: 100px;
 }
 
 .donation-desc {
-    font-size: 0.9rem;
-    color: rgba(26, 54, 38, 0.6);
-    font-weight: 500;
+    font-size: 0.9rem !important;
+    color: rgba(244, 239, 230, 0.7) !important;
+    font-weight: 450 !important;
 }
 
 .donation-card-check {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    border: 1px solid rgba(26, 54, 38, 0.2);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
     background: transparent;
+    flex-shrink: 0;
 }
 
 .donation-card.selected .donation-card-check {
-    background: #22c55e;
-    border-color: #22c55e;
-    box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+    background: #10B981 !important;
+    border-color: #10B981 !important;
+    box-shadow: 0 0 16px rgba(16, 185, 129, 0.6) !important;
 }
 
 .donation-card.selected .donation-card-check::after {
-    content: '???';
-    color: #FFF;
-    font-size: 1rem;
-    font-weight: 800;
+    content: none !important;
 }
 
-/* CUSTOM AMOUNT INPUT */
+/* Custom Amount Input */
 .donation-custom {
-    margin-top: 2rem;
+    margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.6rem;
 }
 
 .donation-custom label {
-    font-size: 0.85rem;
+    font-size: 0.74rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: rgba(26, 54, 38, 0.6);
-    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: rgba(244, 239, 230, 0.6);
+    font-weight: 800;
 }
 
 .donation-custom-input-wrap {
-    position: relative;
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
     overflow: hidden;
     transition: all 0.3s ease;
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
 }
 
 .donation-custom-input-wrap:focus-within {
-    background: rgba(255, 255, 255, 0.8);
-    border-color: #22c55e;
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #10B981;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.25);
 }
 
 .donation-currency {
-    padding-left: 1.5rem;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1A3626;
+    padding-left: 1.4rem;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #34D399;
 }
 
 .donation-custom-input {
     width: 100%;
     border: none;
     background: transparent;
-    padding: 1.25rem 1rem;
-    font-size: 1.25rem;
+    padding: 1rem 1rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    color: #1A3626;
+    color: #F4EFE6;
     outline: none;
+    font-family: inherit;
 }
 
 .donation-custom-input::placeholder {
-    color: rgba(26, 54, 38, 0.3);
+    color: rgba(244, 239, 230, 0.3);
 }
 
-.donate-action {
-    margin-top: 2.5rem;
-}
-
+/* Donate Action CTA */
 .btn-donate {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 0.8rem;
     width: 100%;
-    padding: 1.25rem;
-    background: #1A3626;
-    color: #FFF;
-    font-weight: 700;
-    font-size: 1.1rem;
-    border-radius: 50px;
+    padding: 1.1rem;
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+    color: #FFFFFF !important;
+    font-weight: 800;
+    font-size: 0.88rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 100px;
     text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 25px rgba(26, 54, 38, 0.2);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-sizing: border-box;
 }
 
 .btn-donate:hover {
-    background: #22c55e;
-    transform: translateY(-2px);
-    box-shadow: 0 15px 35px rgba(34, 197, 94, 0.3);
+    background: linear-gradient(135deg, #34D399 0%, #10B981 100%) !important;
+    transform: translateY(-3px) scale(1.01);
+    box-shadow: 0 16px 45px rgba(16, 185, 129, 0.5);
 }
 
-@media (max-width: 992px) {
+.donation-trust-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 1.4rem;
+    font-size: 0.78rem;
+    color: rgba(244, 239, 230, 0.6);
+    font-weight: 500;
+}
+
+/* Responsive Grid Breakpoint */
+@media (max-width: 1024px) {
+    .conversion-section {
+        padding: 6rem 5vw !important;
+    }
     .conversion-inner {
         grid-template-columns: 1fr;
-        gap: 4rem;
+        gap: 3rem;
+    }
+    .conversion-card-panel {
+        padding: 3rem 2.2rem !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .conversion-section {
+        padding: 4.5rem 4vw !important;
+    }
+    .conversion-card-panel {
+        padding: 2.2rem 1.4rem !important;
+        border-radius: 24px !important;
+    }
+    .conversion-heading {
+        font-size: clamp(2rem, 6vw, 3.2rem) !important;
+        margin-bottom: 1rem !important;
+    }
+    .conversion-subtext {
+        font-size: 0.95rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+    .conversion-benefits-list {
+        gap: 0.8rem;
+        margin-bottom: 2rem;
+    }
+    .conversion-benefits-list li {
+        font-size: 0.88rem;
+    }
+    .donation-card {
+        padding: 1.1rem 1.2rem !important;
+        border-radius: 16px !important;
+    }
+    .donation-amount {
+        font-size: clamp(1.6rem, 5vw, 2.2rem) !important;
+    }
+    .donation-desc {
+        font-size: 0.82rem !important;
+    }
+    .conversion-cta-btn, .btn-donate {
+        padding: 0.9rem 1.4rem;
+        font-size: 0.78rem;
+        min-height: 48px;
     }
 }

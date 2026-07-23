@@ -12,10 +12,10 @@
 @import '../styles/sections/Community.css';
 @import '../styles/sections/FinalCTA.css';
 
-/* NextJS specifics */
-html, body {
+/* Global Document Root & GSAP Pin Spacers */
+html, body, #smooth-wrapper, #smooth-content, .pin-spacer {
   max-width: 100vw;
   overflow-x: hidden;
-  background: var(--clr-bg-panel);
-  color: var(--clr-text-prime);
+  background: #040806 !important;
+  color: #FFF;
 }

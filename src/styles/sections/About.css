@@ -1,0 +1,337 @@
+/* ─── AWWWARDS CINEMATIC ABOUT PAGE ─── */
+.about-main {
+    background: #040806 !important;
+    color: #F4EFE6 !important;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    position: relative;
+}
+
+/* Background Ambient Radial Glows */
+.about-ambient-glow {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    height: 70vh;
+    background: radial-gradient(ellipse, rgba(16, 185, 129, 0.08) 0%, rgba(5, 150, 105, 0.02) 50%, transparent 75%);
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Hero Parallax Section */
+.about-hero-section {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+.about-hero-bg {
+    position: absolute;
+    top: -10%;
+    left: 0;
+    width: 100%;
+    height: 120%;
+    z-index: 0;
+}
+
+.about-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.45;
+    filter: brightness(0.85) contrast(1.1);
+}
+
+.about-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(4, 8, 6, 0.4) 0%, rgba(4, 8, 6, 0.2) 50%, #040806 100%);
+}
+
+.about-hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about-hud-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 1.3rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    border-radius: 100px;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: #34D399;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.about-title-colossal {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: clamp(5.5rem, 14vw, 16rem) !important;
+    font-weight: 900 !important;
+    line-height: 0.88 !important;
+    letter-spacing: -0.03em !important;
+    color: #F4EFE6 !important;
+    margin: 0 !important;
+    text-transform: uppercase !important;
+    text-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+.about-subtitle {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.45em !important;
+    text-transform: uppercase !important;
+    margin-top: 2.2rem !important;
+    color: #34D399 !important;
+}
+
+/* Statement Mission Section */
+.about-mission-section {
+    padding: 22vh 6vw;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.about-mission-heading {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: clamp(2.8rem, 5.5vw, 4.8rem) !important;
+    font-weight: 800 !important;
+    line-height: 1.12 !important;
+    letter-spacing: -0.02em !important;
+    max-width: 1240px;
+    text-align: center;
+    color: #F4EFE6 !important;
+    margin: 0 !important;
+}
+
+.about-mission-highlight {
+    color: #10B981 !important;
+    background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Sticky Mandate Layout Section */
+.about-mandate-section {
+    padding: 0 6vw 22vh 6vw;
+    position: relative;
+    z-index: 2;
+}
+
+.about-mandate-grid {
+    display: grid;
+    grid-template-columns: 440px 1fr;
+    gap: 6rem;
+    align-items: flex-start;
+    max-width: 1320px;
+    margin: 0 auto;
+}
+
+/* Left Sticky Mandate Column */
+.about-sticky-col {
+    position: sticky;
+    top: 22vh;
+    padding-right: 1.5rem;
+}
+
+.mandate-hud-tag {
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    color: #34D399;
+    text-transform: uppercase;
+    margin-bottom: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mandate-lead-body {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 1.65rem !important;
+    font-weight: 700 !important;
+    line-height: 1.35 !important;
+    color: #F4EFE6 !important;
+    margin-bottom: 2.8rem !important;
+}
+
+.about-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 1.1rem 2.2rem;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1.5px solid rgba(52, 211, 153, 0.4);
+    border-radius: 100px;
+    color: #F4EFE6 !important;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.about-cta-btn:hover {
+    background: #10B981 !important;
+    color: #040806 !important;
+    border-color: #10B981 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4);
+}
+
+/* Right Scrolling Content Column */
+.about-scroll-col {
+    display: flex;
+    flex-direction: column;
+    gap: 14vh;
+}
+
+.about-dossier-card {
+    background: rgba(255, 255, 255, 0.03) !important;
+    backdrop-filter: blur(32px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 28px !important;
+    padding: 2.5rem !important;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.4s ease;
+}
+
+.about-dossier-card:hover {
+    border-color: rgba(52, 211, 153, 0.35) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    transform: translateY(-6px);
+    box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.7),
+        0 0 40px rgba(16, 185, 129, 0.12) !important;
+}
+
+.about-img-frame {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 2.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.about-img-frame img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-dossier-card:hover .about-img-frame img {
+    transform: scale(1.04);
+}
+
+.about-card-heading {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 2.4rem !important;
+    font-weight: 800 !important;
+    color: #F4EFE6 !important;
+    margin-bottom: 1.2rem !important;
+    line-height: 1.15 !important;
+}
+
+.about-card-text {
+    font-size: 1.1rem !important;
+    line-height: 1.7 !important;
+    color: rgba(244, 239, 230, 0.8) !important;
+    margin: 0 !important;
+}
+
+@media (max-width: 1024px) {
+    .about-mandate-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+    .about-sticky-col {
+        position: relative;
+        top: 0;
+        padding-right: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-hero-section {
+        height: 75vh;
+        padding: 0 5vw;
+    }
+    .about-title-colossal {
+        font-size: clamp(3.2rem, 12vw, 7.5rem) !important;
+    }
+    .about-subtitle {
+        font-size: 0.75rem !important;
+        letter-spacing: 0.25em !important;
+        margin-top: 1.5rem !important;
+    }
+    .about-mission-section {
+        padding: 10vh 5vw;
+    }
+    .about-mission-heading {
+        font-size: clamp(1.8rem, 5.5vw, 3.2rem) !important;
+    }
+    .about-mandate-section {
+        padding: 0 5vw 12vh 5vw;
+    }
+    .about-mandate-grid {
+        gap: 3rem;
+    }
+    .mandate-lead-body {
+        font-size: clamp(1.2rem, 4vw, 1.5rem) !important;
+        margin-bottom: 2rem !important;
+    }
+    .about-cta-btn {
+        width: 100%;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+    .about-scroll-col {
+        gap: 6vh;
+    }
+    .about-dossier-card {
+        padding: 1.6rem !important;
+        border-radius: 20px !important;
+    }
+    .about-img-frame img {
+        height: 260px;
+    }
+    .about-card-heading {
+        font-size: 1.8rem !important;
+        margin-bottom: 0.8rem !important;
+    }
+    .about-card-text {
+        font-size: 0.95rem !important;
+    }
+}

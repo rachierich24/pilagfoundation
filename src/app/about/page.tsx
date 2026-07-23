@@ -6,6 +6,8 @@ import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import Lenis from 'lenis';
 import Link from 'next/link';
+import { ArrowRight, ShieldCheck, Compass } from 'lucide-react';
+import '../../styles/sections/About.css';
 
 export default function AboutCinematicPage() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -72,54 +74,92 @@ export default function AboutCinematicPage() {
     }, { scope: containerRef });
 
     const statement = "We bridge the gap between grassroots realities and global policy.";
-    
+
     return (
-        <main ref={containerRef} style={{ background: '#0A0F11', color: '#EADFC8', minHeight: '100vh', overflowX: 'hidden' }}>
-            
+        <main ref={containerRef} className="about-main">
+            {/* Ambient Background Glow */}
+            <div className="about-ambient-glow"></div>
+
             {/* HERO */}
-            <section className="hero-parallax-container" style={{ position: 'relative', height: '100vh', width: '100vw', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ position: 'absolute', top: '-10%', left: 0, width: '100%', height: '120%', zIndex: 0 }}>
-                    <img ref={heroImgRef} src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2500" alt="Canopy" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5 }} />
+            <section className="about-hero-section hero-parallax-container">
+                <div className="about-hero-bg">
+                    <img
+                        ref={heroImgRef}
+                        src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=2500"
+                        alt="Canopy"
+                        className="about-hero-img"
+                    />
+                    <div className="about-hero-overlay"></div>
                 </div>
-                <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
-                    <h1 className="text-colossal" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(5rem, 12vw, 15rem)', lineHeight: 0.9, letterSpacing: '-0.02em', color: '#EADFC8', margin: 0 }}>ORIGINS</h1>
-                    <p style={{ fontFamily: 'var(--font-body)', letterSpacing: '0.4em', textTransform: 'uppercase', marginTop: '2rem', opacity: 0.8 }}>The Foundation</p>
+                <div className="about-hero-content">
+
+                    <h1 className="about-title-colossal">ORIGINS</h1>
+                    <p className="about-subtitle">The Foundation</p>
                 </div>
             </section>
 
             {/* MISSION */}
-            <section style={{ padding: '25vh 5vw', display: 'flex', justifyContent: 'center' }}>
-                <h2 ref={statementRef} style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(3rem, 6vw, 5rem)', lineHeight: 1.1, maxWidth: '1200px', textAlign: 'center', margin: 0 }}>
+            <section className="about-mission-section">
+                <h2 ref={statementRef} className="about-mission-heading">
                     {statement.split(' ').map((word, i) => (
-                        <span key={i} style={{ display: 'inline-block', overflow: 'hidden', padding: '0 0.3rem', verticalAlign: 'top' }}>
-                            <span className="word" style={{ display: 'inline-block', transformStyle: 'preserve-3d' }}>{word}</span>
+                        <span key={i} style={{ display: 'inline-block', overflow: 'hidden', padding: '0 0.35rem', verticalAlign: 'top' }}>
+                            <span className="word" style={{ display: 'inline-block', transformStyle: 'preserve-3d' }}>
+                                {word === "grassroots" || word === "realities" || word === "global" || word === "policy." ? (
+                                    <span className="about-mission-highlight">{word}</span>
+                                ) : (
+                                    word
+                                )}
+                            </span>
                         </span>
                     ))}
                 </h2>
             </section>
 
             {/* STICKY LAYOUT */}
-            <section style={{ padding: '0 5vw 20vh 5vw' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '8rem', alignItems: 'flex-start' }}>
+            <section className="about-mandate-section">
+                <div className="about-mandate-grid">
                     {/* Left Sticky Col */}
-                    <div style={{ position: 'sticky', top: '25vh', paddingRight: '2rem' }}>
-                        <p className="sv-taxonomy" style={{ marginBottom: '2rem', color: 'rgba(234, 223, 200, 0.6)' }}>OUR MANDATE</p>
-                        <h3 className="sv-body-lead" style={{ marginBottom: '3rem', color: '#FFF' }}>
+                    <div className="about-sticky-col">
+                        <div className="mandate-hud-tag">
+                            <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                            <span>OUR MANDATE</span>
+                        </div>
+                        <h3 className="mandate-lead-body">
                             Equipping the most vulnerable global populations with the legal, technological, and financial resources required to halt systemic ecological collapse.
                         </h3>
-                        <Link href="/impact" className="btn btn-outline" style={{ borderColor: '#EADFC8', color: '#EADFC8', padding: '1rem 2rem' }}>Analyze Our Impact</Link>
+                        <Link href="/impact" className="about-cta-btn">
+                            <span>Analyze Our Impact</span>
+                            <ArrowRight className="w-4 h-4" />
+                        </Link>
                     </div>
 
                     {/* Right Scrolling Col */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '15vh' }}>
-                        <div>
-                            <img className="reveal-img" src="https://images.unsplash.com/photo-1518398046578-8cca57782e17?q=80&w=1000" style={{ width: '100%', height: 'auto', borderRadius: '12px', marginBottom: '2.5rem' }} alt="Field Work" />
-                            <p style={{ fontSize: '1.4rem', lineHeight: 1.6, opacity: 0.8, color: '#EADFC8' }}>For over a decade, PILAG has operated at the intersection of environmental justice and sovereign data. We believe that communities cannot defend what they cannot map, prove, or physically secure.</p>
+                    <div className="about-scroll-col">
+                        <div className="about-dossier-card">
+                            <div className="about-img-frame">
+                                <img
+                                    className="reveal-img"
+                                    src="https://images.unsplash.com/photo-1518398046578-8cca57782e17?q=80&w=1000"
+                                    alt="Field Work"
+                                />
+                            </div>
+                            <p className="about-card-text">
+                                For over a decade, PILAG has operated at the intersection of environmental justice and sovereign data. We believe that communities cannot defend what they cannot map, prove, or physically secure.
+                            </p>
                         </div>
-                        <div>
-                            <img className="reveal-img" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1000" style={{ width: '100%', height: 'auto', borderRadius: '12px', marginBottom: '2.5rem' }} alt="Community" />
-                            <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '3rem', marginBottom: '1.5rem', color: '#FFF' }}>Our Global Footprint</h4>
-                            <p style={{ fontSize: '1.4rem', lineHeight: 1.6, opacity: 0.8, color: '#EADFC8' }}>Active in 14 countries, our interventions have directly established sovereign protections for over 2.5 million hectares of ancestral land, legally blocking illegal extraction pipelines.</p>
+
+                        <div className="about-dossier-card">
+                            <div className="about-img-frame">
+                                <img
+                                    className="reveal-img"
+                                    src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1000"
+                                    alt="Community"
+                                />
+                            </div>
+                            <h4 className="about-card-heading">Our Global Footprint</h4>
+                            <p className="about-card-text">
+                                Active in 14 countries, our interventions have directly established sovereign protections for over 2.5 million hectares of ancestral land, legally blocking illegal extraction pipelines.
+                            </p>
                         </div>
                     </div>
                 </div>

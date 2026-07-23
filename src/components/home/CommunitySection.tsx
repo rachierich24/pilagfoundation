@@ -1,142 +1,202 @@
+"use client";
+
 import { useRef } from 'react';
+import Link from 'next/link';
+import { ArrowRight, CheckCircle2 } from 'lucide-react';
+
+interface Testimonial {
+    id: string;
+    name: string;
+    role: string;
+    text: string;
+    initial: string;
+    verifiedLocation?: string;
+}
+
+const column1Data: Testimonial[] = [
+    {
+        id: 'c1-1',
+        name: 'Arjun M.',
+        role: 'INDIGENOUS COMMUNITY LEADER',
+        text: 'PILAG Foundation provided us with GPS mapping tools and legal aid to defend our ancestral forests when commercial loggers arrived.',
+        initial: 'A',
+        verifiedLocation: 'Land Rights'
+    },
+    {
+        id: 'c1-2',
+        name: 'Priya S.',
+        role: 'ENVIRONMENTAL RESEARCHER',
+        text: 'The open environmental database allowed our team to document 40+ endangered species across protected forest reserves.',
+        initial: 'P',
+        verifiedLocation: 'Forest Mapping'
+    },
+    {
+        id: 'c1-3',
+        name: 'Rahul M.',
+        role: 'CIVIC ACTION VOLUNTEER',
+        text: 'Organizing clean-up and reforestation drives used to take months. With PILAG\'s local network, 200+ volunteers mobilize in hours.',
+        initial: 'R',
+        verifiedLocation: 'Local Action'
+    },
+    {
+        id: 'c1-4',
+        name: 'Ananya D.',
+        role: 'POLICY & GOVERNANCE FELLOW',
+        text: 'PILAG\'s grassroots governance training helped our village council draft transparent community budget proposals.',
+        initial: 'A',
+        verifiedLocation: 'Civic Governance'
+    }
+];
+
+const column2Data: Testimonial[] = [
+    {
+        id: 'c2-1',
+        name: 'Aditya N.',
+        role: 'ENVIRONMENTAL LAWYER',
+        text: 'The litigation fund gave us the resources to take on illegal mining operations in court and secure binding conservation orders.',
+        initial: 'A',
+        verifiedLocation: 'Legal Aid'
+    },
+    {
+        id: 'c2-2',
+        name: 'Sneha G.',
+        role: 'YOUTH COMMUNITY COORDINATOR',
+        text: 'Empowering young people with civic literacy tools turned passive observers into active defenders of local watersheds.',
+        initial: 'S',
+        verifiedLocation: 'Youth Action'
+    },
+    {
+        id: 'c2-3',
+        name: 'Neha P.',
+        role: 'GEOSPATIAL DATA ANALYST',
+        text: 'Using satellite telemetry and field sensors, PILAG’s open platform alerts local rangers to deforestation spikes in real time.',
+        initial: 'N',
+        verifiedLocation: 'Tech for Good'
+    },
+    {
+        id: 'c2-4',
+        name: 'Karthik V.',
+        role: 'SUSTAINABLE AGRI ADVOCATE',
+        text: 'Swapping native seed stocks and sustainable farming methods through PILAG\'s network helped 50+ farming families double crop resilience.',
+        initial: 'K',
+        verifiedLocation: 'Local Resilience'
+    }
+];
+
+const column3Data: Testimonial[] = [
+    {
+        id: 'c3-1',
+        name: 'Sarah K.',
+        role: 'CONSERVATION BIOLOGIST',
+        text: 'Working directly with indigenous elders to document traditional ecological knowledge has transformed our conservation strategy.',
+        initial: 'S',
+        verifiedLocation: 'Traditional Knowledge'
+    },
+    {
+        id: 'c3-2',
+        name: 'Simran K.',
+        role: 'GRASSROOTS JOURNALIST',
+        text: 'PILAG gives frontline communities a microphone. Our investigative stories on river pollution led to real municipal reform.',
+        initial: 'S',
+        verifiedLocation: 'Civic Voice'
+    },
+    {
+        id: 'c3-3',
+        name: 'Aman S.',
+        role: 'CLEAN WATER ADVOCATE',
+        text: 'Installing solar filtration units with PILAG brought clean drinking water to over 1,200 households across remote villages.',
+        initial: 'A',
+        verifiedLocation: 'Clean Water Drive'
+    },
+    {
+        id: 'c3-4',
+        name: 'Pooja M.',
+        role: 'CLIMATE FINANCE FELLOW',
+        text: 'Direct micro-grants to indigenous stewards ensure every dollar donated goes directly into verified forest protection.',
+        initial: 'P',
+        verifiedLocation: 'Transparent Fund'
+    }
+];
 
 export default function CommunitySection() {
     const containerRef = useRef<HTMLElement>(null);
 
     return (
-        <section className="community-section" ref={containerRef}>
-            <div className="community-split-layout">
-                {/* Sticky Left Column */}
-                <div className="community-content">
-                    <div className="community-pill">★ COMMUNITY</div>
-                    <h2 className="community-heading">WE BELIEVE IN THE POWER OF PEERS.</h2>
-                    <p className="community-subtext">
-                        The real change doesn't happen in boardrooms. It happens on the ground, led by individuals who refuse to accept the status quo. Read stories from our network of grassroots leaders.
+        <section className="peer-community-section" ref={containerRef}>
+            {/* Background Ambient Glow */}
+            <div className="peer-bg-glow"></div>
+
+            <div className="peer-split-layout">
+                {/* Left Column (Content) */}
+                <div className="peer-left-content">
+                    <div className="peer-badge">
+                        <span className="peer-badge-dot"></span>
+                        LOCAL GOVERNANCE & IMPACT
+                    </div>
+
+                    <h2 className="peer-heading">
+                        WE BELIEVE IN THE<br />
+                        <span className="peer-heading-highlight">POWER OF PEOPLE.</span>
+                    </h2>
+
+                    <p className="peer-subtext">
+                        PILAG Foundation empowers frontline communities, protects ancestral lands, and builds transparent local governance through grassroots civic action.
                     </p>
-                    <button className="btn btn-primary btn-magnetic" style={{ background: '#1A3626', color: '#FFF' }}>Read More Stories</button>
+
+                    <Link href="/impact" className="peer-cta-btn">
+                        <span>EXPLORE OUR IMPACT</span>
+                        <div className="cta-arrow-circle">
+                            <ArrowRight className="w-4 h-4 text-white" />
+                        </div>
+                    </Link>
                 </div>
 
-                {/* Right Column: Marquee Grid */}
-                <div className="community-marquee-wrapper">
-                    {/* Column 1: UP */}
-                    <div className="marquee-col marquee-up">
-                        <div className="marquee-track">
-                            <div className="marquee-content">
-                                <TestimonialCard 
-                                    name="Arjun M." 
-                                    role="COMMUNITY LEADER" 
-                                    text="Pilag Foundation gave us the tools to map our ancestral lands when the government said they didn't exist. Now, our forest is legally protected." 
-                                />
-                                <TestimonialCard 
-                                    name="Sarah K." 
-                                    role="ENVIRONMENTAL LAWYER" 
-                                    text="The litigation fund allowed us to take on massive fossil fuel corporations and win. This isn't just charity, it's systemic defense." 
-                                />
-                                <TestimonialCard 
-                                    name="Ravi P." 
-                                    role="VOLUNTEER" 
-                                    text="I started by planting trees. Now I lead digital literacy workshops for tribal youth. The ripple effect of this community is astounding." 
-                                />
+                {/* Right Column: 3 Responsive Marquee Columns */}
+                <div className="peer-marquee-wrapper">
+                    {/* Column 1: Moves UP */}
+                    <div className="peer-marquee-col peer-marquee-up">
+                        <div className="peer-marquee-track">
+                            <div className="peer-marquee-content">
+                                {column1Data.map((item) => (
+                                    <PeerTestimonialCard key={item.id} data={item} />
+                                ))}
                             </div>
-                            {/* Duplicate for seamless looping */}
-                            <div className="marquee-content">
-                                <TestimonialCard 
-                                    name="Arjun M." 
-                                    role="COMMUNITY LEADER" 
-                                    text="Pilag Foundation gave us the tools to map our ancestral lands when the government said they didn't exist. Now, our forest is legally protected." 
-                                />
-                                <TestimonialCard 
-                                    name="Sarah K." 
-                                    role="ENVIRONMENTAL LAWYER" 
-                                    text="The litigation fund allowed us to take on massive fossil fuel corporations and win. This isn't just charity, it's systemic defense." 
-                                />
-                                <TestimonialCard 
-                                    name="Ravi P." 
-                                    role="VOLUNTEER" 
-                                    text="I started by planting trees. Now I lead digital literacy workshops for tribal youth. The ripple effect of this community is astounding." 
-                                />
+                            <div className="peer-marquee-content">
+                                {column1Data.map((item) => (
+                                    <PeerTestimonialCard key={`dup-${item.id}`} data={item} />
+                                ))}
                             </div>
                         </div>
                     </div>
 
-                    {/* Column 2: DOWN */}
-                    <div className="marquee-col marquee-down">
-                        <div className="marquee-track">
-                            <div className="marquee-content">
-                                <TestimonialCard 
-                                    name="Elena D." 
-                                    role="STUDENT ACTIVIST" 
-                                    text="The grassroots network is incredible. I've met so many passionate individuals fighting for climate justice. It gives me hope for the future." 
-                                />
-                                <TestimonialCard 
-                                    name="Marcus T." 
-                                    role="DATA SCIENTIST" 
-                                    text="Using satellite data to prove illegal logging has been the most fulfilling work of my life. The impact is immediate and undeniable." 
-                                />
-                                <TestimonialCard 
-                                    name="Priya N." 
-                                    role="LOCAL FARMER" 
-                                    text="Before the foundation intervened, our water supply was polluted. Now, we have clean water and sustainable farming practices." 
-                                />
+                    {/* Column 2: Moves DOWN */}
+                    <div className="peer-marquee-col peer-marquee-down">
+                        <div className="peer-marquee-track">
+                            <div className="peer-marquee-content">
+                                {column2Data.map((item) => (
+                                    <PeerTestimonialCard key={item.id} data={item} />
+                                ))}
                             </div>
-                            {/* Duplicate for seamless looping */}
-                            <div className="marquee-content">
-                                <TestimonialCard 
-                                    name="Elena D." 
-                                    role="STUDENT ACTIVIST" 
-                                    text="The grassroots network is incredible. I've met so many passionate individuals fighting for climate justice. It gives me hope for the future." 
-                                />
-                                <TestimonialCard 
-                                    name="Marcus T." 
-                                    role="DATA SCIENTIST" 
-                                    text="Using satellite data to prove illegal logging has been the most fulfilling work of my life. The impact is immediate and undeniable." 
-                                />
-                                <TestimonialCard 
-                                    name="Priya N." 
-                                    role="LOCAL FARMER" 
-                                    text="Before the foundation intervened, our water supply was polluted. Now, we have clean water and sustainable farming practices." 
-                                />
+                            <div className="peer-marquee-content">
+                                {column2Data.map((item) => (
+                                    <PeerTestimonialCard key={`dup-${item.id}`} data={item} />
+                                ))}
                             </div>
                         </div>
                     </div>
 
-                    {/* Column 3: UP (Staggered) */}
-                    <div className="marquee-col marquee-up" style={{ animationDelay: '-15s' }}>
-                        <div className="marquee-track">
-                            <div className="marquee-content">
-                                <TestimonialCard 
-                                    name="David L." 
-                                    role="PHILANTHROPIST" 
-                                    text="I've seen many organizations, but Pilag's commitment to direct project funding is unparalleled. I know exactly where my money goes." 
-                                />
-                                <TestimonialCard 
-                                    name="Aisha M." 
-                                    role="CLIMATE RESEARCHER" 
-                                    text="The data collected by the community is invaluable for our climate models. It bridges the gap between global trends and local realities." 
-                                />
-                                <TestimonialCard 
-                                    name="Tom H." 
-                                    role="WILDLIFE PHOTOGRAPHER" 
-                                    text="Documenting the recovery of these ecosystems has been breathtaking. The return of native species is a testament to their hard work." 
-                                />
+                    {/* Column 3: Moves UP */}
+                    <div className="peer-marquee-col peer-marquee-up" style={{ animationDelay: '-10s' }}>
+                        <div className="peer-marquee-track">
+                            <div className="peer-marquee-content">
+                                {column3Data.map((item) => (
+                                    <PeerTestimonialCard key={item.id} data={item} />
+                                ))}
                             </div>
-                            {/* Duplicate for seamless looping */}
-                            <div className="marquee-content">
-                                <TestimonialCard 
-                                    name="David L." 
-                                    role="PHILANTHROPIST" 
-                                    text="I've seen many organizations, but Pilag's commitment to direct project funding is unparalleled. I know exactly where my money goes." 
-                                />
-                                <TestimonialCard 
-                                    name="Aisha M." 
-                                    role="CLIMATE RESEARCHER" 
-                                    text="The data collected by the community is invaluable for our climate models. It bridges the gap between global trends and local realities." 
-                                />
-                                <TestimonialCard 
-                                    name="Tom H." 
-                                    role="WILDLIFE PHOTOGRAPHER" 
-                                    text="Documenting the recovery of these ecosystems has been breathtaking. The return of native species is a testament to their hard work." 
-                                />
+                            <div className="peer-marquee-content">
+                                {column3Data.map((item) => (
+                                    <PeerTestimonialCard key={`dup-${item.id}`} data={item} />
+                                ))}
                             </div>
                         </div>
                     </div>
@@ -146,17 +206,24 @@ export default function CommunitySection() {
     );
 }
 
-function TestimonialCard({ name, role, text }: { name: string, role: string, text: string }) {
+function PeerTestimonialCard({ data }: { data: Testimonial }) {
     return (
-        <div className="testimonial-card">
-            <div className="testimonial-quote-icon"></div>
-            <p className="testimonial-text">"{text}"</p>
-            <div className="testimonial-author">
-                <div>
-                    <div className="testimonial-name">{name}</div>
-                    <div className="testimonial-role">{role}</div>
+        <div className="peer-card">
+            <div className="peer-card-top">
+                <div className="peer-avatar">{data.initial}</div>
+                <div className="peer-verified-tag">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 inline" />
+                    <span>{data.verifiedLocation || 'Verified'}</span>
                 </div>
-                <div className="testimonial-stars">★★★★★</div>
+            </div>
+
+            <p className="peer-quote-text">"{data.text}"</p>
+
+            <div className="peer-card-bottom">
+                <div className="peer-author-info">
+                    <div className="peer-author-name">{data.name}</div>
+                    <div className="peer-author-role">{data.role}</div>
+                </div>
             </div>
         </div>
     );

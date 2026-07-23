@@ -2,54 +2,64 @@
 .drives-page {
   min-height: 100vh;
   background: var(--clr-bg-deep);
+  overflow-x: hidden;
 }
 .drives-hero {
-  min-height: 50vh;
+  min-height: 40vh;
   background: var(--clr-bg-dark);
   display: flex; align-items: center; justify-content: center;
-  text-align: center; padding: 8rem 5vw 5rem;
+  text-align: center; padding: 7rem 5vw 3rem;
 }
 .drives-hero-title {
   font-family: var(--font-heading);
-  font-size: clamp(4rem, 10vw, 9rem);
-  font-weight: 900; line-height: 0.9;
+  font-size: clamp(2.8rem, 8vw, 8rem);
+  font-weight: 900; line-height: 0.95;
   color: #F9F6F0; margin: 1rem 0;
+  text-transform: uppercase;
 }
 .drives-hero-sub {
-  font-size: 1.1rem; color: rgba(255,255,255,0.55);
+  font-size: 1rem; color: rgba(255,255,255,0.7);
   max-width: 480px; margin: 0 auto; line-height: 1.6;
 }
 
 /* Filter Bar */
 .drives-filter-bar {
-  display: flex; gap: 0.75rem;
-  padding: 2rem 5vw; max-width: 1200px; margin: 0 auto;
-  flex-wrap: wrap;
+  display: flex; gap: 0.6rem;
+  padding: 1.5rem 5vw; max-width: 1200px; margin: 0 auto;
+  flex-wrap: wrap; justify-content: center;
 }
 .drives-filter-btn {
-  padding: 0.65rem 1.5rem; border-radius: 100px;
-  border: 1px solid rgba(34,34,34,0.15);
+  padding: 0.55rem 1.2rem; border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.15);
   background: transparent; font-family: var(--font-body);
-  font-size: 0.85rem; letter-spacing: 0.05em;
+  font-size: 0.8rem; letter-spacing: 0.05em;
   text-transform: uppercase; cursor: pointer;
   color: var(--clr-text-muted);
   transition: all 0.25s ease;
+  min-height: 40px;
+  touch-action: manipulation;
 }
 .drives-filter-btn:hover { border-color: #22c55e; color: #22c55e; }
-.drives-filter-btn.active { background: #1A3626; color: #F9F6F0; border-color: #1A3626; }
+.drives-filter-btn.active { background: #10B981; color: #040806; border-color: #10B981; font-weight: 700; }
 
 /* Drive Grid */
-.drives-grid-section { padding: 2rem 5vw 8rem; max-width: 1300px; margin: 0 auto; }
+.drives-grid-section { padding: 2rem 5vw 6rem; max-width: 1300px; margin: 0 auto; }
 .drives-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 }
-@media (max-width: 900px) { .drives-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px) { .drives-grid { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .drives-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; } }
+@media (max-width: 600px) {
+  .drives-hero { padding: 6rem 4vw 2.5rem; }
+  .drives-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .drives-grid-section { padding: 1.5rem 4vw 5rem; }
+  .drives-card-img-wrap { height: 180px; }
+  .drives-card-body { padding: 1.25rem; }
+}
 
 .drives-card {
-  background: #FFF; border-radius: 12px; overflow: hidden;
+  background: #FFF; border-radius: 16px; overflow: hidden;
   border: 1px solid rgba(0,0,0,0.06);
   transition: transform 0.4s var(--ease-smooth), box-shadow 0.4s ease;
 }

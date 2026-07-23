@@ -2,25 +2,23 @@
    CSS Variables & Core Setup for Editorial Elevated UI
    ========================================================================== */
 
-/* Premium Web Fonts removed - now loaded in layout.tsx */
 :root {
-    /* Color Palette - Premium Editorial Museum Aesthetic */
-    --clr-bg-deep: #F9F6F0;
-    /* Alabaster / Museum Off-White */
-    --clr-bg-panel: #FFFFFF;
-    /* Pure White for contrast cards */
-    --clr-bg-dark: #121A16;
-    /* Deepest Charcoal/Green for footer */
+    /* Exclusive Brand Palette: Green, Beige, & Dark Green */
+    --clr-bg-deep: #040806;          /* Deepest Obsidian Dark Green */
+    --clr-bg-panel: #0a1812;         /* Deep Forest Green Glass */
+    --clr-bg-dark: #040806;          /* Core Obsidian Dark Green */
+    --clr-bg-beige: #F9F6F0;         /* Editorial Alabaster Beige */
+    --clr-bg-beige-warm: #F4EFE6;    /* Warm Museum Beige */
 
-    --clr-text-prime: #222222;
-    /* Soft Charcoal Black */
-    --clr-text-muted: #5A5A5A;
-    /* Elegant gray */
+    --clr-text-prime: #F9F6F0;       /* Alabaster Beige Text */
+    --clr-text-dark: #061a12;        /* Dark Forest Green Text */
+    --clr-text-muted: rgba(249, 246, 240, 0.75);
 
-    --clr-accent-bright: #1A3626;
-    /* Deep Forest Green (Primary Brand) */
-    --clr-accent-secondary: #C85A3F;
-    /* Earthy Terracotta (Interactions & Calls to Action) */
+    --clr-accent-bright: #34d399;    /* Vibrant Emerald Green */
+    --clr-accent-leaf: #10b981;      /* Forest Leaf Green */
+    --clr-accent-darkgreen: #065f46; /* Deep Emerald Green */
+    --clr-accent-secondary: #10b981; /* Unified Green Accent */
+    --clr-beige-gold: #EADFCF;       /* Warm Beige Gold Accent */
 
     /* Typography */
     --font-heading: 'Playfair Display', serif;
@@ -31,7 +29,6 @@
     --text-xs: clamp(0.75rem, 0.5vw + 0.6rem, 0.85rem);
     --text-sm: clamp(0.875rem, 0.8vw + 0.5rem, 1rem);
     --text-base: clamp(1rem, 1vw + 0.75rem, 1.125rem);
-    /* Extremely legible base */
     --text-md: clamp(1.25rem, 1.5vw + 1rem, 1.75rem);
     --text-lg: clamp(1.75rem, 2.5vw + 1.25rem, 3rem);
     --text-xl: clamp(2.5rem, 4vw + 1.5rem, 4.5rem);
@@ -64,7 +61,7 @@ html {
 
 ::selection {
     background: var(--clr-accent-bright);
-    color: #FFF;
+    color: #040806;
 }
 
 /* Background Image Parallax Container */
@@ -78,7 +75,6 @@ html {
     background-size: cover;
     background-position: center;
     background-color: var(--clr-bg-deep);
-    /* Fallback */
 }
 
 .bg-overlay {
@@ -87,103 +83,32 @@ html {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(249, 246, 240, 0.3) 0%, rgba(249, 246, 240, 1) 100%);
+    background: linear-gradient(to bottom, rgba(4, 8, 6, 0.4) 0%, rgba(4, 8, 6, 1) 100%);
 }
 
 #smooth-wrapper {
     width: 100%;
     overflow: hidden;
+    background: #040806;
 }
 
-/* Typography Hierarchy */
-h1,
-h2,
-h3,
-h4,
-h5 {
-    font-family: var(--font-heading);
-    color: var(--clr-text-prime);
-    margin: 0;
-    line-height: 1.1;
-    font-weight: 400;
-}
-
-h1 strong,
-h2 strong,
-h3 strong {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-style: italic;
-    color: var(--clr-accent-bright);
-}
-
-p {
-    font-family: var(--font-body);
-    font-size: var(--text-base);
-    color: var(--clr-text-muted);
-    font-weight: 400;
-    max-width: 65ch;
-    /* Optimal reading width */
-    margin: 1.5rem 0;
-}
-
-.lead-text {
-    font-size: var(--text-md);
-    color: var(--clr-text-prime);
-    line-height: 1.4;
-    font-weight: 300;
-}
-
-.uppercase-label {
-    font-family: var(--font-body);
+/* Button & Accent Unified Design */
+.btn-primary {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #F9F6F0 !important;
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.25);
+    border-radius: 30px;
+    padding: 0.9rem 2.2rem;
     font-weight: 600;
-    font-size: var(--text-xs);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--clr-accent-secondary);
-    display: block;
-    margin-bottom: 1rem;
+    transition: all 0.35s var(--ease-smooth);
 }
 
-/* Layout Core Helpers */
-.container {
-    margin: 0 auto;
-    max-width: var(--max-width);
-    padding: 0 5vw;
-}
-
-.section {
-    padding: 12vh 0;
-    position: relative;
-    z-index: 10;
-}
-
-.grid-cols-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-}
-
-@media (max-width: 900px) {
-    .grid-cols-2 {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-}
-
-/* Custom Image Reveals via GSAP and Clip Path */
-.img-reveal-wrapper {
-    overflow: hidden;
-    position: relative;
-    clip-path: inset(0 0 100% 0);
-    /* Start hidden bottom up */
-}
-
-.img-reveal-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scale(1.1);
-    /* Subtle parallax starting scale */
+.btn-primary:hover {
+    background: linear-gradient(135deg, #34d399, #10b981);
+    color: #040806 !important;
+    box-shadow: 0 15px 40px rgba(52, 211, 153, 0.4);
+    transform: translateY(-2px);
 }

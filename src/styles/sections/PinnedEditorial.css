@@ -1,37 +1,36 @@
 /* ==========================================================================
-   CINEMATIC PINNED EDITORIAL
+   CINEMATIC PINNED EDITORIAL & ARCHITECTURAL FIELDWORK ARCHIVE
+   COLOR PALETTE: GREEN, BEIGE, & DARK GREEN ONLY
    ========================================================================== */
 
-/* ????????? TYPOGRAPHY ENHANCEMENTS ????????? */
+/* ─── TYPOGRAPHY & SPLIT-TYPE ENHANCEMENTS ─── */
 .text-colossal {
     font-family: var(--font-heading);
-    font-size: clamp(4rem, 12vw, 15rem);
+    font-size: clamp(3.5rem, 10vw, 13rem);
     line-height: 0.85;
     letter-spacing: -0.02em;
     text-transform: uppercase;
-    margin: 0;
-    color: #FFF;
+    margin: 0 0 1rem 0;
+    color: #F9F6F0;
+    perspective: 1000px;
+    transform-style: preserve-3d;
     will-change: transform, opacity;
 }
 
-/* SplitType helpers */
-.line {
-    overflow: hidden; /* For masking characters */
-    padding-bottom: 0.1em;
-}
-.char {
+.text-colossal .char {
     display: inline-block;
     will-change: transform, opacity, filter;
     transform-origin: center bottom;
+    backface-visibility: hidden;
 }
 
-/* ????????? SCATTER PARALLAX & MARQUEE ????????? */
+/* ─── MARQUEE ─── */
 .marquee-band {
     width: 100vw;
     overflow: hidden;
-    background: var(--clr-accent-bright);
-    color: #FFF;
-    padding: 2rem 0;
+    background: linear-gradient(90deg, #059669, #10b981, #047857);
+    color: #F9F6F0;
+    padding: 1.8rem 0;
     display: flex;
     align-items: center;
     position: relative;
@@ -39,8 +38,9 @@
     right: 50%;
     margin-left: -50vw;
     margin-right: -50vw;
-    transform: rotate(-2deg);
+    transform: rotate(-1.5deg);
     z-index: 10;
+    box-shadow: 0 10px 40px rgba(5, 150, 105, 0.25);
 }
 
 .marquee-track-horizontal {
@@ -49,94 +49,318 @@
     font-family: var(--font-heading);
     font-size: var(--text-lg);
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: 0.05em;
 }
 
-.marquee-item { padding: 0 2rem; display: inline-block; }
+.marquee-item {
+    padding: 0 2.5rem;
+    display: inline-block;
+    opacity: 0.95;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+/* ─── MANDATE SECTION (ALABASTER BEIGE BACKGROUND) ─── */
+.mandate-section-beige {
+    background: #F9F6F0 !important;
+    color: #061a12;
+    padding-top: 8vh;
+    padding-bottom: 14vh;
+    position: relative;
+    z-index: 5;
+}
 
 .scrub-text-container {
-    font-size: clamp(3rem, 6vw, 7rem);
+    font-size: clamp(2.5rem, 5.5vw, 6.5rem);
     font-family: var(--font-heading);
     line-height: 1.1;
     color: transparent;
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.15); /* Slightly brighter for dark theme */
+    -webkit-text-stroke: 1.5px rgba(6, 26, 18, 0.28);
     position: relative;
     max-width: 1200px;
-    margin: 15vh auto;
+    margin: 6vh auto 8vh;
+    text-align: center;
 }
+
 .scrub-text-fill {
     position: absolute;
     top: 0;
     left: 0;
-    color: var(--clr-accent-bright);
+    color: #059669;
     -webkit-text-stroke: 0;
     clip-path: inset(0 100% 0 0);
+    will-change: clip-path;
+    text-shadow: 0 0 35px rgba(5, 150, 105, 0.25);
 }
 
-.gallery-scatter {
+/* ─── ULTRA-PREMIUM ARCHITECTURAL FIELDWORK ARCHIVE (ALABASTER BEIGE BACKGROUND) ─── */
+.fieldwork-archive-gallery {
     position: relative;
     width: 100%;
-    height: 120vh;
-    margin: 10vh 0;
-}
-.scatter-img {
-    position: absolute;
-    border-radius: 4px;
+    min-height: 120vh;
+    padding: 12vh 0 16vh;
+    background: #F9F6F0 !important;
+    color: #061a12;
     overflow: hidden;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    border-top: 1px solid rgba(6, 26, 18, 0.1);
+    border-bottom: 1px solid rgba(6, 26, 18, 0.1);
+}
+
+.fieldwork-bg-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: 
+        linear-gradient(rgba(6, 26, 18, 0.8) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6, 26, 18, 0.8) 1px, transparent 1px);
+    background-size: 15vw 15vh;
+}
+
+.fieldwork-watermark-text {
+    position: absolute;
+    top: 38%;
+    left: 0%;
+    font-family: var(--font-heading);
+    font-size: clamp(3.5rem, 8vw, 9.5rem);
+    font-weight: 800;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(6, 26, 18, 0.1);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 2;
     will-change: transform;
 }
-.scatter-img img { width: 100%; height: 100%; object-fit: cover; }
-.scatter-1 { width: 30vw; height: 40vh; left: 5%; top: 10%; z-index: 3; }
-.scatter-2 { width: 40vw; height: 60vh; right: 5%; top: 30%; z-index: 1; }
-.scatter-3 { width: 25vw; height: 35vh; left: 45%; top: 70%; z-index: 4; }
 
-/* ????????? CINEMATIC GALLERY STRUCTURE ????????? */
+.fieldwork-header-hud {
+    position: relative;
+    z-index: 10;
+    margin-bottom: 6vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.hud-badge-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 1.2rem;
+    background: rgba(6, 26, 18, 0.06);
+    border: 1px solid rgba(6, 26, 18, 0.22);
+    border-radius: 30px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: #059669;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    backdrop-filter: blur(10px);
+}
+
+.fieldwork-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    color: #061a12;
+    margin: 0 0 1rem 0;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+}
+
+.fieldwork-subtitle {
+    color: #1a3626;
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 300;
+    opacity: 0.85;
+}
+
+/* ─── 3D GLASSMORPHIC FIELDWORK CARDS GRID ─── */
+.fieldwork-cards-grid {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2.5rem;
+    padding: 0 4vw;
+}
+
+.fieldwork-card-wrapper {
+    position: relative;
+    perspective: 1200px;
+    will-change: transform, opacity;
+}
+
+.fieldwork-card-wrapper:nth-child(1) { grid-column: span 5; margin-top: 0; }
+.fieldwork-card-wrapper:nth-child(2) { grid-column: span 7; margin-top: 8vh; }
+.fieldwork-card-wrapper:nth-child(3) { grid-column: 3 / span 8; margin-top: 4vh; }
+
+.fieldwork-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(10, 24, 18, 0.92);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    box-shadow: 
+        0 30px 70px rgba(6, 26, 18, 0.2),
+        0 0 35px rgba(16, 185, 129, 0.1),
+        inset 0 1px 0 rgba(249, 246, 240, 0.2);
+    transform-style: preserve-3d;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fieldwork-card:hover {
+    border-color: rgba(52, 211, 153, 0.6);
+    box-shadow: 
+        0 40px 90px rgba(6, 26, 18, 0.35),
+        0 0 50px rgba(16, 185, 129, 0.3),
+        inset 0 1px 0 rgba(249, 246, 240, 0.35);
+    transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
+}
+
+.fieldwork-img-container {
+    position: relative;
+    width: 100%;
+    height: 48vh;
+    overflow: hidden;
+}
+
+.fieldwork-card-wrapper:nth-child(2) .fieldwork-img-container { height: 56vh; }
+.fieldwork-card-wrapper:nth-child(3) .fieldwork-img-container { height: 44vh; }
+
+.fieldwork-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.85) contrast(1.1);
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), filter 0.9s ease;
+}
+
+.fieldwork-card:hover .fieldwork-img-container img {
+    transform: scale(1.08);
+    filter: brightness(0.95) contrast(1.15);
+}
+
+.fieldwork-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(4, 8, 6, 0.25) 0%, rgba(4, 8, 6, 0.35) 40%, rgba(4, 8, 6, 0.92) 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.fieldwork-hud-meta {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    right: 1.5rem;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+}
+
+.hud-meta-badge {
+    padding: 0.35rem 0.9rem;
+    background: rgba(4, 8, 6, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #34d399;
+    text-transform: uppercase;
+}
+
+.hud-gps-coords {
+    font-family: monospace;
+    font-size: 0.72rem;
+    color: #EADFCF;
+    letter-spacing: 0.1em;
+    background: rgba(4, 8, 6, 0.75);
+    padding: 0.3rem 0.7rem;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.fieldwork-card-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.fieldwork-card-info h4 {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: #F9F6F0;
+    margin: 0 0 0.4rem 0;
+    line-height: 1.2;
+}
+
+.fieldwork-card-info p {
+    color: #EADFCF;
+    font-size: 0.9rem;
+    margin: 0;
+    font-weight: 300;
+    opacity: 0.85;
+}
+
+.fieldwork-arrow-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #34d399;
+    transition: background 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
+
+.fieldwork-card:hover .fieldwork-arrow-btn {
+    background: #34d399;
+    color: #040806;
+    transform: scale(1.1) rotate(45deg);
+}
+
+/* ─── CINEMATIC GALLERY PINNED CONTAINER ─── */
 .pinned-gallery-wrapper {
     height: 100vh;
     overflow: hidden;
     position: relative;
-    background: #060907; /* Deep cinematic black-green */
+    background: #040806;
     perspective: 1200px;
+    border-top: 1px solid rgba(52, 211, 153, 0.08);
+    border-bottom: 1px solid rgba(52, 211, 153, 0.08);
 }
 
-/* Atmosphere Layers */
-.ambient-grain {
-    position: absolute;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.05;
-    mix-blend-mode: overlay;
-    z-index: 99;
-    pointer-events: none;
-    animation: grainShift 8s steps(10) infinite;
-}
-
-@keyframes grainShift {
-    0%, 100% { transform: translate(0, 0); }
-    25% { transform: translate(-2%, -2%); }
-    50% { transform: translate(1%, 2%); }
-    75% { transform: translate(-1%, -1%); }
-}
-
-.depth-fog {
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 100%; height: 60%;
-    background: linear-gradient(to top, rgba(6,9,7,0.8) 0%, transparent 100%);
-    z-index: 3;
-    pointer-events: none;
-}
-
-/* Dynamic Lighting */
 .gallery-orb {
     position: absolute;
-    width: 60vw;
-    height: 60vw;
+    width: 55vw;
+    height: 55vw;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, rgba(34, 197, 94, 0.05) 30%, transparent 70%);
-    filter: blur(60px);
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.18) 0%, rgba(5, 150, 105, 0.06) 40%, transparent 75%);
+    filter: blur(80px);
     z-index: 2;
     pointer-events: none;
     mix-blend-mode: screen;
@@ -152,11 +376,13 @@
     z-index: 10;
 }
 
-/* ????????? SLIDE ARCHITECTURE ????????? */
+/* ─── SLIDE ARCHITECTURE ─── */
 .pinned-slide {
     position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     opacity: 0;
     visibility: hidden;
     z-index: 1;
@@ -165,200 +391,263 @@
     transform-style: preserve-3d;
 }
 
-.pinned-slide.active { opacity: 1; visibility: visible; z-index: 2; }
+.pinned-slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+}
 
 /* Image Reveal Wrapper */
 .pinned-bg-wrapper {
     position: absolute;
-    right: 0; top: 0;
-    width: 65%; height: 100%;
+    right: 0;
+    top: 0;
+    width: 68%;
+    height: 100%;
     overflow: hidden;
-    clip-path: inset(100% 0 0 0); /* Bottom up reveal initially */
+    clip-path: inset(100% 0 0 0);
     z-index: 1;
-    will-change: clip-path, transform, filter;
-    /* Soft edge mask for cinematic fade */
-    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 100%);
+    will-change: clip-path, transform;
+    mask-image: linear-gradient(to right, transparent, black 18%, black 85%, transparent 98%);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 18%, black 85%, transparent 98%);
 }
 
 .pinned-bg {
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    transform: scale(1.25);
-    filter: blur(10px) brightness(0.6);
+    transform: scale(1.2);
+    filter: brightness(0.75) contrast(1.1);
     will-change: transform, filter;
 }
 
-/* Content */
+/* Content Panel */
 .pinned-content {
     position: relative;
     left: 8%;
     z-index: 10;
-    max-width: 650px;
+    max-width: 800px;
     opacity: 0;
-    transform: translateZ(50px);
+    transform: translateZ(40px);
     will-change: transform, opacity;
+}
+
+.pinned-content .text-colossal {
+    white-space: nowrap;
+    word-break: keep-all;
 }
 
 .pinned-content .lead-text {
-    color: #FFF;
-    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: #EADFCF;
+    font-size: clamp(1.05rem, 1.8vw, 1.3rem);
     font-weight: 300;
-    line-height: 1.6;
+    line-height: 1.65;
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(25px);
     will-change: transform, opacity;
-    max-width: 80%;
+    max-width: 90%;
 }
 
-/* ????????? GLASSMORPHIC STAT CARD ????????? */
+/* ─── RESEARCH MINIMAL EDITORIAL STAT CARD ─── */
 .stat-popup {
     position: absolute;
-    background: rgba(20, 25, 22, 0.6);
-    backdrop-filter: blur(24px) saturate(150%);
-    -webkit-backdrop-filter: blur(24px) saturate(150%);
-    padding: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
-    color: #FFF;
+    background: rgba(12, 20, 16, 0.76);
+    backdrop-filter: blur(28px) saturate(160%);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    padding: 1.6rem 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    color: #F9F6F0;
     z-index: 20;
     opacity: 0;
-    transform: scale(0.9) translateZ(80px);
+    transform: scale(0.9) translateZ(50px);
     box-shadow: 
-        0 30px 60px rgba(0,0,0,0.4),
-        inset 0 1px 0 rgba(255,255,255,0.2);
+        0 25px 65px rgba(0, 0, 0, 0.65),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
     will-change: transform, opacity;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    overflow: hidden;
+    gap: 0.4rem;
+    min-width: 230px;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Inner noise texture for card */
-.stat-popup::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.15;
-    mix-blend-mode: overlay;
-    pointer-events: none;
+.stat-popup:hover {
+    border-color: rgba(52, 211, 153, 0.4);
+    transform: translateY(-6px) scale(1.02) translateZ(60px);
+    box-shadow: 
+        0 35px 85px rgba(0, 0, 0, 0.8),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
-/* Border Glow micro-reflection */
-.stat-popup::after {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    transform: skewX(-20deg);
-    animation: cardSweep 6s infinite ease-in-out;
-}
-
-@keyframes cardSweep {
-    0%, 50% { left: -100%; }
-    100% { left: 200%; }
-}
-
-.stat-popup h5 { 
-    font-family: var(--font-heading); 
-    font-size: 3rem; 
-    margin: 0; 
-    color: #FFF; 
-    line-height: 1;
-    position: relative;
-    z-index: 2;
-}
-.stat-popup h5 span {
-    color: var(--clr-accent-bright);
-}
-.stat-popup p { 
-    font-size: 0.85rem; 
-    margin: 0; 
-    opacity: 0.6; 
+.stat-card-tag {
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: rgba(52, 211, 153, 0.95);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    position: relative;
-    z-index: 2;
+    font-family: monospace;
 }
 
-/* ????????? DECORATIVE EDITORIAL ELEMENTS ????????? */
+.stat-card-num {
+    font-family: var(--font-heading);
+    font-size: clamp(3.2rem, 4.2vw, 4.5rem);
+    font-weight: 800;
+    margin: 0;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    color: #F9F6F0;
+}
+
+.stat-card-label {
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: rgba(234, 223, 207, 0.78);
+    letter-spacing: 0.03em;
+    margin: 0;
+    line-height: 1.35;
+}
+
+/* ─── HUD SLIDE COUNTER & PROGRESS ─── */
 .editorial-grid {
     position: absolute;
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.05;
+    opacity: 0.04;
     background-image: 
-        linear-gradient(rgba(255,255,255,1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
-    background-size: 25vw 25vh;
+        linear-gradient(rgba(52, 211, 153, 0.6) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(52, 211, 153, 0.6) 1px, transparent 1px);
+    background-size: 20vw 20vh;
 }
 
 .slide-counter {
     position: absolute;
     left: 8%;
-    bottom: 10%;
-    z-index: 20;
+    bottom: 8%;
+    z-index: 30;
     font-family: var(--font-heading);
     font-size: 1rem;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 0.1em;
+    color: #EADFCF;
+    letter-spacing: 0.12em;
     display: flex;
     align-items: center;
-    gap: 1rem;
-}
-.slide-counter-line {
-    width: 40px;
-    height: 1px;
-    background: rgba(255,255,255,0.3);
+    gap: 1.2rem;
 }
 
-.crosshair {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    z-index: 20;
-    pointer-events: none;
-    opacity: 0.3;
+.slide-counter-num {
+    font-weight: 700;
+    color: #34d399;
+    font-size: 1.2rem;
+    min-width: 1.8rem;
 }
-.crosshair::before, .crosshair::after {
-    content: '';
-    position: absolute;
-    background: #FFF;
+
+.slide-progress-track {
+    width: 120px;
+    height: 2px;
+    background: rgba(249, 246, 240, 0.15);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
 }
-.crosshair::before { top: 50%; left: 0; width: 100%; height: 1px; transform: translateY(-50%); }
-.crosshair::after { left: 50%; top: 0; height: 100%; width: 1px; transform: translateX(-50%); }
 
-.crosshair-1 { top: 15%; right: 10%; }
-.crosshair-2 { bottom: 15%; right: 30%; }
+.slide-progress-bar {
+    width: 33.33%;
+    height: 100%;
+    background: linear-gradient(90deg, #10b981, #34d399);
+    border-radius: 2px;
+    transition: width 0.4s ease-out;
+    box-shadow: 0 0 10px #34d399;
+}
 
-/* ????????? MOBILE RESPONSIVENESS ????????? */
+/* ─── MOBILE RESPONSIVENESS ─── */
+@media (max-width: 992px) {
+    .fieldwork-cards-grid { grid-template-columns: 1fr; gap: 2rem; padding: 0 4vw; }
+    .fieldwork-card-wrapper:nth-child(1),
+    .fieldwork-card-wrapper:nth-child(2),
+    .fieldwork-card-wrapper:nth-child(3) { grid-column: span 1; margin-top: 0; }
+    .fieldwork-img-container { height: 36vh !important; }
+}
+
 @media (max-width: 768px) {
-    .pinned-gallery-wrapper { height: auto; overflow: visible; background: var(--clr-bg-dark); }
+    .mandate-section-beige { padding-top: 5vh; padding-bottom: 8vh; }
+    .scrub-text-container {
+        font-size: clamp(1.8rem, 6.5vw, 3.5rem);
+        margin: 4vh auto;
+        padding: 0 4vw;
+        box-sizing: border-box;
+    }
+    .fieldwork-archive-gallery { padding: 6vh 0 8vh; min-height: auto; }
+    .fieldwork-watermark-text { display: none; }
+    .fieldwork-title { font-size: clamp(2rem, 7vw, 3.2rem); }
+    .fieldwork-card-body { padding: 1.5rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .fieldwork-arrow-btn { display: none; }
+
+    .pinned-gallery-wrapper { height: auto; overflow: visible; background: #040806; }
     .pinned-gallery-container { height: auto; display: flex; flex-direction: column; align-items: stretch; }
     .pinned-slide {
-        position: relative; opacity: 1; visibility: visible;
-        height: auto; min-height: 100vh;
-        display: flex; flex-direction: column; justify-content: center;
-        padding-top: 10vh;
+        position: relative;
+        opacity: 1;
+        visibility: visible;
+        height: auto;
+        min-height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 4vh;
+        padding-bottom: 4vh;
+        border-bottom: 1px solid rgba(52, 211, 153, 0.1);
     }
-    .pinned-bg-wrapper { 
-        position: relative; width: 100%; height: 50vh; 
-        clip-path: none; mask-image: none; -webkit-mask-image: none; 
+    .pinned-bg-wrapper {
+        position: relative;
+        width: 100%;
+        height: 38vh;
+        clip-path: none !important;
+        mask-image: none !important;
+        -webkit-mask-image: none !important;
         order: 1;
     }
-    .pinned-bg { transform: none; filter: none; }
-    .pinned-content { 
-        position: relative; left: 0; width: 100%; 
-        transform: none !important; opacity: 1 !important; 
-        padding: 2rem 5vw; order: 2;
+    .pinned-bg { transform: none !important; filter: brightness(0.85) !important; }
+    .pinned-content {
+        position: relative;
+        left: 0;
+        width: 100%;
+        transform: none !important;
+        opacity: 1 !important;
+        padding: 1.8rem 5vw;
+        order: 2;
+        box-sizing: border-box;
     }
-    .pinned-content .text-colossal { font-size: 3.5rem; margin-bottom: 1rem; }
-    .stat-popup { 
-        position: relative; transform: none !important; opacity: 1 !important; 
-        margin: 0 5vw 2rem; order: 3;
+    .pinned-content .text-colossal {
+        font-size: clamp(2rem, 8vw, 3.5rem);
+        margin-bottom: 0.6rem;
+        white-space: normal;
+        word-break: break-word;
     }
+    .pinned-content .lead-text {
+        opacity: 1 !important;
+        transform: none !important;
+        font-size: 0.95rem;
+        max-width: 100%;
+    }
+    .stat-popup {
+        position: relative;
+        transform: none !important;
+        opacity: 1 !important;
+        margin: 1rem 5vw 2rem;
+        order: 3;
+        top: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        width: calc(100% - 10vw);
+        box-sizing: border-box;
+    }
+    .stat-card-num { font-size: clamp(2.4rem, 8vw, 3.5rem); }
     .editorial-grid, .crosshair, .slide-counter { display: none; }
+}
+
+@media (max-width: 480px) {
+    .fieldwork-cards-grid { padding: 0 3vw; }
+    .fieldwork-hud-meta { top: 1rem; left: 1rem; right: 1rem; }
+    .hud-gps-coords { font-size: 0.65rem; }
 }

@@ -1,39 +1,800 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400;600&display=swap');
-
-body { 
-    background: #000 !important;
-    color: #FFF !important; 
-    scrollbar-width: none;
-}
-body::-webkit-scrollbar { display: none; }
-
-.impact-master-wrapper { 
-    padding: 0; margin: 0; position: relative; width: 100vw; background: #000; overflow-x: hidden; 
+/* ─── AWWWARDS IMPACT REPORT SYSTEM ─── */
+.impact-main-container {
+    background: #040806 !important;
+    color: #F4EFE6 !important;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    position: relative;
 }
 
-.impact-video {
-    position: absolute;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
+/* Background Glow */
+.impact-bg-glow {
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    height: 70vh;
+    background: radial-gradient(ellipse, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.02) 55%, transparent 80%);
+    filter: blur(120px);
+    pointer-events: none;
     z-index: 0;
 }
 
-.dark-tint {
+/* Hero Section */
+.impact-hero-section {
+    position: relative;
+    min-height: 90vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10rem 6vw 6rem 6vw;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.impact-hero-bg-media {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.35;
+    filter: brightness(0.8) contrast(1.1);
+}
+
+.impact-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(4, 8, 6, 0.6) 0%, rgba(4, 8, 6, 0.3) 50%, #040806 100%);
+}
+
+.impact-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.impact-hud-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 1.3rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    border-radius: 100px;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: #34D399;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.impact-hero-title {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: clamp(3rem, 6.5vw, 5.8rem) !important;
+    font-weight: 900 !important;
+    line-height: 1.02 !important;
+    letter-spacing: -0.025em !important;
+    color: #F4EFE6 !important;
+    margin-bottom: 1.5rem !important;
+    text-transform: uppercase !important;
+}
+
+.impact-hero-title-highlight {
+    color: #10B981 !important;
+    background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.impact-hero-subtext {
+    font-size: 1.15rem !important;
+    line-height: 1.65 !important;
+    color: rgba(244, 239, 230, 0.75) !important;
+    max-width: 720px;
+    margin: 0 auto 3.5rem auto !important;
+}
+
+/* Stat Ticker HUD Strip */
+.impact-stats-hud-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.impact-stat-pod {
+    background: rgba(255, 255, 255, 0.035);
+    backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 1.8rem 1.4rem;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    transition: transform 0.35s ease;
+}
+
+.impact-stat-pod:hover {
+    transform: translateY(-4px);
+    border-color: rgba(52, 211, 153, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.stat-number {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    line-height: 1;
+    color: #10B981;
+    margin-bottom: 0.4rem;
+}
+
+.stat-label {
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: rgba(244, 239, 230, 0.7);
+    text-transform: uppercase;
+}
+
+/* Problem Section */
+.impact-problem-section {
+    padding: 8rem 6vw;
+    position: relative;
+    z-index: 2;
+    max-width: 1320px;
+    margin: 0 auto;
+}
+
+.section-tag-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: #F43F5E;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+}
+
+.section-title-large {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: clamp(2.4rem, 4.5vw, 4.2rem) !important;
+    font-weight: 800 !important;
+    text-align: center;
+    line-height: 1.1 !important;
+    color: #F4EFE6 !important;
+    margin-bottom: 3.5rem !important;
+    text-transform: uppercase !important;
+}
+
+.problem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.problem-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.problem-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(244, 63, 94, 0.4);
+}
+
+.problem-img-wrapper {
+    height: 230px;
+    overflow: hidden;
+    position: relative;
+}
+
+.problem-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.problem-card:hover .problem-img-wrapper img {
+    transform: scale(1.06);
+}
+
+.problem-card-body {
+    padding: 2rem;
+}
+
+.problem-card-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #F4EFE6;
+    margin-bottom: 0.6rem;
+}
+
+.problem-card-text {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: rgba(244, 239, 230, 0.7);
+}
+
+/* Before & After Interactive Visualizer Section */
+.impact-restoration-section {
+    padding: 7rem 6vw;
+    position: relative;
+    z-index: 2;
+    max-width: 1320px;
+    margin: 0 auto;
+}
+
+.restoration-visualizer-box {
+    background: rgba(255, 255, 255, 0.035);
+    backdrop-filter: blur(32px);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    border-radius: 32px;
+    padding: 3.5rem 3rem;
+    text-align: center;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+
+.visualizer-toggle-pills {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.toggle-pill-btn {
+    padding: 0.7rem 1.8rem;
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.04);
+    color: #F4EFE6;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition: all 0.35s ease;
+}
+
+.toggle-pill-btn.active-pill {
+    background: #10B981;
+    color: #040806;
+    border-color: #10B981;
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
+}
+
+.visualizer-media-frame {
+    position: relative;
+    height: 480px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.visualizer-media-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.5s ease;
+}
+
+.visualizer-caption {
+    margin-top: 1.8rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgba(244, 239, 230, 0.85);
+}
+
+/* 4 Pillars Section */
+.impact-pillars-section {
+    padding: 7rem 6vw;
+    position: relative;
+    z-index: 2;
+    max-width: 1320px;
+    margin: 0 auto;
+}
+
+.pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+}
+
+.pillar-card {
+    background: rgba(255, 255, 255, 0.035);
+    backdrop-filter: blur(32px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.pillar-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(52, 211, 153, 0.35);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 40px rgba(16, 185, 129, 0.12);
+}
+
+.pillar-img-box {
+    height: 280px;
+    overflow: hidden;
+    position: relative;
+}
+
+.pillar-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pillar-card:hover .pillar-img-box img {
+    transform: scale(1.05);
+}
+
+.pillar-card-content {
+    padding: 2.2rem;
+}
+
+.pillar-tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    color: #34D399;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+}
+
+.pillar-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #F4EFE6;
+    margin-bottom: 0.8rem;
+}
+
+.pillar-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(244, 239, 230, 0.75);
+}
+
+/* Volunteer Champion Spotlight Section */
+.impact-champion-section {
+    padding: 7rem 6vw;
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.champion-card {
+    background: rgba(255, 255, 255, 0.035);
+    backdrop-filter: blur(32px);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    border-radius: 32px;
+    padding: 3rem;
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 3rem;
+    align-items: center;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+
+.champion-img-frame {
+    height: 380px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.champion-img-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.champion-quote-mark {
+    font-family: 'Outfit', sans-serif;
+    font-size: 4rem;
+    line-height: 0.8;
+    color: #10B981;
+    margin-bottom: 1rem;
+}
+
+.champion-quote {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #F4EFE6;
+    margin-bottom: 1.5rem;
+}
+
+.champion-name {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #34D399;
+}
+
+.champion-role {
+    font-size: 0.85rem;
+    color: rgba(244, 239, 230, 0.6);
+    letter-spacing: 0.08em;
+}
+
+/* Action CTA Banner */
+.impact-cta-banner {
+    padding: 7rem 6vw 9rem 6vw;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.cta-box {
+    max-width: 960px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.035);
+    backdrop-filter: blur(32px);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    border-radius: 36px;
+    padding: 4.5rem 3rem;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.7), 0 0 50px rgba(16, 185, 129, 0.15);
+}
+
+.cta-heading {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+    font-weight: 900;
+    color: #F4EFE6;
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
+}
+
+.cta-text {
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: rgba(244, 239, 230, 0.75);
+    max-width: 620px;
+    margin: 0 auto 2.5rem auto;
+}
+
+.cta-btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.cta-primary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 1.1rem 2.4rem;
+    background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+    border-radius: 100px;
+    color: #040806;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.35s ease;
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+}
+
+.cta-primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 45px rgba(16, 185, 129, 0.6);
+}
+
+.cta-secondary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 1.1rem 2.4rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 100px;
+    color: #F4EFE6;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.35s ease;
+}
+
+.cta-secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-3px);
+}
+
+/* ─── RISING VIDEO PILLARS HERO (AWWWARDS EDITION) ─── */
+.rising-hero-section {
+    position: relative;
+    min-height: 100vh;
+    width: 100vw;
+    background: #040806;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8.5rem 4vw 0 4vw;
+    overflow: hidden;
     z-index: 1;
+}
+
+.rising-hero-bg-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.25;
+    filter: brightness(0.6) contrast(1.2);
+    z-index: 0;
+}
+
+.rising-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(4, 8, 6, 0.8) 0%, rgba(4, 8, 6, 0.4) 50%, #040806 100%);
+    z-index: 1;
+}
+
+.rising-hero-top {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.rising-hero-heading {
+    font-family: 'Outfit', sans-serif !important;
+    font-size: clamp(3rem, 6.5vw, 6rem) !important;
+    font-weight: 900 !important;
+    line-height: 0.95 !important;
+    letter-spacing: -0.03em !important;
+    color: #F4EFE6 !important;
+    margin: 0 !important;
+    text-transform: uppercase !important;
+    max-width: 900px;
+}
+
+.rising-hero-heading-green {
+    color: #10B981;
+    background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.rising-hero-side-tag {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    color: rgba(244, 239, 230, 0.5);
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-top: 0.5rem;
+}
+
+/* 5 Rising Pillars Grid Container */
+.rising-pillars-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    gap: 1.2rem;
+    height: 68vh;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0.5rem auto 0 auto;
+}
+
+.rising-pillar-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    transition: flex 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+}
+
+.rising-pillar-col:hover {
+    flex: 1.4;
+}
+
+.pillar-stat-header {
+    margin-bottom: 0.8rem;
+    padding: 0 0.5rem;
+    transition: transform 0.35s ease;
+}
+
+.rising-pillar-col:hover .pillar-stat-header {
+    transform: translateY(-4px);
+}
+
+.pillar-meta-name {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: rgba(244, 239, 230, 0.7);
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+}
+
+.pillar-stat-val {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1.8rem, 3.2vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1;
+    color: #10B981;
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+}
+
+.pillar-video-box {
+    position: relative;
+    width: 100%;
+    border-radius: 18px 18px 0 0;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-bottom: none;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.rising-pillar-col:hover .pillar-video-box {
+    border-color: rgba(52, 211, 153, 0.6);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(16, 185, 129, 0.25);
+}
+
+.pillar-video-media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.65;
+    filter: brightness(0.85) contrast(1.1);
+    transition: opacity 0.5s ease, transform 0.8s ease;
+}
+
+.rising-pillar-col:hover .pillar-video-media {
+    opacity: 0.95;
+    transform: scale(1.04);
+}
+
+.pillar-glass-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(4, 8, 6, 0.9) 100%);
     pointer-events: none;
 }
 
-.abs-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    text-align: center;
-    width: 100%;
+@media (max-width: 992px) {
+    .impact-stats-hud-grid, .problem-grid, .pillars-grid {
+        grid-template-columns: 1fr;
+    }
+    .champion-card {
+        grid-template-columns: 1fr;
+        padding: 2.2rem 1.8rem;
+        gap: 2rem;
+    }
+    .champion-img-frame {
+        height: 280px;
+    }
+    .rising-hero-section {
+        padding: 6.5rem 4vw 2rem 4vw;
+        min-height: auto;
+        height: auto;
+    }
+    .rising-pillars-container {
+        flex-direction: column;
+        height: auto;
+        gap: 1.2rem;
+        align-items: stretch;
+        margin-top: 2rem;
+    }
+    .rising-pillar-col {
+        height: auto;
+        width: 100%;
+        flex: 1 1 auto;
+    }
+    .pillar-video-box {
+        height: 120px !important;
+        border-radius: 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .pillar-stat-val {
+        font-size: 1.8rem;
+    }
+    .rising-hero-side-tag {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .impact-problem-section, .impact-restoration-section, .impact-pillars-section, .impact-champion-section {
+        padding: 4.5rem 4vw;
+    }
+    .restoration-visualizer-box {
+        padding: 2rem 1.2rem;
+        border-radius: 24px;
+    }
+    .visualizer-toggle-pills {
+        flex-direction: column;
+        gap: 0.7rem;
+    }
+    .toggle-pill-btn {
+        width: 100%;
+        font-size: 0.76rem;
+        padding: 0.7rem 1rem;
+        box-sizing: border-box;
+    }
+    .visualizer-media-frame {
+        height: 240px;
+    }
+    .pillar-img-box {
+        height: 220px;
+    }
+    .pillar-card-content {
+        padding: 1.5rem;
+    }
+    .pillar-title {
+        font-size: 1.4rem;
+    }
+    .champion-quote {
+        font-size: 1.15rem;
+    }
+    .impact-cta-banner {
+        padding: 4.5rem 4vw 6rem 4vw;
+    }
+    .cta-box {
+        padding: 2.5rem 1.4rem;
+        border-radius: 28px;
+    }
+    .cta-heading {
+        font-size: clamp(2rem, 6vw, 3.2rem);
+    }
+    .cta-btn-group {
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+    }
+    .cta-primary-btn, .cta-secondary-btn {
+        width: 100%;
+        justify-content: center;
+        box-sizing: border-box;
+    }
 }

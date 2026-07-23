@@ -346,17 +346,18 @@
 .nav-link-item {
     font-family: var(--font-body);
     font-size: 0.85rem;
-    font-weight: 500;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--clr-text-prime);
+    color: #061a12 !important;
     text-decoration: none;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
+    opacity: 0.85;
+    transition: opacity 0.3s ease, color 0.3s ease;
 }
 
 .nav-link-item:hover {
     opacity: 1;
+    color: #10b981 !important;
 }
 
 .nav-cta-btn {
@@ -606,10 +607,59 @@
     grid-row: span 2;
 }
 
-@media(max-width: 900px) {
+@media (max-width: 900px) {
     .bento-grid>div {
         grid-column: span 12 !important;
         grid-row: span 1 !important;
+    }
+    .sticky-split-layout {
+        flex-direction: column;
+    }
+    .sticky-half {
+        width: 100%;
+        position: relative;
+        top: 0;
+        margin-bottom: 3rem;
+    }
+    .scroll-half {
+        width: 100%;
+        gap: 4rem;
+        padding-bottom: 5vh;
+    }
+}
+
+/* Global Mobile Form Input & Touch Target Optimization */
+@media (max-width: 768px) {
+    input, select, textarea, button {
+        font-size: 16px !important; /* Prevents auto-zoom on iOS safari */
+    }
+
+    button, a.btn, input[type="submit"] {
+        min-height: 44px;
+        touch-action: manipulation;
+    }
+
+    .donation-container {
+        padding: 2rem 1.5rem;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .amount-selector {
+        grid-template-columns: repeat(2, 1fr);
+        display: grid;
+        gap: 0.8rem;
+    }
+
+    .amount-btn {
+        min-height: 48px;
+        padding: 0.8rem;
+        font-size: 1rem;
+    }
+
+    .hero-image-block {
+        height: 45vh;
+        margin: 2rem 0;
     }
 }
 
@@ -840,7 +890,7 @@
     position: relative;
     left: 8%;
     z-index: 10;
-    max-width: 600px;
+    max-width: 800px;
     transform: translateY(100px);
     opacity: 0;
 }
@@ -850,6 +900,8 @@
     line-height: 0.9;
     color: #EADFC8;
     margin-bottom: 1.5rem;
+    white-space: nowrap;
+    word-break: keep-all;
 }
 
 .pinned-content .lead-text {
@@ -1584,26 +1636,6 @@
     margin-top: 2rem;
 }
 
-/* ─── TRANSPARENCY / TRUST SECTION ──────────────────────────────── */
-.trust-section {
-    padding: 10rem 5vw;
-    background: var(--clr-bg-dark);
-}
-
-.trust-inner h2,
-.trust-inner p {
-    color: #FFF;
-}
-
-.trust-eyebrow {
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    font-size: 0.75rem;
-    color: #22c55e;
-    margin-bottom: 1.5rem;
-    display: block;
-}
-
 .trust-bar-label {
     color: rgba(255, 255, 255, 0.85);
 }
@@ -1650,45 +1682,7 @@
     box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
 }
 
-/* ─── SOCIAL PROOF / COMMUNITY SECTION ──────────────────────────── */
-.community-section {
-    padding: 10rem 5vw;
-    background: var(--clr-bg-panel);
-}
-
-.community-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2.5rem;
-    margin-top: 5rem;
-}
-
-.testimonial-card {
-    background: #FFF;
-    border-radius: 12px;
-    padding: 3rem;
-    position: relative;
-    transition: all 0.5s var(--ease-smooth);
-    border: 1px solid rgba(0, 0, 0, 0.03);
-}
-
-.testimonial-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
-}
-
-.testimonial-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: var(--clr-accent-bright);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    color: var(--clr-bg-deep);
-    font-family: var(--font-heading);
-}
+/* ─── SOCIAL PROOF / COMMUNITY SECTION (STYLED IN Community.css) ─── */
 
 /* ─── FINAL CTA SECTION ──────────────────────────────────────────── */
 .final-cta-section {
@@ -1822,11 +1816,7 @@
     max-width: 400px;
 }
 
-/* See All Drives Banner */
-.see-all-drives-banner {
-    background: #1A3626;
-    padding: 4rem 5vw;
-}
+/* See All Drives Banner (Styled in MuseumDrives.css) */
 
 .see-all-drives-inner {
     max-width: 1200px;
@@ -2056,21 +2046,7 @@
     line-height: 1.5;
 }
 
-.testimonial-card {
-    position: relative;
-}
 
-.testimonial-card::before {
-    content: '"';
-    position: absolute;
-    top: 1.5rem;
-    left: 2rem;
-    font-family: var(--font-heading);
-    font-size: 5rem;
-    line-height: 1;
-    color: rgba(34, 197, 94, 0.12);
-    pointer-events: none;
-}
 
 .main-nav.nav-scrolled .nav-pill {
     background: rgba(249, 246, 240, 0.95) !important;
@@ -2096,23 +2072,7 @@
     box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
 }
 
-.see-all-drives-banner {
-    background: linear-gradient(135deg, #1A3626 0%, #0f2518 100%);
-    padding: 5rem 5vw;
-    position: relative;
-    overflow: hidden;
-}
 
-.see-all-drives-banner::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba(34, 197, 94, 0.08) 0%, transparent 70%);
-    pointer-events: none;
-}
 
 a:focus-visible,
 button:focus-visible {

@@ -114,11 +114,31 @@
 
 @media (max-width: 768px) {
     .final-cta-section {
-        padding: 10rem 5vw;
+        padding: 8rem 5vw;
+    }
+    .cta-line {
+        font-size: clamp(2.2rem, 8vw, 4.5rem);
     }
     .final-cta-buttons {
         flex-direction: column;
         width: 100%;
-        max-width: 300px;
+        max-width: 100%;
+        gap: 1rem;
+        margin-top: 2.5rem;
+    }
+    .btn-volunteer,
+    .btn-donate-cta {
+        width: 100%;
+        padding: 1.2rem 2rem;
+        font-size: 1rem;
+        box-sizing: border-box;
+        text-align: center;
+        min-height: 52px;
+    }
+}
+
+@media (max-width: 480px) {
+    .final-cta-section {
+        padding: 6rem 4vw;
     }
 }
